@@ -18,6 +18,7 @@ public class RegistrationScreen {
     private Label firstNameLabel;
     private Label lastNameLabel;
     private Label birthDateLabel;
+    private Label errorLabel;
 
     private TextField usernameField;
     private TextField emailField;
@@ -66,6 +67,9 @@ public class RegistrationScreen {
         birthDateLabel = new Label("Birth date:");
         birthDateField = new DatePicker();
 
+        errorLabel = new Label();
+        errorLabel.getStyleClass().add("error");
+
         registerButton = new Button("Register");
         registerButton.setOnAction(e -> registerUser());
 
@@ -88,6 +92,7 @@ public class RegistrationScreen {
         gridPane.add(birthDateField, 1, 6);
         gridPane.add(registerButton, 1, 7);
         gridPane.add(backButton, 1, 8);
+        gridPane.add(errorLabel, 1, 9);
 
         return gridPane;
     }
@@ -95,12 +100,12 @@ public class RegistrationScreen {
     private void registerUser() {
 
         if (!areAllFieldsFilled()) {
-            System.out.println("Not all fields have been filled!");
+            errorLabel.setText("Not all fields have been filled!");
             return;
         }
 
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            System.out.println("Entered passwords are different!");
+            errorLabel.setText("Entered passwords are different!");
             return;
         }
 
