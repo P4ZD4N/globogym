@@ -1,16 +1,21 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.User;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class RegistrationScreen {
 
     private Main main;
 
+    private Label errorLabel;
     private Label usernameLabel;
     private Label emailLabel;
     private Label passwordLabel;
@@ -18,7 +23,6 @@ public class RegistrationScreen {
     private Label firstNameLabel;
     private Label lastNameLabel;
     private Label birthDateLabel;
-    private Label errorLabel;
 
     private TextField usernameField;
     private TextField emailField;
@@ -40,11 +44,20 @@ public class RegistrationScreen {
 
     public Pane getView() {
 
-        GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("container");
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setVgap(5);
-        gridPane.setHgap(5);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
+
+        errorLabel = new Label();
+        errorLabel.getStyleClass().add("error");
+
+        HBox topContainer = new HBox();
+        topContainer.setAlignment(Pos.CENTER);
+        topContainer.getChildren().add(errorLabel);
+
+        GridPane centerContainer = new GridPane();
+        centerContainer.getStyleClass().add("container");
+        centerContainer.setVgap(5);
+        centerContainer.setHgap(5);
 
         usernameLabel = new Label("Username:");
         usernameField = new TextField();
@@ -67,34 +80,37 @@ public class RegistrationScreen {
         birthDateLabel = new Label("Birth date:");
         birthDateField = new DatePicker();
 
-        errorLabel = new Label();
-        errorLabel.getStyleClass().add("error");
-
         registerButton = new Button("Register");
         registerButton.setOnAction(e -> registerUser());
 
         backButton = new Button("Back");
         backButton.setOnAction(e -> main.showMainScreen());
 
-        gridPane.add(usernameLabel, 0, 0);
-        gridPane.add(usernameField, 1, 0);
-        gridPane.add(emailLabel, 0, 1);
-        gridPane.add(emailField, 1, 1);
-        gridPane.add(passwordLabel, 0, 2);
-        gridPane.add(passwordField, 1, 2);
-        gridPane.add(confirmPasswordLabel, 0, 3);
-        gridPane.add(confirmPasswordField, 1, 3);
-        gridPane.add(firstNameLabel, 0, 4);
-        gridPane.add(firstNameField, 1, 4);
-        gridPane.add(lastNameLabel, 0, 5);
-        gridPane.add(lastNameField, 1, 5);
-        gridPane.add(birthDateLabel, 0, 6);
-        gridPane.add(birthDateField, 1, 6);
-        gridPane.add(registerButton, 1, 7);
-        gridPane.add(backButton, 1, 8);
-        gridPane.add(errorLabel, 1, 9);
+        centerContainer.add(usernameLabel, 0, 0);
+        centerContainer.add(usernameField, 1, 0);
+        centerContainer.add(emailLabel, 0, 1);
+        centerContainer.add(emailField, 1, 1);
+        centerContainer.add(passwordLabel, 0, 2);
+        centerContainer.add(passwordField, 1, 2);
+        centerContainer.add(confirmPasswordLabel, 0, 3);
+        centerContainer.add(confirmPasswordField, 1, 3);
+        centerContainer.add(firstNameLabel, 0, 4);
+        centerContainer.add(firstNameField, 1, 4);
+        centerContainer.add(lastNameLabel, 0, 5);
+        centerContainer.add(lastNameField, 1, 5);
+        centerContainer.add(birthDateLabel, 0, 6);
+        centerContainer.add(birthDateField, 1, 6);
 
-        return gridPane;
+        HBox bottomContainer = new HBox();
+        bottomContainer.setAlignment(Pos.CENTER);
+        bottomContainer.getChildren().add(backButton);
+        bottomContainer.getChildren().add(registerButton);
+
+        borderPane.setTop(topContainer);
+        borderPane.setCenter(centerContainer);
+        borderPane.setBottom(bottomContainer);
+
+        return borderPane;
     }
 
     private void registerUser() {
@@ -109,17 +125,17 @@ public class RegistrationScreen {
             return;
         }
 
-        User user = new User(
+        ClubMember clubMember = new ClubMember(
                 usernameField.getText(),
                 emailField.getText(),
                 passwordField.getText(),
                 firstNameField.getText(),
                 lastNameField.getText(),
                 birthDateField.getValue());
-        User.getUsers().add(user);
+        User.getUsers().add(clubMember);
         User.serializeUsers();
 
-        System.out.println("User registered successfully!");
+        System.out.println("Club member registered successfully!");
 
         main.showMainScreen();
     }
