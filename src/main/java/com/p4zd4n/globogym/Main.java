@@ -27,16 +27,16 @@ public class Main extends Application {
         RegistrationScreen registrationScreen = new RegistrationScreen(this);
         ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this);
 
-        mainScene = new Scene(mainScreen.getView(), 500, 500);
+        mainScene = new Scene(mainScreen.getView(), 800, 800);
         mainScene.getStylesheets().add(getClass().getResource("/css/screen-main.css").toExternalForm());
 
-        loginScene = new Scene(loginScreen.getView(), 500, 500);
+        loginScene = new Scene(loginScreen.getView(), 800, 800);
         loginScene.getStylesheets().add(getClass().getResource("/css/screen-login.css").toExternalForm());
 
-        registrationScene = new Scene(registrationScreen.getView(), 500, 500);
+        registrationScene = new Scene(registrationScreen.getView(), 800, 800);
         registrationScene.getStylesheets().add(getClass().getResource("/css/screen-register.css").toExternalForm());
 
-        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 500, 500);
+        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 800, 800);
 
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("GloboGym");
