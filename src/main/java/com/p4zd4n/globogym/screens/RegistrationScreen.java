@@ -11,6 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegistrationScreen {
 
     private Main main;
@@ -41,6 +46,9 @@ public class RegistrationScreen {
 
     private Button registerButton;
     private Button backButton;
+
+    private Pattern pattern;
+    private Matcher matcher;
 
     public RegistrationScreen(Main main) {
 
@@ -142,8 +150,7 @@ public class RegistrationScreen {
             return;
         }
 
-        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            errorLabel.setText("Entered passwords are different!");
+        if (!isDataValid()) {
             return;
         }
 
@@ -170,5 +177,145 @@ public class RegistrationScreen {
                 firstNameField.getText() != null &&
                 lastNameField.getText() != null &&
                 birthDateField.getValue() != null;
+    }
+
+    private boolean isDataValid() {
+
+        if (!isUsernameValid()) {
+            return false;
+        }
+
+        if (!isEmailValid()) {
+            return false;
+        }
+
+        if (!isPasswordValid()) {
+            return false;
+        }
+
+        if (!isFirstNameAndLastNameValid()) {
+            return false;
+        }
+
+        if (!isBirthDateValid()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isUsernameValid() {
+
+        Optional<User> existingUser = User.getUsers().stream()
+                                                    .filter(user -> user.getUsername().equals(usernameField.getText()))
+                                                    .findFirst();
+
+        if (existingUser.isPresent()) {
+            errorLabel.setText("User with this username already exists!");
+            return false;
+        }
+
+        if (usernameField.getText().length() <= 4) {
+            errorLabel.setText("Username must consist of at least 5 characters!");
+            return false;
+        }
+
+        String usernamePattern = "[^a-zA-Z0-9]";
+        pattern = Pattern.compile(usernamePattern);
+        matcher = pattern.matcher(usernameField.getText());
+        boolean doesUsernameContainSpecialCharacters = matcher.find();
+
+        if (doesUsernameContainSpecialCharacters) {
+            errorLabel.setText("Username shouldn't contain special characters!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isEmailValid() {
+
+        Optional<User> existingUser = User.getUsers().stream()
+                                                    .filter(user -> user.getEmail().equals(emailField.getText()))
+                                                    .findFirst();
+
+        if (existingUser.isPresent()) {
+            errorLabel.setText("User with this email already exists!");
+            return false;
+        }
+
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        pattern = Pattern.compile(emailPattern);
+        matcher = pattern.matcher(emailField.getText());
+        boolean isEmailValid = matcher.find();
+
+        if (!isEmailValid) {
+            errorLabel.setText("Invalid email!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isPasswordValid() {
+
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).+$";
+        pattern = Pattern.compile(passwordPattern);
+        matcher = pattern.matcher(passwordField.getText());
+        boolean isPasswordValid = matcher.find();
+
+        if (!isPasswordValid) {
+            errorLabel.setText("Password must consist of lowercase and uppercase letters, numbers and special characters!");
+            return false;
+        }
+
+        if (passwordField.getText().length() <= 8) {
+            errorLabel.setText("Password must be at least 8 characters long!");
+            return false;
+        }
+
+        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            errorLabel.setText("Entered passwords are different!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isFirstNameAndLastNameValid() {
+
+        String namePattern = "^[A-Z][a-zA-Z]*$";
+        pattern = Pattern.compile(namePattern);
+        matcher = pattern.matcher(firstNameField.getText());
+        boolean isFirstNameValid = matcher.find();
+
+        if (!isFirstNameValid) {
+            errorLabel.setText("First name must start with a capital letter and consist only of letters!");
+            return false;
+        }
+
+        matcher = pattern.matcher(lastNameField.getText());
+        boolean isLastNameValid = matcher.find();
+
+        if (!isLastNameValid) {
+            errorLabel.setText("Last name must start with a capital letter and consist only of letters!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isBirthDateValid() {
+
+        LocalDate birthDate = birthDateField.getValue();
+        LocalDate todayDate = LocalDate.now();
+        LocalDate thresholdDate = todayDate.minusYears(18);
+
+        if (birthDate.isAfter(thresholdDate)) {
+            errorLabel.setText("You must be at least 18 years old!");
+            return false;
+        }
+
+        return true;
     }
 }
