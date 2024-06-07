@@ -39,12 +39,15 @@ public class MainScreen {
         logoView.setFitWidth(300);
 
         loginButton = new Button("Login");
+        loginButton.getStyleClass().add("button");
         loginButton.setOnAction(e -> main.showLoginScreen());
 
         registerButton = new Button("Register");
+        registerButton.getStyleClass().add("button");
         registerButton.setOnAction(e -> main.showRegistrationScreen());
 
         exitButton = new Button("Exit");
+        exitButton.getStyleClass().add("button");
         exitButton.setOnAction(e -> main.exit());
 
         vBox.getChildren().addAll(logoView, loginButton, registerButton, exitButton);
