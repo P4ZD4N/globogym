@@ -12,6 +12,8 @@ public class MainScreen {
 
     private Main main;
 
+    private VBox vBox;
+
     private Image logo;
     private ImageView logoView;
 
@@ -26,7 +28,7 @@ public class MainScreen {
 
     public Pane getView() {
 
-        VBox vBox = new VBox();
+        vBox = new VBox();
         vBox.getStyleClass().add("container");
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
