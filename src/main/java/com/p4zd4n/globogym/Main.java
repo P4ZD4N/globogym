@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym;
 
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.screens.ClubMemberDashboardScreen;
 import com.p4zd4n.globogym.screens.LoginScreen;
 import com.p4zd4n.globogym.screens.MainScreen;
 import com.p4zd4n.globogym.screens.RegistrationScreen;
@@ -14,6 +15,7 @@ public class Main extends Application {
     private Scene mainScene;
     private Scene loginScene;
     private Scene registrationScene;
+    private Scene clubMemberDashboardScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,6 +25,7 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(this);
         LoginScreen loginScreen = new LoginScreen(this);
         RegistrationScreen registrationScreen = new RegistrationScreen(this);
+        ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this);
 
         mainScene = new Scene(mainScreen.getView(), 500, 500);
         mainScene.getStylesheets().add(getClass().getResource("/css/screen-main.css").toExternalForm());
@@ -32,6 +35,8 @@ public class Main extends Application {
 
         registrationScene = new Scene(registrationScreen.getView(), 500, 500);
         registrationScene.getStylesheets().add(getClass().getResource("/css/screen-register.css").toExternalForm());
+
+        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 500, 500);
 
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("GloboGym");
@@ -57,6 +62,11 @@ public class Main extends Application {
     public void showRegistrationScreen() {
 
         primaryStage.setScene(registrationScene);
+    }
+
+    public void showClubMemberDashboardScreen() {
+
+        primaryStage.setScene(clubMemberDashboardScene);
     }
 
     public void exit() {
