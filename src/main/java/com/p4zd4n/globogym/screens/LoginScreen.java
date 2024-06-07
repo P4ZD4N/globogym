@@ -43,15 +43,21 @@ public class LoginScreen {
         centerContainer.setHgap(5);
 
         usernameOrEmailLabel = new Label("Email / Username:");
+        usernameOrEmailLabel.getStyleClass().add("label");
         usernameOrEmailField = new TextField();
+        usernameOrEmailField.getStyleClass().add("field");
 
         passwordLabel = new Label("Password:");
+        passwordLabel.getStyleClass().add("label");
         passwordField = new PasswordField();
+        passwordField.getStyleClass().add("field");
 
         loginButton = new Button("Login");
+        loginButton.getStyleClass().add("button");
         loginButton.setOnAction(e -> login());
 
         backButton = new Button("Back");
+        backButton.getStyleClass().add("button");
         backButton.setOnAction(e -> main.showMainScreen());
 
         centerContainer.add(usernameOrEmailLabel, 0, 0);
@@ -61,7 +67,7 @@ public class LoginScreen {
         centerContainer.add(loginButton, 1, 2);
         centerContainer.add(backButton, 1, 3);
 
-        HBox bottomContainer = new HBox();
+        HBox bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(loginButton);

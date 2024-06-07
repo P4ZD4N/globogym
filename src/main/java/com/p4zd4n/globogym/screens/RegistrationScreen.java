@@ -48,6 +48,7 @@ public class RegistrationScreen {
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
         errorLabel = new Label();
+        errorLabel.getStyleClass().add("label");
         errorLabel.getStyleClass().add("error");
 
         HBox topContainer = new HBox();
@@ -60,30 +61,46 @@ public class RegistrationScreen {
         centerContainer.setHgap(5);
 
         usernameLabel = new Label("Username:");
+        usernameLabel.getStyleClass().add("label");
         usernameField = new TextField();
+        usernameField.getStyleClass().add("field");
 
         emailLabel = new Label("Email:");
+        emailLabel.getStyleClass().add("label");
         emailField = new TextField();
+        emailField.getStyleClass().add("field");
 
         passwordLabel = new Label("Password:");
+        passwordLabel.getStyleClass().add("label");
         passwordField = new PasswordField();
+        passwordField.getStyleClass().add("field");
 
         confirmPasswordLabel = new Label("Confirm password: ");
+        confirmPasswordLabel.getStyleClass().add("label");
         confirmPasswordField = new PasswordField();
+        confirmPasswordField.getStyleClass().add("field");
 
         firstNameLabel = new Label("First name:");
+        firstNameLabel.getStyleClass().add("label");
         firstNameField = new TextField();
+        firstNameField.getStyleClass().add("field");
 
         lastNameLabel = new Label("Last name:");
+        lastNameLabel.getStyleClass().add("label");
         lastNameField = new TextField();
+        lastNameField.getStyleClass().add("field");
 
         birthDateLabel = new Label("Birth date:");
+        birthDateLabel.getStyleClass().add("label");
         birthDateField = new DatePicker();
+        birthDateField.getStyleClass().add("field");
 
         registerButton = new Button("Register");
+        registerButton.getStyleClass().add("button");
         registerButton.setOnAction(e -> registerUser());
 
         backButton = new Button("Back");
+        backButton.getStyleClass().add("button");
         backButton.setOnAction(e -> main.showMainScreen());
 
         centerContainer.add(usernameLabel, 0, 0);
@@ -101,7 +118,7 @@ public class RegistrationScreen {
         centerContainer.add(birthDateLabel, 0, 6);
         centerContainer.add(birthDateField, 1, 6);
 
-        HBox bottomContainer = new HBox();
+        HBox bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(registerButton);
