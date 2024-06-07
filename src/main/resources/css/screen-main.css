@@ -2,12 +2,15 @@
     -fx-alignment: center;
 }
 
+.label, .button {
+    -fx-font-size: 20px;
+}
+
 .button {
     -fx-min-width: 120px;
     -fx-background-color: #65c9ff;
     -fx-background-radius: 60px;
     -fx-text-fill: white;
-    -fx-font-size: 20px;
 }
 
 .button:hover {
