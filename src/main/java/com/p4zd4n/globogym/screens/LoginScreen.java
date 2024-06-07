@@ -17,6 +17,10 @@ public class LoginScreen {
 
     private Main main;
 
+    private BorderPane borderPane;
+    private GridPane centerContainer;
+    private HBox bottomContainer;
+
     private Label usernameOrEmailLabel;
     private Label passwordLabel;
 
@@ -33,10 +37,10 @@ public class LoginScreen {
 
     public Pane getView() {
 
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
-        GridPane centerContainer = new GridPane();
+        centerContainer = new GridPane();
         centerContainer.getStyleClass().add("container");
         centerContainer.setPadding(new Insets(10, 10, 10, 10));
         centerContainer.setVgap(5);
@@ -67,7 +71,7 @@ public class LoginScreen {
         centerContainer.add(loginButton, 1, 2);
         centerContainer.add(backButton, 1, 3);
 
-        HBox bottomContainer = new HBox(10);
+        bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(loginButton);

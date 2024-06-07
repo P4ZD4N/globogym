@@ -15,6 +15,11 @@ public class RegistrationScreen {
 
     private Main main;
 
+    private BorderPane borderPane;
+    private HBox topContainer;
+    private GridPane centerContainer;
+    private HBox bottomContainer;
+
     private Label errorLabel;
     private Label usernameLabel;
     private Label emailLabel;
@@ -44,18 +49,18 @@ public class RegistrationScreen {
 
     public Pane getView() {
 
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
         errorLabel = new Label();
         errorLabel.getStyleClass().add("label");
         errorLabel.getStyleClass().add("error");
 
-        HBox topContainer = new HBox();
+        topContainer = new HBox();
         topContainer.setAlignment(Pos.CENTER);
         topContainer.getChildren().add(errorLabel);
 
-        GridPane centerContainer = new GridPane();
+        centerContainer = new GridPane();
         centerContainer.getStyleClass().add("container");
         centerContainer.setVgap(5);
         centerContainer.setHgap(5);
@@ -118,7 +123,7 @@ public class RegistrationScreen {
         centerContainer.add(birthDateLabel, 0, 6);
         centerContainer.add(birthDateField, 1, 6);
 
-        HBox bottomContainer = new HBox(10);
+        bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(registerButton);

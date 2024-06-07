@@ -14,6 +14,9 @@ public class ClubMemberDashboardScreen {
 
     private Main main;
 
+    private BorderPane borderPane;
+    private HBox topContainer;
+
     private Image logo;
     private ImageView logoView;
 
@@ -24,7 +27,7 @@ public class ClubMemberDashboardScreen {
 
     public Pane getView() {
 
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
         logo = new Image(getClass().getResource("/img/logo-no-background.png").toString());
@@ -32,7 +35,7 @@ public class ClubMemberDashboardScreen {
         logoView.setFitHeight(96);
         logoView.setFitWidth(300);
 
-        HBox topContainer = new HBox();
+        topContainer = new HBox();
         topContainer.getChildren().add(logoView);
         topContainer.setAlignment(Pos.CENTER);
 
