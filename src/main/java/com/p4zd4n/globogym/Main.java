@@ -14,6 +14,7 @@ public class Main extends Application {
     private Scene registrationScene;
     private Scene clubMemberDashboardScene;
     private Scene userAccountScene;
+    private Scene scheduleScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -64,6 +65,7 @@ public class Main extends Application {
         ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this, user);
 
         clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 800, 800);
+        clubMemberDashboardScene.getStylesheets().add(getClass().getResource("/css/screen-club-member-dashboard.css").toExternalForm());
 
         primaryStage.setScene(clubMemberDashboardScene);
     }
@@ -73,8 +75,19 @@ public class Main extends Application {
         UserAccountScreen userAccountScreen = new UserAccountScreen(this, user);
 
         userAccountScene = new Scene(userAccountScreen.getView(), 800, 800);
+        userAccountScene.getStylesheets().add(getClass().getResource("/css/screen-user-account.css").toExternalForm());
 
         primaryStage.setScene(userAccountScene);
+    }
+
+    public void showScheduleScreen(User user) {
+
+        ScheduleScreen scheduleScreen = new ScheduleScreen(this, user);
+
+        scheduleScene = new Scene(scheduleScreen.getView(), 800, 800);
+        scheduleScene.getStylesheets().add(getClass().getResource("/css/screen-schedule.css").toExternalForm());
+
+        primaryStage.setScene(scheduleScene);
     }
 
     public void exit() {
