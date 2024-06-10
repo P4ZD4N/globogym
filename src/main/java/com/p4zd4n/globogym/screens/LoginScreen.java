@@ -18,9 +18,11 @@ public class LoginScreen {
     private Main main;
 
     private BorderPane borderPane;
+    private HBox topContainer;
     private GridPane centerContainer;
     private HBox bottomContainer;
 
+    private Label errorLabel;
     private Label usernameOrEmailLabel;
     private Label passwordLabel;
 
@@ -39,6 +41,14 @@ public class LoginScreen {
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
+
+        errorLabel = new Label();
+        errorLabel.getStyleClass().add("label");
+        errorLabel.getStyleClass().add("error");
+
+        topContainer = new HBox();
+        topContainer.setAlignment(Pos.CENTER);
+        topContainer.getChildren().add(errorLabel);
 
         centerContainer = new GridPane();
         centerContainer.getStyleClass().add("container");
@@ -76,6 +86,7 @@ public class LoginScreen {
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(loginButton);
 
+        borderPane.setTop(topContainer);
         borderPane.setCenter(centerContainer);
         borderPane.setBottom(bottomContainer);
 
@@ -93,16 +104,19 @@ public class LoginScreen {
 
         if (user == null) {
 
-            System.out.println("User not found");
+            errorLabel.setText("User not found");
             return;
         }
 
         if (!user.getPassword().equals(passwordField.getText())) {
 
-            System.out.println("Invalid password");
+            errorLabel.setText("Invalid password");
             return;
         }
 
-        main.showClubMemberDashboardScreen();
+        main.showClubMemberDashboardScreen(user);
+        usernameOrEmailField.clear();
+        passwordField.clear();
+        errorLabel.setText("");
     }
 }
