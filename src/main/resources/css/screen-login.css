@@ -17,3 +17,7 @@
     -fx-background-color: #4995c5;
     -fx-cursor: hand;
 }
+
+.error {
+    -fx-text-fill: #c03d3d;
+}
