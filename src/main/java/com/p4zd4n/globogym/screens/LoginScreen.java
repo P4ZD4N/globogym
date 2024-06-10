@@ -40,7 +40,7 @@ public class LoginScreen {
     public Pane getView() {
 
         borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(10, 10, 10, 10));
+        borderPane.setPadding(new Insets(20, 20, 20, 20));
 
         errorLabel = new Label();
         errorLabel.getStyleClass().add("label");

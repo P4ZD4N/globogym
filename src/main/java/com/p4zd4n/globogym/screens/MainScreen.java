@@ -37,7 +37,7 @@ public class MainScreen {
     public Pane getView() {
 
         borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(10, 10, 10, 10));
+        borderPane.setPadding(new Insets(20, 20, 20, 20));
 
         centerContainer = new VBox();
         centerContainer.getStyleClass().add("container");
