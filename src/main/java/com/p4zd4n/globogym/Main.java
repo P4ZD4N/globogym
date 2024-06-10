@@ -1,10 +1,7 @@
 package com.p4zd4n.globogym;
 
 import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.screens.ClubMemberDashboardScreen;
-import com.p4zd4n.globogym.screens.LoginScreen;
-import com.p4zd4n.globogym.screens.MainScreen;
-import com.p4zd4n.globogym.screens.RegistrationScreen;
+import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,6 +13,7 @@ public class Main extends Application {
     private Scene loginScene;
     private Scene registrationScene;
     private Scene clubMemberDashboardScene;
+    private Scene userAccountScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -25,7 +23,6 @@ public class Main extends Application {
         MainScreen mainScreen = new MainScreen(this);
         LoginScreen loginScreen = new LoginScreen(this);
         RegistrationScreen registrationScreen = new RegistrationScreen(this);
-        ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this);
 
         mainScene = new Scene(mainScreen.getView(), 800, 800);
         mainScene.getStylesheets().add(getClass().getResource("/css/screen-main.css").toExternalForm());
@@ -35,8 +32,6 @@ public class Main extends Application {
 
         registrationScene = new Scene(registrationScreen.getView(), 800, 800);
         registrationScene.getStylesheets().add(getClass().getResource("/css/screen-register.css").toExternalForm());
-
-        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 800, 800);
 
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("GloboGym");
@@ -64,9 +59,22 @@ public class Main extends Application {
         primaryStage.setScene(registrationScene);
     }
 
-    public void showClubMemberDashboardScreen() {
+    public void showClubMemberDashboardScreen(User user) {
+
+        ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this, user);
+
+        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 800, 800);
 
         primaryStage.setScene(clubMemberDashboardScene);
+    }
+
+    public void showUserAccountScreen(User user) {
+
+        UserAccountScreen userAccountScreen = new UserAccountScreen(this, user);
+
+        userAccountScene = new Scene(userAccountScreen.getView(), 800, 800);
+
+        primaryStage.setScene(userAccountScene);
     }
 
     public void exit() {
