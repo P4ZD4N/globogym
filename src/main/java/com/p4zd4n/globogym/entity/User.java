@@ -25,6 +25,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private Double balance = 0D;
 
     public User(String username, String email, String password, String firstName, String lastName, LocalDate birthDate) {
 
