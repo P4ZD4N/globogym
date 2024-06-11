@@ -22,6 +22,7 @@ public class LeftPane extends VBox {
         homeButton.setOnAction(e -> main.showClubMemberDashboardScreen(user));
 
         paymentsButton = new Button("Payments");
+        paymentsButton.setOnAction(e -> main.showPaymentsScreen(user));
 
         scheduleButton = new Button("Schedule");
         scheduleButton.setOnAction(e -> main.showScheduleScreen(user));
