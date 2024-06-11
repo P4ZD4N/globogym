@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
@@ -20,7 +21,7 @@ public class UserAccountScreen {
     private User user;
 
     private BorderPane borderPane;
-    private VBox centerContainer;
+    private CenterPane centerPane;
 
     private Label usernameLabel;
     private Label emailLabel;
@@ -37,10 +38,8 @@ public class UserAccountScreen {
 
     public Pane getView() {
 
-        centerContainer = new VBox();
-        centerContainer.setAlignment(Pos.CENTER);
-        centerContainer.setSpacing(10);
-
+        centerPane = new CenterPane();
+        
         usernameLabel = new Label("Username: " + user.getUsername());
         emailLabel = new Label("Email: " + user.getEmail());
         firstNameLabel = new Label("First name: " + user.getFirstName());
@@ -50,13 +49,13 @@ public class UserAccountScreen {
         birthDateLabel.setText("Birth date: " + user.getBirthDate().format(formatter));
         balanceLabel = new Label("Balance: " + user.getBalance() + " zł");
 
-        centerContainer.getChildren().addAll(usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel, balanceLabel);
+        centerPane.getChildren().addAll(usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel, balanceLabel);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
         borderPane.setTop(new TopPane(main, user));
         borderPane.setLeft(new LeftPane(main, user));
-        borderPane.setCenter(centerContainer);
+        borderPane.setCenter(centerPane);
 
         return borderPane;
     }
