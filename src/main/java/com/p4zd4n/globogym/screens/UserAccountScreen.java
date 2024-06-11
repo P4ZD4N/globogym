@@ -28,7 +28,6 @@ public class UserAccountScreen {
     private Label firstNameLabel;
     private Label lastNameLabel;
     private Label birthDateLabel;
-    private Label balanceLabel;
 
     public UserAccountScreen(Main main, User user) {
 
@@ -47,9 +46,8 @@ public class UserAccountScreen {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         birthDateLabel = new Label();
         birthDateLabel.setText("Birth date: " + user.getBirthDate().format(formatter));
-        balanceLabel = new Label("Balance: " + user.getBalance() + " zł");
 
-        centerPane.getChildren().addAll(usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel, balanceLabel);
+        centerPane.getChildren().addAll(usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
