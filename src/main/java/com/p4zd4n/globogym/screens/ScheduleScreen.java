@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ public class ScheduleScreen {
     private User user;
 
     private BorderPane borderPane;
+    private CenterPane centerPane;
 
     public ScheduleScreen(Main main, User user) {
 
@@ -28,14 +30,13 @@ public class ScheduleScreen {
 
         DatePicker datePicker = new DatePicker();
 
-        VBox box = new VBox(20);
-        box.setPadding(new Insets(10));
-        box.getChildren().add(datePicker);
+        centerPane = new CenterPane();
+        centerPane.getChildren().add(datePicker);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
         borderPane.setTop(new TopPane(main, user));
-        borderPane.setCenter(box);
+        borderPane.setCenter(centerPane);
         borderPane.setLeft(new LeftPane(main, user));
 
         return borderPane;
