@@ -39,7 +39,7 @@ public class UserAccountScreen {
     public Pane getView() {
 
         centerPane = new CenterPane();
-        
+
         usernameLabel = new Label("Username: " + user.getUsername());
         emailLabel = new Label("Email: " + user.getEmail());
         firstNameLabel = new Label("First name: " + user.getFirstName());
