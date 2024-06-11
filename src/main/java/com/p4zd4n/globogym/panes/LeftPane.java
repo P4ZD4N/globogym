@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym.panes;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,14 +22,20 @@ public class LeftPane extends VBox {
         homeButton = new Button("Home");
         homeButton.setOnAction(e -> main.showClubMemberDashboardScreen(user));
 
-        paymentsButton = new Button("Payments");
-        paymentsButton.setOnAction(e -> main.showPaymentsScreen(user));
-
         scheduleButton = new Button("Schedule");
         scheduleButton.setOnAction(e -> main.showScheduleScreen(user));
 
         statisticsButton = new Button("Statistics");
 
-        getChildren().addAll(homeButton, paymentsButton, scheduleButton, statisticsButton);
+        getChildren().add(homeButton);
+
+        if (user instanceof ClubMember clubMember) {
+
+            paymentsButton = new Button("Payments");
+            paymentsButton.setOnAction(e -> main.showPaymentsScreen(clubMember));
+            getChildren().add(paymentsButton);
+        }
+
+        getChildren().addAll(scheduleButton, statisticsButton);
     }
 }
