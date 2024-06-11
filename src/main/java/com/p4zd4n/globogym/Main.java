@@ -1,5 +1,6 @@
 package com.p4zd4n.globogym;
 
+import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
@@ -91,9 +92,9 @@ public class Main extends Application {
         primaryStage.setScene(scheduleScene);
     }
 
-    public void showPaymentsScreen(User user) {
+    public void showPaymentsScreen(ClubMember clubMember) {
 
-        PaymentsScreen paymentsScreen = new PaymentsScreen(this, user);
+        PaymentsScreen paymentsScreen = new PaymentsScreen(this, clubMember);
 
         paymentsScene = new Scene(paymentsScreen.getView(), 800, 800);
         paymentsScene.getStylesheets().add(getClass().getResource("/css/screen-payments.css").toExternalForm());
