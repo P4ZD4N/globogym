@@ -1,5 +1,8 @@
 package com.p4zd4n.globogym.entity;
 
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +22,7 @@ public class User implements Serializable {
     private static Long counter = 1L;
 
     private Long id;
+    private String profilePicturePath;
     private String username;
     private String email;
     private String password;
@@ -29,6 +33,7 @@ public class User implements Serializable {
     public User(String username, String email, String password, String firstName, String lastName, LocalDate birthDate) {
 
         this.id = counter++;
+        profilePicturePath = System.getProperty("user.dir") + "/src/main/resources/img/default-user-icon.png";
         this.username = username;
         this.email = email;
         this.password = password;
