@@ -11,6 +11,7 @@ public class LeftPane extends VBox {
 
     private Button homeButton;
     private Button paymentsButton;
+    private Button membershipCardButton;
     private Button scheduleButton;
     private Button statisticsButton;
 
@@ -33,7 +34,10 @@ public class LeftPane extends VBox {
 
             paymentsButton = new Button("Payments");
             paymentsButton.setOnAction(e -> main.showPaymentsScreen(clubMember));
-            getChildren().add(paymentsButton);
+
+            membershipCardButton = new Button("Membership Card");
+            membershipCardButton.setOnAction(e -> main.showMembershipCardScreen(clubMember));
+            getChildren().addAll(paymentsButton, membershipCardButton);
         }
 
         getChildren().addAll(scheduleButton, statisticsButton);
