@@ -269,7 +269,7 @@ public class RegistrationScreen {
             return false;
         }
 
-        if (passwordField.getText().length() <= 8) {
+        if (passwordField.getText().length() < 8) {
             errorLabel.setText("Password must be at least 8 characters long!");
             return false;
         }
