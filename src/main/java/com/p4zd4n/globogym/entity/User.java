@@ -28,7 +28,7 @@ public class User implements Serializable {
 
     public User(String username, String email, String password, String firstName, String lastName, LocalDate birthDate) {
 
-        this.id = counter;
+        this.id = counter++;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -36,7 +36,7 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.birthDate = birthDate;
 
-        counter++;
+        users.add(this);
     }
 
     public static List<User> getUsers() {
