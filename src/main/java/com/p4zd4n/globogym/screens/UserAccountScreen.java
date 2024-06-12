@@ -23,6 +23,7 @@ public class UserAccountScreen {
     private BorderPane borderPane;
     private CenterPane centerPane;
 
+    private Label idLabel;
     private Label usernameLabel;
     private Label emailLabel;
     private Label firstNameLabel;
@@ -39,6 +40,7 @@ public class UserAccountScreen {
 
         centerPane = new CenterPane();
 
+        idLabel = new Label("ID: " + user.getId());
         usernameLabel = new Label("Username: " + user.getUsername());
         emailLabel = new Label("Email: " + user.getEmail());
         firstNameLabel = new Label("First name: " + user.getFirstName());
@@ -47,7 +49,7 @@ public class UserAccountScreen {
         birthDateLabel = new Label();
         birthDateLabel.setText("Birth date: " + user.getBirthDate().format(formatter));
 
-        centerPane.getChildren().addAll(usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel);
+        centerPane.getChildren().addAll(idLabel, usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
