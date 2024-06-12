@@ -78,9 +78,9 @@ public class MembershipCard implements Serializable {
 
             MembershipCard.setMembershipCards(membershipCards);
 
-            System.out.println("Membership cards successfully read from users.bin");
+            System.out.println("Membership cards successfully read from membershipCards.bin");
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error with reading membership cards from users.bin");
+            System.err.println("Error with reading membership cards from membershipCards.bin");
             e.printStackTrace();
         }
     }
