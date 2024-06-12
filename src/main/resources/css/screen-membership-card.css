@@ -1,0 +1,33 @@
+.label, .field, .button {
+    -fx-font-size: 20px;
+}
+
+.button {
+    -fx-min-width: 120px;
+    -fx-background-color: #65c9ff;
+    -fx-background-radius: 60px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #4995c5;
+    -fx-cursor: hand;
+}
+
+.owner-name, .owner-id {
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.not-purchased {
+    -fx-text-fill: #8c8c8c;
+}
+
+.active, .info {
+    -fx-text-fill: #73e14c;
+}
+
+.expired, .error {
+    -fx-text-fill: #c03d3d;
+}
