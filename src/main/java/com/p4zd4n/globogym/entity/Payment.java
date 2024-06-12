@@ -17,6 +17,6 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return date + ": " + amount;
+        return date + ": " + amount + " PLN";
     }
 }
