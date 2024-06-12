@@ -21,6 +21,7 @@ public class Main extends Application {
     private Scene userAccountScene;
     private Scene scheduleScene;
     private Scene paymentsScene;
+    private Scene membershipCardScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,6 +49,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         User.deserializeUsers();
+        MembershipCard.deserializeMembershipCards();
         MembershipCard.getMembershipCards()
                     .stream()
                     .filter(membershipCard -> membershipCard.getExpirationDate().isBefore(LocalDate.now()))
@@ -108,6 +110,16 @@ public class Main extends Application {
         paymentsScene.getStylesheets().add(getClass().getResource("/css/screen-payments.css").toExternalForm());
 
         primaryStage.setScene(paymentsScene);
+    }
+
+    public void showMembershipCardScreen(ClubMember clubMember) {
+
+        MembershipCardScreen membershipCardScreen = new MembershipCardScreen(this, clubMember);
+
+        membershipCardScene = new Scene(membershipCardScreen.getView(), 800, 800);
+        membershipCardScene.getStylesheets().add(getClass().getResource("/css/screen-membership-card.css").toExternalForm());
+
+        primaryStage.setScene(membershipCardScene);
     }
 
     public void exit() {
