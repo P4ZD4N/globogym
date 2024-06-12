@@ -25,14 +25,12 @@ public class ClubMember extends User {
 
         balance += amount;
         updatePaymentsHistory(LocalDate.now(), amount);
-        User.serializeUsers();
     }
 
     public void reduceBalance(Double amount) {
 
         balance -= amount;
         updatePaymentsHistory(LocalDate.now(), -amount);
-        User.serializeUsers();
     }
 
     public void updatePaymentsHistory(LocalDate date, Double amount) {
