@@ -8,9 +8,11 @@ import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
+@Getter
 public class Main extends Application {
 
     private Stage primaryStage;
