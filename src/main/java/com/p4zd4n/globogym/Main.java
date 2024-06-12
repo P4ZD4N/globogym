@@ -1,11 +1,15 @@
 package com.p4zd4n.globogym;
 
 import com.p4zd4n.globogym.entity.ClubMember;
+import com.p4zd4n.globogym.entity.MembershipCard;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 public class Main extends Application {
 
@@ -44,6 +48,10 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         User.deserializeUsers();
+        MembershipCard.getMembershipCards()
+                    .stream()
+                    .filter(membershipCard -> membershipCard.getExpirationDate().isBefore(LocalDate.now()))
+                    .forEach(membershipCard -> membershipCard.setMembershipCardStatus(MembershipCardStatus.EXPIRED));
         launch();
     }
 
