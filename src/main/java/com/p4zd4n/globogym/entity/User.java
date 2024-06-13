@@ -44,6 +44,14 @@ public class User implements Serializable {
         users.add(this);
     }
 
+    public static Long getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(Long counter) {
+        User.counter = counter;
+    }
+
     public static List<User> getUsers() {
         return users;
     }
@@ -58,6 +66,7 @@ public class User implements Serializable {
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
             objectOut.writeObject(users);
+            objectOut.writeObject(counter);
 
             System.out.println("Users successfully saved to users.bin");
         } catch (IOException e) {
@@ -72,8 +81,10 @@ public class User implements Serializable {
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
             List<User> users = (List<User>) objectIn.readObject();
+            Long counter = (Long) objectIn.readObject();
 
             User.setUsers(users);
+            User.setCounter(counter);
 
             System.out.println("Users successfully read from users.bin");
         } catch (IOException | ClassNotFoundException e) {
