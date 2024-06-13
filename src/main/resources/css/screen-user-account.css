@@ -1,3 +1,7 @@
+.container {
+    -fx-alignment: center;
+}
+
 .label, .field, .button {
     -fx-font-size: 20px;
 }

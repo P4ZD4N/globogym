@@ -8,13 +8,16 @@ import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -27,7 +30,10 @@ public class UserAccountScreen {
     private User user;
 
     private BorderPane borderPane;
-    private CenterPane centerPane;
+    private GridPane centerPane;
+    private VBox profilePicturePane;
+    private VBox userDetailsPane;
+    private VBox centerRightPane;
 
     private Image profilePicture;
     private ImageView profilePictureView;
@@ -49,7 +55,16 @@ public class UserAccountScreen {
 
     public Pane getView() {
 
-        centerPane = new CenterPane();
+        centerPane = new GridPane();
+        centerPane.getStyleClass().add("container");
+
+        profilePicturePane = new VBox();
+        profilePicturePane.setSpacing(10);
+        profilePicturePane.setAlignment(Pos.CENTER);
+
+        userDetailsPane = new VBox();
+        userDetailsPane.setSpacing(10);
+        userDetailsPane.setAlignment(Pos.CENTER);
 
         profilePicture = new Image(new File(user.getProfilePicturePath()).toURI().toString());
         profilePictureView = new ImageView(profilePicture);
@@ -68,19 +83,17 @@ public class UserAccountScreen {
         birthDateLabel = new Label();
         birthDateLabel.setText("Birth date: " + user.getBirthDate().format(formatter));
 
-        centerPane.getChildren().addAll(
-                profilePictureView,
-                changeProfilePictureButton,
-                idLabel,
-                usernameLabel,
-                emailLabel,
-                firstNameLabel,
-                lastNameLabel, birthDateLabel);
+        profilePicturePane.getChildren().addAll(profilePictureView, changeProfilePictureButton);
+        userDetailsPane.getChildren().addAll(idLabel, usernameLabel, emailLabel, firstNameLabel, lastNameLabel, birthDateLabel);
 
         if (user instanceof Coach coach) {
 
+            centerRightPane = new VBox();
+            centerRightPane.setSpacing(10);
+            centerRightPane.setAlignment(Pos.CENTER);
+
             Label specializationsLabel = new Label("Specializations");
-            centerPane.getChildren().add(specializationsLabel);
+            centerRightPane.getChildren().add(specializationsLabel);
 
             CoachSpecialization.getAllSpecializations()
                     .stream()
@@ -96,8 +109,17 @@ public class UserAccountScreen {
                         });
                         return checkBox;
                     })
-                    .forEach(centerPane.getChildren()::add);
+                    .forEach(centerRightPane.getChildren()::add);
         }
+
+        GridPane.setColumnIndex(profilePicturePane, 0);
+        GridPane.setColumnIndex(userDetailsPane, 1);
+        centerPane.getChildren().addAll(profilePicturePane, userDetailsPane);
+        if (centerRightPane != null) {
+            GridPane.setColumnIndex(centerRightPane, 2);
+            centerPane.getChildren().add(centerRightPane);
+        }
+        centerPane.setHgap(30);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
