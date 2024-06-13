@@ -17,7 +17,8 @@ public class MembershipCard implements Serializable {
     @Serial
     private static final long serialVersionUID = -8490544777140165825L;
     private static List<MembershipCard> membershipCards = new ArrayList<>();
-    private static Double price = 150D;
+    private static Double coachPrice = 500D;
+    private static Double clubMemberPrice = 150D;
     private static Long counter = 1L;
 
     private Long id;
@@ -28,8 +29,14 @@ public class MembershipCard implements Serializable {
 
     public MembershipCard(ClubMember clubMember) {
 
-        if (clubMember.getMembershipCard() != null || clubMember.getBalance() < price) {
-            throw new IllegalArgumentException();
+        if (clubMember instanceof Coach) {
+            if (clubMember.getMembershipCard() != null || clubMember.getBalance() < coachPrice) {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            if (clubMember.getMembershipCard() != null || clubMember.getBalance() < clubMemberPrice) {
+                throw new IllegalArgumentException();
+            }
         }
 
         id = counter++;
@@ -38,7 +45,6 @@ public class MembershipCard implements Serializable {
         expirationDate = LocalDate.now().plusMonths(1);
         membershipCardStatus = MembershipCardStatus.ACTIVE;
 
-        clubMember.reduceBalance(price);
         membershipCards.add(this);
     }
 
@@ -61,6 +67,7 @@ public class MembershipCard implements Serializable {
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
             objectOut.writeObject(membershipCards);
+            objectOut.writeObject(counter);
 
             System.out.println("Membership cards successfully saved to membershipCards.bin");
         } catch (IOException e) {
@@ -75,14 +82,24 @@ public class MembershipCard implements Serializable {
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
             List<MembershipCard> membershipCards = (List<MembershipCard>) objectIn.readObject();
+            Long counter = (Long) objectIn.readObject();
 
             MembershipCard.setMembershipCards(membershipCards);
+            MembershipCard.setCounter(counter);
 
             System.out.println("Membership cards successfully read from membershipCards.bin");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error with reading membership cards from membershipCards.bin");
             e.printStackTrace();
         }
+    }
+
+    public static Long getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(Long counter) {
+        MembershipCard.counter = counter;
     }
 
     public static List<MembershipCard> getMembershipCards() {
@@ -93,11 +110,19 @@ public class MembershipCard implements Serializable {
         MembershipCard.membershipCards = membershipCards;
     }
 
-    public static Double getPrice() {
-        return price;
+    public static Double getCoachPrice() {
+        return coachPrice;
     }
 
-    public static void setPrice(Double price) {
-        MembershipCard.price = price;
+    public static void setCoachPrice(Double coachPrice) {
+        MembershipCard.coachPrice = coachPrice;
+    }
+
+    public static Double getClubMemberPrice() {
+        return clubMemberPrice;
+    }
+
+    public static void setClubMemberPrice(Double clubMemberPrice) {
+        MembershipCard.clubMemberPrice = clubMemberPrice;
     }
 }
