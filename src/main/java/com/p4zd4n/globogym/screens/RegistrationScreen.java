@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.ClubMember;
+import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,6 +45,11 @@ public class RegistrationScreen {
 
     private DatePicker birthDateField;
 
+    private ToggleGroup group;
+
+    private RadioButton clubMemberRadioButton;
+    private RadioButton coachRadioButton;
+
     private Button registerButton;
     private Button backButton;
 
@@ -70,8 +76,20 @@ public class RegistrationScreen {
 
         centerContainer = new GridPane();
         centerContainer.getStyleClass().add("container");
-        centerContainer.setVgap(5);
-        centerContainer.setHgap(5);
+        centerContainer.setVgap(10);
+        centerContainer.setHgap(10);
+
+        clubMemberRadioButton = new RadioButton("Club member");
+        clubMemberRadioButton.getStyleClass().add("radio-button");
+        coachRadioButton = new RadioButton("Coach (approval required!)");
+        coachRadioButton.getStyleClass().add("radio-button");
+
+        group = new ToggleGroup();
+
+        clubMemberRadioButton.setToggleGroup(group);
+        coachRadioButton.setToggleGroup(group);
+
+        clubMemberRadioButton.setSelected(true);
 
         usernameLabel = new Label("Username:");
         usernameLabel.getStyleClass().add("label");
@@ -116,20 +134,23 @@ public class RegistrationScreen {
         backButton.getStyleClass().add("button");
         backButton.setOnAction(e -> main.showMainScreen());
 
-        centerContainer.add(usernameLabel, 0, 0);
-        centerContainer.add(usernameField, 1, 0);
-        centerContainer.add(emailLabel, 0, 1);
-        centerContainer.add(emailField, 1, 1);
-        centerContainer.add(passwordLabel, 0, 2);
-        centerContainer.add(passwordField, 1, 2);
-        centerContainer.add(confirmPasswordLabel, 0, 3);
-        centerContainer.add(confirmPasswordField, 1, 3);
-        centerContainer.add(firstNameLabel, 0, 4);
-        centerContainer.add(firstNameField, 1, 4);
-        centerContainer.add(lastNameLabel, 0, 5);
-        centerContainer.add(lastNameField, 1, 5);
-        centerContainer.add(birthDateLabel, 0, 6);
-        centerContainer.add(birthDateField, 1, 6);
+        centerContainer.add(clubMemberRadioButton, 0, 0);
+        centerContainer.add(coachRadioButton, 1, 0);
+
+        centerContainer.add(usernameLabel, 0, 1);
+        centerContainer.add(usernameField, 1, 1);
+        centerContainer.add(emailLabel, 0, 2);
+        centerContainer.add(emailField, 1, 2);
+        centerContainer.add(passwordLabel, 0, 3);
+        centerContainer.add(passwordField, 1, 3);
+        centerContainer.add(confirmPasswordLabel, 0, 4);
+        centerContainer.add(confirmPasswordField, 1, 4);
+        centerContainer.add(firstNameLabel, 0, 5);
+        centerContainer.add(firstNameField, 1, 5);
+        centerContainer.add(lastNameLabel, 0, 6);
+        centerContainer.add(lastNameField, 1, 6);
+        centerContainer.add(birthDateLabel, 0, 7);
+        centerContainer.add(birthDateField, 1, 7);
 
         bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
@@ -154,17 +175,27 @@ public class RegistrationScreen {
             return;
         }
 
-        ClubMember clubMember = new ClubMember(
-                usernameField.getText(),
-                emailField.getText(),
-                passwordField.getText(),
-                firstNameField.getText(),
-                lastNameField.getText(),
-                birthDateField.getValue());
-        User.getUsers().add(clubMember);
-        User.serializeUsers();
-
-        System.out.println("Club member registered successfully!");
+        if (group.getSelectedToggle().equals(clubMemberRadioButton)) {
+            ClubMember clubMember = new ClubMember(
+                    usernameField.getText(),
+                    emailField.getText(),
+                    passwordField.getText(),
+                    firstNameField.getText(),
+                    lastNameField.getText(),
+                    birthDateField.getValue());
+            User.serializeUsers();
+            System.out.println("Club member registered successfully!");
+        } else {
+            Coach coach = new Coach(
+                    usernameField.getText(),
+                    emailField.getText(),
+                    passwordField.getText(),
+                    firstNameField.getText(),
+                    lastNameField.getText(),
+                    birthDateField.getValue());
+            User.serializeUsers();
+            System.out.println("Coach registered successfully!");
+        }
 
         main.showMainScreen();
     }
