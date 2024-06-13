@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.ClubMember;
+import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.MembershipCard;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.panes.CenterPane;
@@ -27,6 +28,8 @@ public class MembershipCardScreen {
 
     private Main main;
 
+    private Double membershipCardPrice;
+
     private ClubMember clubMember;
 
     private MembershipCard membershipCard;
@@ -46,6 +49,13 @@ public class MembershipCardScreen {
 
         this.main = main;
         this.clubMember = clubMember;
+
+        if (clubMember instanceof Coach) {
+            membershipCardPrice = MembershipCard.getCoachPrice();
+        } else {
+            membershipCardPrice = MembershipCard.getClubMemberPrice();
+        }
+
         membershipCard = MembershipCard.findByUsername(clubMember.getUsername());
     }
 
@@ -67,18 +77,18 @@ public class MembershipCardScreen {
         buyRenewCardButton.setOnAction(e -> buyOrRenewMembership());
 
         if (membershipCard == null) {
-            buyRenewCardButton.setText("Buy membership! (" + MembershipCard.getPrice() + " PLN = +1 month)");
+            buyRenewCardButton.setText("Buy membership! (" + membershipCardPrice + " PLN = +1 month)");
             cardStatus.setText("Not purchased");
             cardStatus.getStyleClass().add("not-purchased");
         } else if (membershipCard.getMembershipCardStatus().equals(MembershipCardStatus.ACTIVE)) {
-            buyRenewCardButton.setText("Extend membership! (" + MembershipCard.getPrice() + " PLN = +1 month)");
+            buyRenewCardButton.setText("Extend membership! (" + membershipCardPrice + " PLN = +1 month)");
             cardStatus.setText("Active");
             cardStatus.getStyleClass().add("active");
             purchaseDate.setText("Purchased on " + membershipCard.getPurchaseDate());
             long daysLeft = ChronoUnit.DAYS.between(LocalDate.now(), membershipCard.getExpirationDate());
             expirationDate.setText("Expires on " + membershipCard.getExpirationDate() + ", " + daysLeft + " days left");
         } else if (membershipCard.getMembershipCardStatus().equals(MembershipCardStatus.EXPIRED)) {
-            buyRenewCardButton.setText("Renew membership! (" + MembershipCard.getPrice() + " PLN = +1 month)");
+            buyRenewCardButton.setText("Renew membership! (" + membershipCardPrice + " PLN = +1 month)");
             cardStatus.setText("Expired");
             cardStatus.getStyleClass().add("expired");
             purchaseDate.setText("Purchased on " + membershipCard.getPurchaseDate());
@@ -105,7 +115,7 @@ public class MembershipCardScreen {
 
     private void buyOrRenewMembership() {
 
-        if (membershipCard == null && clubMember.getBalance() < MembershipCard.getPrice()) {
+        if (membershipCard == null && clubMember.getBalance() < membershipCardPrice) {
             errorLabel.setText("Not enough money! Your current balance: " + clubMember.getBalance());
             return;
         }
@@ -113,14 +123,15 @@ public class MembershipCardScreen {
         if (membershipCard == null) {
             infoLabel.setText("Successfully bought membership!");
             clubMember.setMembershipCard(new MembershipCard(clubMember));
+            clubMember.reduceBalance(membershipCardPrice);
             MembershipCard.serializeMembershipCards();
             return;
         }
 
-        if (clubMember.getBalance() >= MembershipCard.getPrice()) {
+        if (clubMember.getBalance() >= membershipCardPrice) {
             infoLabel.setText("Successfully renewed membership!");
             membershipCard.renew();
-            clubMember.reduceBalance(MembershipCard.getPrice());
+            clubMember.reduceBalance(membershipCardPrice);
             MembershipCard.serializeMembershipCards();
         } else {
             errorLabel.setText("Not enough money! Your current balance: " + clubMember.getBalance());
@@ -154,6 +165,9 @@ public class MembershipCardScreen {
         whiteAdjust.setBrightness(1.0);
         logoView.setEffect(whiteAdjust);
 
+        Text coachText = new Text("Coach");
+        coachText.getStyleClass().add("coach-text");
+
         Text ownerName = new Text(clubMember.getFirstName() + " " + clubMember.getLastName());
         ownerName.getStyleClass().add("owner-name");
 
@@ -163,13 +177,21 @@ public class MembershipCardScreen {
         logoView.setX(10);
         logoView.setY(10);
 
+        coachText.setX(card.getWidth() - coachText.getLayoutBounds().getWidth() - 45);
+        coachText.setY(card.getHeight() - 10);
+
         ownerName.setX(10);
         ownerName.setY(card.getHeight() - 10);
 
         ownerId.setX(10);
         ownerId.setY(card.getHeight() - 30);
 
-        Group cardGroup = new Group(card, logoView, ownerName, ownerId);
+        Group cardGroup;
+        if (clubMember instanceof Coach) {
+            cardGroup = new Group(card, logoView, coachText, ownerName, ownerId);
+        } else {
+            cardGroup = new Group(card, logoView, ownerName, ownerId);
+        }
 
         centerPane.getChildren().add(cardGroup);
     }
