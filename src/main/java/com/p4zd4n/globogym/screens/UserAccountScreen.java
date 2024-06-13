@@ -1,12 +1,15 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.enums.CoachSpecialization;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,6 +76,28 @@ public class UserAccountScreen {
                 emailLabel,
                 firstNameLabel,
                 lastNameLabel, birthDateLabel);
+
+        if (user instanceof Coach coach) {
+
+            Label specializationsLabel = new Label("Specializations");
+            centerPane.getChildren().add(specializationsLabel);
+
+            CoachSpecialization.getAllSpecializations()
+                    .stream()
+                    .map(coachSpecialization -> {
+                        CheckBox checkBox = new CheckBox(coachSpecialization.name());
+                        checkBox.setSelected(coach.getSpecializations().contains(coachSpecialization));
+                        checkBox.setOnAction(e -> {
+                            if (checkBox.isSelected()) {
+                                coach.addSpecialization(coachSpecialization);
+                            } else {
+                                coach.removeSpecialization(coachSpecialization);
+                            }
+                        });
+                        return checkBox;
+                    })
+                    .forEach(centerPane.getChildren()::add);
+        }
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
