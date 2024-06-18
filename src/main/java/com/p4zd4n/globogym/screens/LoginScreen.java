@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -111,6 +112,11 @@ public class LoginScreen {
         if (!user.getPassword().equals(passwordField.getText())) {
 
             errorLabel.setText("Invalid password");
+            return;
+        }
+
+        if (user instanceof Coach coach && !coach.isActive()) {
+            errorLabel.setText("Your account is inactive");
             return;
         }
 
