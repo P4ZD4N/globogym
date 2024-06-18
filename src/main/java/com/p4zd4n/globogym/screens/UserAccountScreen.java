@@ -110,6 +110,7 @@ public class UserAccountScreen {
             centerRightPane.setAlignment(Pos.CENTER);
 
             Label specializationsLabel = new Label("Specializations");
+            specializationsLabel.getStyleClass().add("bold");
             centerRightPane.getChildren().add(specializationsLabel);
 
             CoachSpecialization.getAllSpecializations()
@@ -136,7 +137,7 @@ public class UserAccountScreen {
             GridPane.setColumnIndex(centerRightPane, 2);
             centerPane.getChildren().add(centerRightPane);
         }
-        centerPane.setHgap(30);
+        centerPane.setHgap(100);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
