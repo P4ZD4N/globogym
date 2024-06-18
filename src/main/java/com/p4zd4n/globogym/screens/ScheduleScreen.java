@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.appointments.CustomAppointment;
 import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
@@ -17,9 +18,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
@@ -382,8 +385,18 @@ public class ScheduleScreen {
 
     public void addEvent() {
 
-        Classes classes = new Classes(eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, (Coach) user, Room.findByRoomNumber(selectedRoomNumber));
-        Classes.addClasses(classes);
+        if (user instanceof Coach specificUser) {
+            Classes classes = new Classes(eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, specificUser, Room.findByRoomNumber(selectedRoomNumber));
+            classes.setCoach(specificUser);
+            Classes.addClasses(classes);
+        } else if (user instanceof Employee specificUser) {
+            Classes classes = new Classes(eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, specificUser, Room.findByRoomNumber(selectedRoomNumber));
+            Classes.addClasses(classes);
+        } else {
+            System.out.println("Unsupported user type.");
+            return;
+        }
+
         Event.serializeEvents();
         Room.serializeRooms();
     }
@@ -401,16 +414,96 @@ public class ScheduleScreen {
     }
 
     private void loadEvents() {
-
         List<Event> loadedEvents = Event.getEvents();
 
         loadedEvents.forEach(event -> {
-            agenda.appointments().add(
-                new Agenda.AppointmentImplLocal()
-                        .withStartLocalDateTime(event.getStartDateTime())
-                        .withEndLocalDateTime(event.getEndDateTime())
-                        .withSummary(event.getName())
-                        .withDescription(event.getDescription()));
+            CustomAppointment customAppointment = new CustomAppointment(event);
+            agenda.appointments().add(customAppointment);
+        });
+
+        agenda.selectedAppointments().addListener((ListChangeListener<Agenda.Appointment>)(change) -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    List<Agenda.Appointment> selectedAppointments = agenda.selectedAppointments();
+
+                    if (!selectedAppointments.isEmpty()) {
+                        Agenda.Appointment focusedAppointment = selectedAppointments.getFirst();
+                        if (focusedAppointment instanceof CustomAppointment customAppointment &&
+                                customAppointment.getEvent() instanceof Classes classes) {
+
+                            String coachFullName = "";
+
+                            if (classes.getCoach() == null) {
+                                coachFullName = "-";
+                            } else {
+                                String coachFirstName = classes.getCoach().getFirstName();
+                                String coachLastName = classes.getCoach().getLastName();
+                                coachFullName = (coachFirstName != null ? coachFirstName : "") + " " +
+                                        (coachLastName != null ? coachLastName : "");
+                            }
+
+                            LocalDateTime classesStartDateTime = classes.getStartDateTime();
+                            LocalDateTime classesEndDateTime = classes.getEndDateTime();
+                            Integer roomNumber = classes.getRoom().getNumber();
+                            Integer roomCapacity = classes.getRoom().getCapacity();
+                            String classesName = classes.getName();
+                            String classesDescription = classes.getDescription();
+                            List<ClubMember> participants = classes.getParticipants();
+                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle(classesName + " details");
+                            alert.setHeaderText(classesDescription);
+
+                            GridPane gridPane = new GridPane();
+                            gridPane.setHgap(10);
+                            gridPane.setVgap(10);
+
+                            Label trainerLabel = new Label("Coach:");
+                            Label trainerValue = new Label(coachFullName);
+                            gridPane.addRow(0, trainerLabel, trainerValue);
+
+                            Label startLabel = new Label("Start Date/Time:");
+                            Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
+                            gridPane.addRow(1, startLabel, startValue);
+
+                            Label endLabel = new Label("End Date/Time:");
+                            Label endValue = new Label(classesEndDateTime.format(dateTimeFormatter));
+                            gridPane.addRow(2, endLabel, endValue);
+
+                            Label roomLabel = new Label("Room:");
+                            Label roomValue = new Label(roomNumber.toString());
+                            gridPane.addRow(3, roomLabel, roomValue);
+
+                            Label freePlacesLabel = new Label("Free places:");
+                            Label freePlacesValue = new Label(Integer.toString(roomCapacity - participants.size()));
+                            gridPane.addRow(4, freePlacesLabel, freePlacesValue);
+
+                            ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
+                            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+                            alert.getButtonTypes().setAll(signUpButton, okButton);
+
+                            alert.getDialogPane().setContent(gridPane);
+
+                            alert.showAndWait().ifPresent(buttonType -> {
+
+                                if (buttonType.getButtonData() == ButtonBar.ButtonData.APPLY) {
+                                    classes.addParticipant((ClubMember) user);
+                                    alert.setResult(ButtonType.OK);
+                                } else if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                                    alert.setResult(ButtonType.OK);
+                                }
+                            });
+                        } else {
+                            System.out.println("Focused appointment is not an instance of CustomAppointment or CustomAppointment does not contain Classes.");
+                        }
+                    } else {
+                        System.out.println("No appointment is currently focused.");
+                    }
+                } else if (change.wasRemoved()) {
+                    System.out.println("Selected Appointments changed: " + agenda.selectedAppointments());
+                }
+            }
         });
     }
 }
