@@ -16,6 +16,7 @@ public class Coach extends ClubMember {
     @Serial
     private static final long serialVersionUID = -5076345663056590411L;
 
+    private boolean isActive = false;
     private List<CoachSpecialization> specializations = new ArrayList<>();
 
     public Coach(
