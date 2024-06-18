@@ -1,8 +1,6 @@
 package com.p4zd4n.globogym;
 
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.MembershipCard;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
@@ -50,6 +48,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        Room room1 = new Room(1, 10);
+        Room.serializeRooms();
+
+        Event.deserializeEvents();
+        Room.deserializeRooms();
         User.deserializeUsers();
         MembershipCard.deserializeMembershipCards();
         MembershipCard.getMembershipCards()
