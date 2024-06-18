@@ -5,10 +5,12 @@ import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.util.StringConverter;
 import jfxtras.scene.control.agenda.Agenda;
 
 import java.time.DayOfWeek;
@@ -79,7 +81,7 @@ public class ScheduleScreen {
 
         navigationBox = new HBox(10, previousWeekButton);
 
-        if (user instanceof Coach) {
+        if (user instanceof Coach || user instanceof Employee) {
             navigationBox.getChildren().add(buttonAdd);
         }
 
@@ -108,13 +110,31 @@ public class ScheduleScreen {
 
     private void chooseEventDate(DatePicker eventDate) {
 
+        StringConverter<Integer> converter = new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer n) {
+                if (n == null) return "";
+                if (n < 10) return "0" + n;
+                else return n.toString();
+            }
+
+            @Override
+            public Integer fromString(String s) {
+                return Integer.parseInt(s);
+            }
+        };
+
         if (eventDate == null) {
 
             this.eventDate = new DatePicker();
-            this.startHourComboBox = new ComboBox<>();
-            this.startMinuteComboBox = new ComboBox<>();
-            this.endHourComboBox = new ComboBox<>();
-            this.endMinuteComboBox = new ComboBox<>();
+            startHourComboBox = new ComboBox<>();
+            startHourComboBox.setConverter(converter);
+            startMinuteComboBox = new ComboBox<>();
+            startMinuteComboBox.setConverter(converter);
+            endHourComboBox = new ComboBox<>();
+            endHourComboBox.setConverter(converter);
+            endMinuteComboBox = new ComboBox<>();
+            endMinuteComboBox.setConverter(converter);
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -138,50 +158,51 @@ public class ScheduleScreen {
             }
         });
 
-        IntStream.rangeClosed(9, 19).forEach(i -> this.startHourComboBox.getItems().add(i));
+        IntStream.rangeClosed(9, 19).forEach(i -> startHourComboBox.getItems().add(i));
 
         if (eventDate == null)
-            this.startHourComboBox.getSelectionModel().select(0);
+            startHourComboBox.getSelectionModel().select(0);
         else
-            this.startHourComboBox.getSelectionModel().select(startHourComboBox.getValue());
+            startHourComboBox.getSelectionModel().select(startHourComboBox.getValue());
 
-        IntStream.iterate(0, i -> i + 5).limit(12).forEach(i -> this.startMinuteComboBox.getItems().add(i));
+        IntStream.iterate(0, i -> i + 5).limit(12).forEach(i -> startMinuteComboBox.getItems().add(i));
 
         if (eventDate == null)
-            this.startMinuteComboBox.getSelectionModel().select(0);
+            startMinuteComboBox.getSelectionModel().select(0);
         else
-            this.startMinuteComboBox.getSelectionModel().select(startMinuteComboBox.getValue());
+            startMinuteComboBox.getSelectionModel().select(startMinuteComboBox.getValue());
 
-        IntStream.rangeClosed(this.startHourComboBox.getValue(), 19).forEach(i -> this.endHourComboBox.getItems().add(i));
+        IntStream.rangeClosed(startHourComboBox.getValue(), 19).forEach(i -> endHourComboBox.getItems().add(i));
 
         if (eventDate == null)
-            this.endHourComboBox.getSelectionModel().select(0);
+            endHourComboBox.getSelectionModel().select(0);
         else
-            this.endHourComboBox.getSelectionModel().select(endHourComboBox.getValue());
+            endHourComboBox.getSelectionModel().select(endHourComboBox.getValue());
 
-        IntStream.iterate(this.startMinuteComboBox.getValue(), i -> i + 5).limit(12 - this.startMinuteComboBox.getValue() / 5).forEach(i -> this.endMinuteComboBox.getItems().add(i));
+        IntStream.iterate(startMinuteComboBox.getValue(), i -> i + 5)
+                .limit(12 - startMinuteComboBox.getValue() / 5).forEach(i -> endMinuteComboBox.getItems().add(i));
 
         if (eventDate == null)
-            this.endMinuteComboBox.getSelectionModel().select(0);
+            endMinuteComboBox.getSelectionModel().select(0);
         else
-            this.endMinuteComboBox.getSelectionModel().select(endMinuteComboBox.getValue());
+            endMinuteComboBox.getSelectionModel().select(endMinuteComboBox.getValue());
 
-        this.startHourComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        startHourComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
-            this.endHourComboBox.getItems().clear();
-            IntStream.rangeClosed(newValue, 19).forEach(i -> this.endHourComboBox.getItems().add(i));
-            this.endHourComboBox.getSelectionModel().select(0);
+            endHourComboBox.getItems().clear();
+            IntStream.rangeClosed(newValue, 19).forEach(i -> endHourComboBox.getItems().add(i));
+            endHourComboBox.getSelectionModel().select(0);
         });
 
-        this.startMinuteComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        startMinuteComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
             updateEndMinutes(newValue);
         });
 
-        this.endHourComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        endHourComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
-            if (this.endHourComboBox.getValue() != null) {
-                updateEndMinutes(this.startMinuteComboBox.getValue());
+            if (endHourComboBox.getValue() != null) {
+                updateEndMinutes(startMinuteComboBox.getValue());
             }
         });
 
@@ -195,16 +216,16 @@ public class ScheduleScreen {
         gridPane.add(this.eventDate, 1, 0);
 
         gridPane.add(new Label("Start hour:"), 0, 1);
-        gridPane.add(this.startHourComboBox, 1, 1);
+        gridPane.add(startHourComboBox, 1, 1);
 
         gridPane.add(new Label("Start minute:"), 0, 2);
-        gridPane.add(this.startMinuteComboBox, 1, 2);
+        gridPane.add(startMinuteComboBox, 1, 2);
 
         gridPane.add(new Label("End hour:"), 0, 3);
-        gridPane.add(this.endHourComboBox, 1, 3);
+        gridPane.add(endHourComboBox, 1, 3);
 
         gridPane.add(new Label("End minute:"), 0, 4);
-        gridPane.add(this.endMinuteComboBox, 1, 4);
+        gridPane.add(endMinuteComboBox, 1, 4);
 
         alert.getDialogPane().setContent(gridPane);
 
@@ -213,11 +234,11 @@ public class ScheduleScreen {
             if (buttonType == ButtonType.OK) {
 
                 LocalDate selectedDate = this.eventDate.getValue();
-                int selectedStartHour = this.startHourComboBox.getValue();
-                int selectedStartMinute = this.startMinuteComboBox.getValue();
+                int selectedStartHour = startHourComboBox.getValue();
+                int selectedStartMinute = startMinuteComboBox.getValue();
                 eventStartDateTime = LocalDateTime.of(selectedDate, LocalTime.of(selectedStartHour, selectedStartMinute));
-                int selectedEndHour = this.endHourComboBox.getValue();
-                int selectedEndMinute = this.endMinuteComboBox.getValue();
+                int selectedEndHour = endHourComboBox.getValue();
+                int selectedEndMinute = endMinuteComboBox.getValue();
                 eventEndDateTime = LocalDateTime.of(selectedDate, LocalTime.of(selectedEndHour, selectedEndMinute));
 
                 chooseEventRoom();
