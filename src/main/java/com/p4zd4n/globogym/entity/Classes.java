@@ -1,5 +1,6 @@
 package com.p4zd4n.globogym.entity;
 
+import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,27 +17,42 @@ public class Classes extends Event {
     private static final long serialVersionUID = -5047333787692779181L;
     private static List<Classes> allClasses = new ArrayList<>();
 
+    private User user;
     private Coach coach;
     private Room room;
     private List<ClubMember> participants = new ArrayList<>();
 
-    public Classes(String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, Coach coach, Room room) {
+    public Classes(String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, User user, Room room) {
         super(name, description, startDateTime, endDateTime);
 
-        this.coach = coach;
-        this.room = room;
+        if (user instanceof Coach || user instanceof Employee) {
 
-        allClasses.add(this);
+            this.user = user;
+            this.room = room;
+
+            allClasses.add(this);
+        }
     }
 
     public void addParticipant(ClubMember clubMember) {
 
-        participants.add(clubMember);
+        if (!participants.contains(clubMember) &&
+            clubMember.getMembershipCard() != null &&
+            clubMember.getMembershipCard().getMembershipCardStatus().equals(MembershipCardStatus.ACTIVE) &&
+            participants.size() < room.getCapacity()
+        ) {
+            participants.add(clubMember);
+            Event.serializeEvents();
+        } else {
+            System.out.println("Can't add this participant to classes");
+        }
     }
 
     public static void addClasses(Classes classes) {
 
         allClasses.add(classes);
+
+        Event.serializeEvents();
     }
 
     public static List<Classes> getAllClasses() {
