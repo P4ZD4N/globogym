@@ -17,7 +17,6 @@ public class Coach extends ClubMember {
     private static final long serialVersionUID = -5076345663056590411L;
 
     private List<CoachSpecialization> specializations = new ArrayList<>();
-    private Double balance = 0D;
 
     public Coach(
             String username,
