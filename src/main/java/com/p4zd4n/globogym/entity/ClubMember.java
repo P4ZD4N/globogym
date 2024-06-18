@@ -15,7 +15,7 @@ public class ClubMember extends User {
 
     private MembershipCard membershipCard;
     private List<Payment> paymentsHistory = new ArrayList<>();
-    private Double balance = 0D;
+    protected Double balance = 0D;
 
     public ClubMember(String username, String email, String password, String firstName, String lastName, LocalDate birthDate) {
         super(username, email, password, firstName, lastName, birthDate);
