@@ -6,6 +6,10 @@
     -fx-font-size: 20px;
 }
 
+.bold {
+    -fx-font-weight: bold;
+}
+
 .button {
     -fx-min-width: 120px;
     -fx-background-color: #65c9ff;
