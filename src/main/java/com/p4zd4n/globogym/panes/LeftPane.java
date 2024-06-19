@@ -8,6 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+
 public class LeftPane extends VBox {
 
     private Button homeButton;
@@ -35,7 +37,7 @@ public class LeftPane extends VBox {
         if (user instanceof Employee employee) {
 
             membersManagementButton = new Button("Members Management");
-            membersManagementButton.setOnAction(e -> main.showMembersManagementScreen(employee));
+            membersManagementButton.setOnAction(e -> main.showMembersManagementScreen(employee, null));
 
             getChildren().add(membersManagementButton);
         }
