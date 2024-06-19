@@ -79,13 +79,12 @@ public class MembersManagementScreen {
     private void initTable(ObservableList<ClubMember> usersObservableList) {
 
         tableView = new TableView<>(usersObservableList);
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         TableColumn<ClubMember, String> idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idCol.setPrefWidth(50);
 
-        TableColumn<ClubMember, String> accountTypeCol = new TableColumn<>("Account type");
+        TableColumn<ClubMember, String> accountTypeCol = new TableColumn<>("Type");
         accountTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));
 
         TableColumn<ClubMember, String> usernameCol = new TableColumn<>("Username");
@@ -103,7 +102,7 @@ public class MembersManagementScreen {
         TableColumn<ClubMember, String> birthDateCol = new TableColumn<>("Birth date");
         birthDateCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
 
-        TableColumn<ClubMember, String> membershipCardStatusCol = new TableColumn<>("Membership card status");
+        TableColumn<ClubMember, String> membershipCardStatusCol = new TableColumn<>("Card");
         membershipCardStatusCol.setCellValueFactory(cellData -> new SimpleStringProperty(
                     cellData.getValue().getMembershipCard() == null
                             ? "No card"
