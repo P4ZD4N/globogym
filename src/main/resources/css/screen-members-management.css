@@ -1,0 +1,48 @@
+.label, .field, .button {
+    -fx-font-size: 20px;
+}
+
+.button {
+    -fx-min-width: 120px;
+    -fx-background-color: #65c9ff;
+    -fx-background-radius: 60px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #4995c5;
+    -fx-cursor: hand;
+}
+
+.button-details {
+    -fx-min-width: 80px;
+    -fx-background-color: #873fc9;
+    -fx-text-fill: white;
+}
+
+.button-details:hover {
+    -fx-background-color: #642d94;
+    -fx-cursor: hand;
+}
+
+.button-update {
+    -fx-min-width: 80px;
+    -fx-background-color: #2db22e;
+    -fx-text-fill: white;
+}
+
+.button-update:hover {
+    -fx-background-color: #258a26;
+    -fx-cursor: hand;
+}
+
+.button-remove {
+    -fx-min-width: 80px;
+    -fx-background-color: #f13f3f;
+    -fx-text-fill: white;
+}
+
+.button-remove:hover {
+    -fx-background-color: #a22323;
+    -fx-cursor: hand;
+}
