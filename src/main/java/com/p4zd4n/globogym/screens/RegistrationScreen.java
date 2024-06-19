@@ -4,6 +4,8 @@ import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.forms.Form;
+import com.p4zd4n.globogym.forms.RegistrationForm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -23,32 +25,10 @@ public class RegistrationScreen {
 
     private BorderPane borderPane;
     private HBox topContainer;
-    private GridPane centerContainer;
+    private RegistrationForm form;
     private HBox bottomContainer;
 
     private Label errorLabel;
-    private Label usernameLabel;
-    private Label emailLabel;
-    private Label passwordLabel;
-    private Label confirmPasswordLabel;
-    private Label firstNameLabel;
-    private Label lastNameLabel;
-    private Label birthDateLabel;
-
-    private TextField usernameField;
-    private TextField emailField;
-    private TextField firstNameField;
-    private TextField lastNameField;
-
-    private PasswordField passwordField;
-    private PasswordField confirmPasswordField;
-
-    private DatePicker birthDateField;
-
-    private ToggleGroup group;
-
-    private RadioButton clubMemberRadioButton;
-    private RadioButton coachRadioButton;
 
     private Button registerButton;
     private Button backButton;
@@ -74,57 +54,10 @@ public class RegistrationScreen {
         topContainer.setAlignment(Pos.CENTER);
         topContainer.getChildren().add(errorLabel);
 
-        centerContainer = new GridPane();
-        centerContainer.getStyleClass().add("container");
-        centerContainer.setVgap(10);
-        centerContainer.setHgap(10);
-
-        clubMemberRadioButton = new RadioButton("Club member");
-        clubMemberRadioButton.getStyleClass().add("radio-button");
-        coachRadioButton = new RadioButton("Coach (approval required!)");
-        coachRadioButton.getStyleClass().add("radio-button");
-
-        group = new ToggleGroup();
-
-        clubMemberRadioButton.setToggleGroup(group);
-        coachRadioButton.setToggleGroup(group);
-
-        clubMemberRadioButton.setSelected(true);
-
-        usernameLabel = new Label("Username:");
-        usernameLabel.getStyleClass().add("label");
-        usernameField = new TextField();
-        usernameField.getStyleClass().add("field");
-
-        emailLabel = new Label("Email:");
-        emailLabel.getStyleClass().add("label");
-        emailField = new TextField();
-        emailField.getStyleClass().add("field");
-
-        passwordLabel = new Label("Password:");
-        passwordLabel.getStyleClass().add("label");
-        passwordField = new PasswordField();
-        passwordField.getStyleClass().add("field");
-
-        confirmPasswordLabel = new Label("Confirm password: ");
-        confirmPasswordLabel.getStyleClass().add("label");
-        confirmPasswordField = new PasswordField();
-        confirmPasswordField.getStyleClass().add("field");
-
-        firstNameLabel = new Label("First name:");
-        firstNameLabel.getStyleClass().add("label");
-        firstNameField = new TextField();
-        firstNameField.getStyleClass().add("field");
-
-        lastNameLabel = new Label("Last name:");
-        lastNameLabel.getStyleClass().add("label");
-        lastNameField = new TextField();
-        lastNameField.getStyleClass().add("field");
-
-        birthDateLabel = new Label("Birth date:");
-        birthDateLabel.getStyleClass().add("label");
-        birthDateField = new DatePicker();
-        birthDateField.getStyleClass().add("field");
+        form = new RegistrationForm();
+        form.getStyleClass().add("container");
+        form.setVgap(10);
+        form.setHgap(10);
 
         registerButton = new Button("Register");
         registerButton.getStyleClass().add("button");
@@ -134,31 +67,13 @@ public class RegistrationScreen {
         backButton.getStyleClass().add("button");
         backButton.setOnAction(e -> main.showMainScreen());
 
-        centerContainer.add(clubMemberRadioButton, 0, 0);
-        centerContainer.add(coachRadioButton, 1, 0);
-
-        centerContainer.add(usernameLabel, 0, 1);
-        centerContainer.add(usernameField, 1, 1);
-        centerContainer.add(emailLabel, 0, 2);
-        centerContainer.add(emailField, 1, 2);
-        centerContainer.add(passwordLabel, 0, 3);
-        centerContainer.add(passwordField, 1, 3);
-        centerContainer.add(confirmPasswordLabel, 0, 4);
-        centerContainer.add(confirmPasswordField, 1, 4);
-        centerContainer.add(firstNameLabel, 0, 5);
-        centerContainer.add(firstNameField, 1, 5);
-        centerContainer.add(lastNameLabel, 0, 6);
-        centerContainer.add(lastNameField, 1, 6);
-        centerContainer.add(birthDateLabel, 0, 7);
-        centerContainer.add(birthDateField, 1, 7);
-
         bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(backButton);
         bottomContainer.getChildren().add(registerButton);
 
         borderPane.setTop(topContainer);
-        borderPane.setCenter(centerContainer);
+        borderPane.setCenter(form);
         borderPane.setBottom(bottomContainer);
 
         return borderPane;
@@ -175,24 +90,24 @@ public class RegistrationScreen {
             return;
         }
 
-        if (group.getSelectedToggle().equals(clubMemberRadioButton)) {
+        if (form.getGroup().getSelectedToggle().equals(form.getClubMemberRadioButton())) {
             ClubMember clubMember = new ClubMember(
-                    usernameField.getText(),
-                    emailField.getText(),
-                    passwordField.getText(),
-                    firstNameField.getText(),
-                    lastNameField.getText(),
-                    birthDateField.getValue());
+                    form.getUsernameField().getText(),
+                    form.getEmailField().getText(),
+                    form.getPasswordField().getText(),
+                    form.getFirstNameField().getText(),
+                    form.getLastNameField().getText(),
+                    form.getBirthDateField().getValue());
             User.serializeUsers();
             System.out.println("Club member registered successfully!");
         } else {
             Coach coach = new Coach(
-                    usernameField.getText(),
-                    emailField.getText(),
-                    passwordField.getText(),
-                    firstNameField.getText(),
-                    lastNameField.getText(),
-                    birthDateField.getValue());
+                    form.getUsernameField().getText(),
+                    form.getEmailField().getText(),
+                    form.getPasswordField().getText(),
+                    form.getFirstNameField().getText(),
+                    form.getLastNameField().getText(),
+                    form.getBirthDateField().getValue());
             User.serializeUsers();
             System.out.println("Coach registered successfully!");
         }
@@ -202,12 +117,12 @@ public class RegistrationScreen {
 
     private boolean areAllFieldsFilled() {
 
-        return usernameField.getText() != null &&
-                passwordField.getText() != null &&
-                confirmPasswordField.getText() != null &&
-                firstNameField.getText() != null &&
-                lastNameField.getText() != null &&
-                birthDateField.getValue() != null;
+        return form.getUsernameField().getText() != null &&
+                form.getEmailField().getText() != null &&
+                form.getPasswordField().getText() != null &&
+                form.getFirstNameField().getText() != null &&
+                form.getLastNameField().getText() != null &&
+                form.getBirthDateField().getValue() != null;
     }
 
     private boolean isDataValid() {
@@ -238,7 +153,7 @@ public class RegistrationScreen {
     private boolean isUsernameValid() {
 
         Optional<User> existingUser = User.getUsers().stream()
-                                                    .filter(user -> user.getUsername().equals(usernameField.getText()))
+                                                    .filter(user -> user.getUsername().equals(form.getUsernameField().getText()))
                                                     .findFirst();
 
         if (existingUser.isPresent()) {
@@ -246,14 +161,14 @@ public class RegistrationScreen {
             return false;
         }
 
-        if (usernameField.getText().length() <= 4) {
+        if (form.getUsernameField().getText().length() <= 4) {
             errorLabel.setText("Username must consist of at least 5 characters!");
             return false;
         }
 
         String usernamePattern = "[^a-zA-Z0-9]";
         pattern = Pattern.compile(usernamePattern);
-        matcher = pattern.matcher(usernameField.getText());
+        matcher = pattern.matcher(form.getUsernameField().getText());
         boolean doesUsernameContainSpecialCharacters = matcher.find();
 
         if (doesUsernameContainSpecialCharacters) {
@@ -267,7 +182,7 @@ public class RegistrationScreen {
     private boolean isEmailValid() {
 
         Optional<User> existingUser = User.getUsers().stream()
-                                                    .filter(user -> user.getEmail().equals(emailField.getText()))
+                                                    .filter(user -> user.getEmail().equals(form.getEmailField().getText()))
                                                     .findFirst();
 
         if (existingUser.isPresent()) {
@@ -277,7 +192,7 @@ public class RegistrationScreen {
 
         String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         pattern = Pattern.compile(emailPattern);
-        matcher = pattern.matcher(emailField.getText());
+        matcher = pattern.matcher(form.getEmailField().getText());
         boolean isEmailValid = matcher.find();
 
         if (!isEmailValid) {
@@ -292,7 +207,7 @@ public class RegistrationScreen {
 
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).+$";
         pattern = Pattern.compile(passwordPattern);
-        matcher = pattern.matcher(passwordField.getText());
+        matcher = pattern.matcher(form.getPasswordField().getText());
         boolean isPasswordValid = matcher.find();
 
         if (!isPasswordValid) {
@@ -300,12 +215,12 @@ public class RegistrationScreen {
             return false;
         }
 
-        if (passwordField.getText().length() < 8) {
+        if (form.getPasswordField().getText().length() < 8) {
             errorLabel.setText("Password must be at least 8 characters long!");
             return false;
         }
 
-        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+        if (!form.getPasswordField().getText().equals(form.getConfirmPasswordField().getText())) {
             errorLabel.setText("Entered passwords are different!");
             return false;
         }
@@ -317,7 +232,7 @@ public class RegistrationScreen {
 
         String namePattern = "^[A-Z][a-zA-Z]*$";
         pattern = Pattern.compile(namePattern);
-        matcher = pattern.matcher(firstNameField.getText());
+        matcher = pattern.matcher(form.getFirstNameField().getText());
         boolean isFirstNameValid = matcher.find();
 
         if (!isFirstNameValid) {
@@ -325,7 +240,7 @@ public class RegistrationScreen {
             return false;
         }
 
-        matcher = pattern.matcher(lastNameField.getText());
+        matcher = pattern.matcher(form.getLastNameField().getText());
         boolean isLastNameValid = matcher.find();
 
         if (!isLastNameValid) {
@@ -338,7 +253,7 @@ public class RegistrationScreen {
 
     private boolean isBirthDateValid() {
 
-        LocalDate birthDate = birthDateField.getValue();
+        LocalDate birthDate = form.getBirthDateField().getValue();
         LocalDate todayDate = LocalDate.now();
         LocalDate thresholdDate = todayDate.minusYears(18);
 
