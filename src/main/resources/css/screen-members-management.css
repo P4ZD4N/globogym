@@ -14,6 +14,29 @@
     -fx-cursor: hand;
 }
 
+.table-cell {
+    -fx-alignment: CENTER;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #c3e3fc;
+}
+
+.table-row-cell:even {
+    -fx-background-color: white;
+}
+
+.table-row-cell:selected {
+    -fx-text-fill: white;
+    -fx-background-color: #0077cc;
+}
+
+.column-header {
+    -fx-background-color: #65c9ff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
 .button-details {
     -fx-min-width: 80px;
     -fx-background-color: #873fc9;
