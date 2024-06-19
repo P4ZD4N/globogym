@@ -11,8 +11,6 @@ import com.p4zd4n.globogym.panes.TopPane;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +25,8 @@ public class MembersManagementScreen {
 
     private Main main;
 
+    private List<ClubMember> clubMembers;
+
     private Employee employee;
 
     private BorderPane borderPane;
@@ -37,8 +37,15 @@ public class MembersManagementScreen {
 
     private TableView<ClubMember> tableView;
 
-    public MembersManagementScreen(Main main, Employee employee) {
+    public MembersManagementScreen(Main main, Employee employee, List<User> clubMembers) {
 
+
+        if (clubMembers != null) {
+            this.clubMembers = clubMembers.stream()
+                    .filter(user -> user instanceof ClubMember)
+                    .map(user -> (ClubMember) user)
+                    .collect(Collectors.toList());
+        }
         this.main = main;
         this.employee = employee;
     }
@@ -51,13 +58,15 @@ public class MembersManagementScreen {
         addMemberButton.setOnAction(e -> main.showRegistrationScreen());
 
         findMemberButton = new Button("Find member");
-        findMemberButton.setOnAction(e -> main.showRegistrationScreen());
+        findMemberButton.setOnAction(e -> main.showFindUserScreen(employee));
 
         ObservableList<ClubMember> usersObservableList = FXCollections.observableArrayList();
-        List<ClubMember> clubMembers = User.getUsers()
-                .stream().filter(user -> user instanceof ClubMember)
-                .map(user -> (ClubMember) user)
-                .toList();
+        if (clubMembers == null) {
+            clubMembers = User.getUsers()
+                    .stream().filter(user -> user instanceof ClubMember)
+                    .map(user -> (ClubMember) user)
+                    .toList();
+        }
         usersObservableList.addAll(clubMembers);
 
         initTable(usersObservableList);
