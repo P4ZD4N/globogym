@@ -51,6 +51,47 @@ public class Main extends Application {
         Room room1 = new Room(1, 10);
         Room.serializeRooms();
 
+        ClubMember testClubMember = new ClubMember(
+                "clubm",
+                "clubm@gmail.com",
+                "!Test123",
+                "Wiktor",
+                "Chudy",
+                LocalDate.of(2003, 8, 1));
+        System.out.println("testClubMember registered successfully!");
+
+        Coach testCoach = new Coach(
+                "coach",
+                "coach@gmail.com",
+                "!Test123",
+                "Wiktor",
+                "Chudy",
+                LocalDate.of(2003, 8, 1));
+        testCoach.setActive(true);
+        System.out.println("testCoach registered successfully!");
+
+        Employee testEmployee = new Employee(
+                "emp",
+                "emp@gmail.com",
+                "!Test123",
+                "Wiktor",
+                "Chudy",
+                LocalDate.of(2003, 8, 1),
+                4000.0);
+        System.out.println("testEmployee registered successfully!");
+
+        Manager manager = new Manager(
+                "man",
+                "man@gmail.com",
+                "!Test123",
+                "Wiktor",
+                "Chudy",
+                LocalDate.of(2003, 8, 1),
+                4000.0);
+        System.out.println("manager registered successfully!");
+
+        User.serializeUsers();
+
         Event.deserializeEvents();
         Room.deserializeRooms();
         User.deserializeUsers();
