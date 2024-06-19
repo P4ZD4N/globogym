@@ -6,6 +6,7 @@ module com.p4zd4n.globogym {
 
 
     opens com.p4zd4n.globogym to javafx.fxml;
+    opens com.p4zd4n.globogym.entity to javafx.base;
     exports com.p4zd4n.globogym;
     exports com.p4zd4n.globogym.controller;
     opens com.p4zd4n.globogym.controller to javafx.fxml;
