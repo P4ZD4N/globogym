@@ -18,6 +18,7 @@ public class Main extends Application {
     private Scene loginScene;
     private Scene registrationScene;
     private Scene clubMemberDashboardScene;
+    private Scene membersManagementScene;
     private Scene userAccountScene;
     private Scene scheduleScene;
     private Scene paymentsScene;
@@ -126,6 +127,16 @@ public class Main extends Application {
         clubMemberDashboardScene.getStylesheets().add(getClass().getResource("/css/screen-club-member-dashboard.css").toExternalForm());
 
         primaryStage.setScene(clubMemberDashboardScene);
+    }
+
+    public void showMembersManagementScreen(Employee employee) {
+
+        MembersManagementScreen membersManagementScreen = new MembersManagementScreen(this, employee);
+
+        membersManagementScene = new Scene(membersManagementScreen.getView(), 800, 800);
+        membersManagementScene.getStylesheets().add(getClass().getResource("/css/screen-members-management.css").toExternalForm());
+
+        primaryStage.setScene(membersManagementScene);
     }
 
     public void showUserAccountScreen(User user) {
