@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 public class Main extends Application {
@@ -23,6 +24,7 @@ public class Main extends Application {
     private Scene scheduleScene;
     private Scene paymentsScene;
     private Scene membershipCardScene;
+    private Scene findUserScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -129,9 +131,9 @@ public class Main extends Application {
         primaryStage.setScene(clubMemberDashboardScene);
     }
 
-    public void showMembersManagementScreen(Employee employee) {
+    public void showMembersManagementScreen(Employee employee, List<User> clubMembers) {
 
-        MembersManagementScreen membersManagementScreen = new MembersManagementScreen(this, employee);
+        MembersManagementScreen membersManagementScreen = new MembersManagementScreen(this, employee, clubMembers);
 
         membersManagementScene = new Scene(membersManagementScreen.getView(), 800, 800);
         membersManagementScene.getStylesheets().add(getClass().getResource("/css/screen-members-management.css").toExternalForm());
@@ -177,6 +179,16 @@ public class Main extends Application {
         membershipCardScene.getStylesheets().add(getClass().getResource("/css/screen-membership-card.css").toExternalForm());
 
         primaryStage.setScene(membershipCardScene);
+    }
+
+    public void showFindUserScreen(Employee employee) {
+
+        FindUserScreen findUserScreen = new FindUserScreen(this, employee);
+
+        findUserScene = new Scene(findUserScreen.getView(), 800, 800);
+        findUserScene.getStylesheets().add(getClass().getResource("/css/screen-find-user.css").toExternalForm());
+
+        primaryStage.setScene(findUserScene);
     }
 
     public void exit() {
