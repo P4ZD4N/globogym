@@ -1,34 +1,46 @@
 package com.p4zd4n.globogym.forms;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
 
 @Getter
 public abstract class Form extends GridPane {
 
-    private Label usernameLabel;
-    private Label emailLabel;
-    private Label passwordLabel;
-    private Label confirmPasswordLabel;
-    private Label firstNameLabel;
-    private Label lastNameLabel;
-    private Label birthDateLabel;
+    protected Label idLabel;
+    protected Label usernameLabel;
+    protected Label emailLabel;
+    protected Label passwordLabel;
+    protected Label confirmPasswordLabel;
+    protected Label firstNameLabel;
+    protected Label lastNameLabel;
+    protected Label birthDateLabel;
 
-    private TextField usernameField;
-    private TextField emailField;
-    private TextField firstNameField;
-    private TextField lastNameField;
+    protected TextField idTextField;
+    protected TextField usernameField;
+    protected TextField emailField;
+    protected TextField firstNameField;
+    protected TextField lastNameField;
 
-    private PasswordField passwordField;
-    private PasswordField confirmPasswordField;
+    protected PasswordField passwordField;
+    protected PasswordField confirmPasswordField;
 
-    private DatePicker birthDateField;
+    protected ToggleGroup group;
+
+    protected RadioButton clubMemberRadioButton;
+    protected RadioButton coachRadioButton;
+
+    protected CheckBox clubMemberCheckBox;
+    protected CheckBox coachCheckbox;
+
+    protected DatePicker birthDateField;
 
     public Form() {
+
+        idLabel = new Label("ID:");
+        idLabel.getStyleClass().add("label");
+        idTextField = new TextField();
+        idTextField.getStyleClass().add("field");
 
         usernameLabel = new Label("Username:");
         usernameLabel.getStyleClass().add("label");
@@ -60,24 +72,23 @@ public abstract class Form extends GridPane {
         lastNameField = new TextField();
         lastNameField.getStyleClass().add("field");
 
+        group = new ToggleGroup();
+
+        clubMemberRadioButton = new RadioButton("Club member");
+        clubMemberRadioButton.getStyleClass().add("radio-button");
+
+        coachRadioButton = new RadioButton("Coach (approval required!)");
+        coachRadioButton.getStyleClass().add("radio-button");
+
+        clubMemberCheckBox = new CheckBox("Club member");
+        clubMemberCheckBox.getStyleClass().add("checkbox");
+
+        coachCheckbox = new CheckBox("Coach");
+        coachCheckbox.getStyleClass().add("checkbox");
+
         birthDateLabel = new Label("Birth date:");
         birthDateLabel.getStyleClass().add("label");
         birthDateField = new DatePicker();
         birthDateField.getStyleClass().add("field");
-
-        add(usernameLabel, 0, 1);
-        add(usernameField, 1, 1);
-        add(emailLabel, 0, 2);
-        add(emailField, 1, 2);
-        add(passwordLabel, 0, 3);
-        add(passwordField, 1, 3);
-        add(confirmPasswordLabel, 0, 4);
-        add(confirmPasswordField, 1, 4);
-        add(firstNameLabel, 0, 5);
-        add(firstNameField, 1, 5);
-        add(lastNameLabel, 0, 6);
-        add(lastNameField, 1, 6);
-        add(birthDateLabel, 0, 7);
-        add(birthDateField, 1, 7);
     }
 }
