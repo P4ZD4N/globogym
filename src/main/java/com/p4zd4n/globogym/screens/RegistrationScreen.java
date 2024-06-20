@@ -127,27 +127,11 @@ public class RegistrationScreen {
 
     private boolean isDataValid() {
 
-        if (!isUsernameValid()) {
-            return false;
-        }
-
-        if (!isEmailValid()) {
-            return false;
-        }
-
-        if (!isPasswordValid()) {
-            return false;
-        }
-
-        if (!isFirstNameAndLastNameValid()) {
-            return false;
-        }
-
-        if (!isBirthDateValid()) {
-            return false;
-        }
-
-        return true;
+        return isUsernameValid() &&
+                isEmailValid() &&
+                isPasswordValid() &&
+                isFirstNameAndLastNameValid() &&
+                isBirthDateValid();
     }
 
     private boolean isUsernameValid() {
