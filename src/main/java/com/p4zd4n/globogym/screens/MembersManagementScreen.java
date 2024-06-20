@@ -149,7 +149,7 @@ public class MembersManagementScreen {
         tableView.getColumns().add(updateMemberCol);
         tableView.getColumns().add(removeMemberCol);
 
-        tableView.setPrefHeight(150);
+        tableView.setPrefHeight(300);
     }
 
     private TableCell<ClubMember, Void> createButtonTableCell(String buttonText, Consumer<ClubMember> action) {
