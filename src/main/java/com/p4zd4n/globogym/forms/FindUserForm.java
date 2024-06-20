@@ -15,15 +15,19 @@ public class FindUserForm extends Form {
         add(usernameField, 1, 1);
         add(emailLabel, 0, 2);
         add(emailField, 1, 2);
-        add(passwordLabel, 0, 3);
-        add(passwordField, 1, 3);
-        add(firstNameLabel, 0, 4);
-        add(firstNameField, 1, 4);
-        add(lastNameLabel, 0, 5);
-        add(lastNameField, 1, 5);
-        add(birthDateLabel, 0, 6);
-        add(birthDateField, 1, 6);
-        add(clubMemberCheckBox, 0, 7);
-        add(coachCheckbox, 1, 7);
+        add(firstNameLabel, 0, 3);
+        add(firstNameField, 1, 3);
+        add(lastNameLabel, 0, 4);
+        add(lastNameField, 1, 4);
+        add(minBirthDateLabel, 0, 5);
+        add(minBirthDateField, 1, 5);
+        add(maxBirthDateLabel, 0, 6);
+        add(maxBirthDateField, 1, 6);
+        add(membershipCardStatusLabel, 0, 7);
+        add(membershipCardStatusComboBox, 1, 7);
+        add(activeLabel, 0, 8);
+        add(activeCheckbox, 1, 8);
+        add(clubMemberCheckBox, 0, 9);
+        add(coachCheckbox, 1, 9);
     }
 }
