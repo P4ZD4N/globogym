@@ -1,5 +1,7 @@
 package com.p4zd4n.globogym.forms;
 
+import com.p4zd4n.globogym.entity.MembershipCard;
+import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
@@ -15,6 +17,10 @@ public abstract class Form extends GridPane {
     protected Label firstNameLabel;
     protected Label lastNameLabel;
     protected Label birthDateLabel;
+    protected Label minBirthDateLabel;
+    protected Label maxBirthDateLabel;
+    protected Label membershipCardStatusLabel;
+    protected Label activeLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
@@ -32,8 +38,13 @@ public abstract class Form extends GridPane {
 
     protected CheckBox clubMemberCheckBox;
     protected CheckBox coachCheckbox;
+    protected CheckBox activeCheckbox;
 
     protected DatePicker birthDateField;
+    protected DatePicker minBirthDateField;
+    protected DatePicker maxBirthDateField;
+
+    protected ComboBox<MembershipCardStatus> membershipCardStatusComboBox;
 
     public Form() {
 
@@ -90,5 +101,26 @@ public abstract class Form extends GridPane {
         birthDateLabel.getStyleClass().add("label");
         birthDateField = new DatePicker();
         birthDateField.getStyleClass().add("field");
+
+        minBirthDateLabel = new Label("Min. birth date:");
+        minBirthDateLabel.getStyleClass().add("label");
+        minBirthDateField = new DatePicker();
+        minBirthDateField.getStyleClass().add("field");
+
+        maxBirthDateLabel = new Label("Max. birth date:");
+        maxBirthDateLabel.getStyleClass().add("label");
+        maxBirthDateField = new DatePicker();
+        maxBirthDateField.getStyleClass().add("field");
+
+        membershipCardStatusLabel = new Label("Card status:");
+        membershipCardStatusLabel.getStyleClass().add("label");
+        membershipCardStatusComboBox = new ComboBox<>();
+        membershipCardStatusComboBox.getItems().addAll(
+                null, MembershipCardStatus.NO_CARD, MembershipCardStatus.ACTIVE, MembershipCardStatus.EXPIRED);
+
+        activeLabel = new Label("Active:");
+        activeLabel.getStyleClass().add("label");
+        activeCheckbox = new CheckBox();
+        activeCheckbox.getStyleClass().add("checkbox");
     }
 }
