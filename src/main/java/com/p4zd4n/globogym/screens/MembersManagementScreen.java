@@ -55,7 +55,7 @@ public class MembersManagementScreen {
         centerPane = new CenterPane();
 
         addMemberButton = new Button("Add member");
-        addMemberButton.setOnAction(e -> main.showRegistrationScreen());
+        addMemberButton.setOnAction(e -> main.showAddUserScreen(employee));
 
         findMemberButton = new Button("Find member");
         findMemberButton.setOnAction(e -> main.showFindUserScreen(employee));
