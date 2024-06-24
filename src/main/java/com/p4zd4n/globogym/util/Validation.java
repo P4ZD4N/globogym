@@ -43,11 +43,35 @@ public class Validation {
                 isBirthDateValid();
     }
 
+    public boolean isDataValid(User user) {
+
+        return isUsernameValid(user) &&
+                isEmailValid(user) &&
+                isPasswordValid() &&
+                isFirstNameAndLastNameValid() &&
+                isBirthDateValid();
+    }
+
     private boolean isUsernameValid() {
 
         Optional<User> existingUser = User.getUsers().stream()
                 .filter(user -> user.getUsername().equals(form.getUsernameField().getText()))
                 .findFirst();
+
+        return checkUsernameValidity(existingUser);
+    }
+
+    private boolean isUsernameValid(User u) {
+
+        Optional<User> existingUser = User.getUsers().stream()
+                .filter(user -> user.getUsername().equals(form.getUsernameField().getText()))
+                .filter(user -> !user.equals(u))
+                .findFirst();
+
+        return checkUsernameValidity(existingUser);
+    }
+
+    private boolean checkUsernameValidity(Optional<User> existingUser) {
 
         if (existingUser.isPresent()) {
             validatable.getErrorLabel().setText("User with this username already exists!");
@@ -77,6 +101,21 @@ public class Validation {
         Optional<User> existingUser = User.getUsers().stream()
                 .filter(user -> user.getEmail().equals(form.getEmailField().getText()))
                 .findFirst();
+
+        return checkEmailValidity(existingUser);
+    }
+
+    private boolean isEmailValid(User u) {
+
+        Optional<User> existingUser = User.getUsers().stream()
+                .filter(user -> user.getEmail().equals(form.getEmailField().getText()))
+                .filter(user -> !user.equals(u))
+                .findFirst();
+
+        return checkEmailValidity(existingUser);
+    }
+
+    private boolean checkEmailValidity(Optional<User> existingUser) {
 
         if (existingUser.isPresent()) {
             validatable.getErrorLabel().setText("User with this email already exists!");

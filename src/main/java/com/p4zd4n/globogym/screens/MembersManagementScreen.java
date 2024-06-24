@@ -187,6 +187,7 @@ public class MembersManagementScreen {
     private void update(ClubMember clubMember) {
 
         System.out.println("Updated: " + clubMember.getUsername());
+        main.showUpdateUserScreen(employee, clubMember);
     }
 
     private void remove(ClubMember clubMember) {

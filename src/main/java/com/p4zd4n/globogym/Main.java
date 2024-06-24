@@ -26,6 +26,7 @@ public class Main extends Application {
     private Scene membershipCardScene;
     private Scene findUserScene;
     private Scene addUserScene;
+    private Scene updateUserScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -200,6 +201,16 @@ public class Main extends Application {
         addUserScene.getStylesheets().add(getClass().getResource("/css/screen-add-user.css").toExternalForm());
 
         primaryStage.setScene(addUserScene);
+    }
+
+    public void showUpdateUserScreen(Employee employee, User user) {
+
+        UpdateUserScreen updateUserScreen = new UpdateUserScreen(this, employee, user);
+
+        updateUserScene = new Scene(updateUserScreen.getView(), 800, 800);
+        updateUserScene.getStylesheets().add(getClass().getResource("/css/screen-update-user.css").toExternalForm());
+
+        primaryStage.setScene(updateUserScene);
     }
 
     public void exit() {
