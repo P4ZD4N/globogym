@@ -253,11 +253,19 @@ public class FindUserScreen {
 
     private void findUsersByActiveStatus() {
 
+        if (
+                (form.getActiveCheckbox().isSelected() && form.getInactiveCheckbox().isSelected()) ||
+                (!form.getActiveCheckbox().isSelected() && !form.getInactiveCheckbox().isSelected())
+        ) {
+
+            return;
+        }
+
         if (form.getActiveCheckbox().isSelected()) {
 
             List<User> usersFoundByActiveStatus = User.getUsers()
                     .stream()
-                    .filter(user ->  user instanceof Coach)
+                    .filter(user -> user instanceof Coach)
                     .filter(user -> ((Coach) user).isActive())
                     .toList();
 
@@ -265,12 +273,15 @@ public class FindUserScreen {
             return;
         }
 
-        List<User> usersFoundByActiveStatus = User.getUsers()
-                .stream()
-                .filter(user ->  user instanceof Coach)
-                .filter(user -> !((Coach) user).isActive())
-                .toList();
 
-        foundUsers.retainAll(usersFoundByActiveStatus);
+        if (form.getInactiveCheckbox().isSelected()) {
+            List<User> usersFoundByActiveStatus = User.getUsers()
+                    .stream()
+                    .filter(user -> user instanceof Coach)
+                    .filter(user -> !((Coach) user).isActive())
+                    .toList();
+
+            foundUsers.retainAll(usersFoundByActiveStatus);
+        }
     }
 }
