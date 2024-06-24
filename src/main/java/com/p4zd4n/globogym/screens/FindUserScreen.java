@@ -7,6 +7,8 @@ import com.p4zd4n.globogym.entity.Employee;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.forms.FindUserForm;
+import com.p4zd4n.globogym.panes.LeftPane;
+import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -57,6 +59,9 @@ public class FindUserScreen {
         bottomContainer.setAlignment(Pos.CENTER);
         bottomContainer.getChildren().add(findButton);
 
+        borderPane.setPadding(new Insets(20, 20, 20, 20));
+        borderPane.setTop(new TopPane(main, employee));
+        borderPane.setLeft(new LeftPane(main, employee));
         borderPane.setCenter(form);
         borderPane.setBottom(bottomContainer);
 
