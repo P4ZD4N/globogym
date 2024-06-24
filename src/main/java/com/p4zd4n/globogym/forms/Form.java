@@ -39,6 +39,7 @@ public abstract class Form extends GridPane {
     protected CheckBox clubMemberCheckBox;
     protected CheckBox coachCheckbox;
     protected CheckBox activeCheckbox;
+    protected CheckBox inactiveCheckbox;
 
     protected DatePicker birthDateField;
     protected DatePicker minBirthDateField;
@@ -120,7 +121,9 @@ public abstract class Form extends GridPane {
 
         activeLabel = new Label("Active:");
         activeLabel.getStyleClass().add("label");
-        activeCheckbox = new CheckBox();
+        activeCheckbox = new CheckBox("Active");
         activeCheckbox.getStyleClass().add("checkbox");
+        inactiveCheckbox = new CheckBox("Inactive");
+        inactiveCheckbox.getStyleClass().add("checkbox");
     }
 }
