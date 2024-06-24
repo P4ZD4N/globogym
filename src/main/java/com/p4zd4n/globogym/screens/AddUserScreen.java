@@ -1,10 +1,15 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.entity.ClubMember;
+import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.Employee;
+import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.forms.AddUserForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.util.Validatable;
+import com.p4zd4n.globogym.util.Validation;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,8 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 
-public class AddUserScreen {
+@Getter
+public class AddUserScreen implements Validatable {
 
     private Main main;
 
@@ -28,6 +35,8 @@ public class AddUserScreen {
     private Label errorLabel;
 
     private Button addButton;
+
+    private Validation validation;
 
     public AddUserScreen(Main main, Employee employee) {
 
@@ -70,10 +79,58 @@ public class AddUserScreen {
 
         borderPane.setBottom(bottomContainer);
 
+        validation = new Validation(form, this);
+
         return borderPane;
     }
 
     public void addUser() {
 
+        boolean areAllFieldsFilled = validation.areAllFieldsFilled();
+        boolean isDataValid = validation.isDataValid();
+
+        if (!areAllFieldsFilled) {
+            errorLabel.setText("Not all fields have been filled!");
+            return;
+        }
+
+        if (!isDataValid) {
+            return;
+        }
+
+        if (form.getGroup().getSelectedToggle().equals(form.getClubMemberRadioButton())) {
+
+            ClubMember clubMember = new ClubMember(
+                    form.getUsernameField().getText(),
+                    form.getEmailField().getText(),
+                    form.getPasswordField().getText(),
+                    form.getFirstNameField().getText(),
+                    form.getLastNameField().getText(),
+                    form.getBirthDateField().getValue());
+
+            User.serializeUsers();
+
+            System.out.println("Club member registered successfully!");
+
+        } else {
+
+            Coach coach = new Coach(
+                    form.getUsernameField().getText(),
+                    form.getEmailField().getText(),
+                    form.getPasswordField().getText(),
+                    form.getFirstNameField().getText(),
+                    form.getLastNameField().getText(),
+                    form.getBirthDateField().getValue());
+
+            if (form.getActiveCheckbox().isSelected()) {
+                coach.setActive(true);
+            }
+
+            User.serializeUsers();
+
+            System.out.println("Coach registered successfully!");
+        }
+
+        main.showMembersManagementScreen(employee, null);
     }
 }
