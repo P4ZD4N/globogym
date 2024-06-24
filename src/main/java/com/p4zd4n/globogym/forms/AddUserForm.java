@@ -10,8 +10,17 @@ public class AddUserForm extends Form {
         clubMemberRadioButton.setSelected(true);
 
         coachRadioButton.setToggleGroup(group);
+        coachRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                add(activeLabel, 0, 7);
+                add(activeCheckbox, 1, 7);
+            } else {
+                getChildren().removeAll(activeLabel, activeCheckbox);
+            }
+        });
 
         add(clubMemberRadioButton, 0, 0);
+        coachRadioButton.setText("Coach");
         add(coachRadioButton, 1, 0);
         add(usernameLabel, 0, 1);
         add(usernameField, 1, 1);
@@ -25,7 +34,5 @@ public class AddUserForm extends Form {
         add(lastNameField, 1, 5);
         add(birthDateLabel, 0, 6);
         add(birthDateField, 1, 6);
-        add(activeLabel, 0, 7);
-        add(activeCheckbox, 1, 7);
     }
 }
