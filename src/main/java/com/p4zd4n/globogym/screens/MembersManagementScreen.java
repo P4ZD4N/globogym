@@ -128,9 +128,6 @@ public class MembersManagementScreen {
             }
         });
 
-        TableColumn<ClubMember, Void> memberDetailsCol = new TableColumn<>();
-        memberDetailsCol.setCellFactory(param -> createButtonTableCell("Details", this::displayDetails));
-
         TableColumn<ClubMember, Void> updateMemberCol = new TableColumn<>();
         updateMemberCol.setCellFactory(param -> createButtonTableCell("Update", this::update));
 
@@ -146,7 +143,6 @@ public class MembersManagementScreen {
         tableView.getColumns().add(birthDateCol);
         tableView.getColumns().add(membershipCardStatusCol);
         tableView.getColumns().add(activeCol);
-        tableView.getColumns().add(memberDetailsCol);
         tableView.getColumns().add(updateMemberCol);
         tableView.getColumns().add(removeMemberCol);
 
