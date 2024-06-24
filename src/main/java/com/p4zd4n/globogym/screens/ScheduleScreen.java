@@ -23,6 +23,7 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ScheduleScreen {
@@ -459,8 +460,33 @@ public class ScheduleScreen {
                             gridPane.setVgap(10);
 
                             Label trainerLabel = new Label("Coach:");
-                            Label trainerValue = new Label(coachFullName);
-                            gridPane.addRow(0, trainerLabel, trainerValue);
+                            if (!(user instanceof Employee)) {
+                                Label trainerValue = new Label(coachFullName);
+                                gridPane.addRow(0, trainerLabel, trainerValue);
+                            } else {
+                                ComboBox<String> trainerValue = new ComboBox<>();
+
+                                trainerValue.getItems().addAll(User.getUsers()
+                                        .stream()
+                                        .filter(u -> u instanceof Coach)
+                                        .map(user -> "ID: " +
+                                            user.getId() + ", " +
+                                            user.getFirstName() + " " +
+                                            user.getLastName()
+                                        )
+                                        .toList()
+                                );
+
+                                trainerValue.setValue(coachFullName);
+                                trainerValue.setOnAction(event -> {
+                                    String selectedCoach = trainerValue.getValue();
+                                    String[] stringElements = selectedCoach.split(" ");
+                                    Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
+                                    classes.setCoach((Coach) User.findById(coachId));
+                                    Event.serializeEvents();
+                                });
+                                gridPane.addRow(0, trainerLabel, trainerValue);
+                            }
 
                             Label startLabel = new Label("Start Date/Time:");
                             Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
@@ -483,6 +509,10 @@ public class ScheduleScreen {
                             alert.getButtonTypes().setAll(signUpButton, okButton);
 
                             alert.getDialogPane().setContent(gridPane);
+
+                            alert.getDialogPane().lookupButton(signUpButton).setDisable(freePlacesValue.getText().equals("0"));
+                            alert.getDialogPane().lookupButton(signUpButton).setDisable(LocalDateTime.now().isAfter(classesStartDateTime));
+                            alert.getDialogPane().lookupButton(signUpButton).setDisable(classes.getParticipants().contains(user));
 
                             alert.showAndWait().ifPresent(buttonType -> {
 
