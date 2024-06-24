@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -186,12 +187,28 @@ public class MembersManagementScreen {
 
     private void update(ClubMember clubMember) {
 
-        System.out.println("Updated: " + clubMember.getUsername());
         main.showUpdateUserScreen(employee, clubMember);
     }
 
     private void remove(ClubMember clubMember) {
 
-        System.out.println("Deleted: " + clubMember.getUsername());
+        Optional<User> userToRemove = User.getUsers()
+                .stream()
+                .filter(user -> user.equals(clubMember))
+                .findFirst();
+
+        userToRemove.ifPresent(user -> {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Deletion");
+            alert.setHeaderText("Are you sure you want to delete this user?");
+            alert.setContentText("This action cannot be undone.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                User.getUsers().remove(user);
+                User.serializeUsers();
+            }
+        });
     }
 }
