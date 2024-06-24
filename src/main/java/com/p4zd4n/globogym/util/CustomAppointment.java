@@ -1,4 +1,4 @@
-package com.p4zd4n.globogym.appointments;
+package com.p4zd4n.globogym.util;
 
 import com.p4zd4n.globogym.entity.Event;
 import jfxtras.scene.control.agenda.Agenda;
