@@ -25,8 +25,8 @@ public class FindUserForm extends Form {
         add(maxBirthDateField, 1, 6);
         add(membershipCardStatusLabel, 0, 7);
         add(membershipCardStatusComboBox, 1, 7);
-        add(activeLabel, 0, 8);
-        add(activeCheckbox, 1, 8);
+        add(activeCheckbox, 0, 8);
+        add(inactiveCheckbox, 1, 8);
         add(clubMemberCheckBox, 0, 9);
         add(coachCheckbox, 1, 9);
     }
