@@ -93,6 +93,15 @@ public class User implements Serializable {
         }
     }
 
+    public static User findById(Long id) {
+
+        Optional<User> foundUser = users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst();
+
+        return foundUser.orElse(null);
+    }
+
     public static User findByUsername(String username) {
 
         Optional<User> foundUser = users.stream()
