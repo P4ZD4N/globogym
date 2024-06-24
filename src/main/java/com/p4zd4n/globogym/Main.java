@@ -27,6 +27,8 @@ public class Main extends Application {
     private Scene findUserScene;
     private Scene addUserScene;
     private Scene updateUserScene;
+    private Scene roomsManagementScene;
+    private Scene findRoomScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -211,6 +213,26 @@ public class Main extends Application {
         updateUserScene.getStylesheets().add(getClass().getResource("/css/screen-update-user.css").toExternalForm());
 
         primaryStage.setScene(updateUserScene);
+    }
+
+    public void showRoomsManagementScreen(Employee employee, List<Room> rooms) {
+
+        RoomsManagementScreen roomsManagementScreen = new RoomsManagementScreen(this, employee, rooms);
+
+        roomsManagementScene = new Scene(roomsManagementScreen.getView(), 800, 800);
+        roomsManagementScene.getStylesheets().add(getClass().getResource("/css/screen-rooms-management.css").toExternalForm());
+
+        primaryStage.setScene(roomsManagementScene);
+    }
+
+    public void showFindRoomScreen(Employee employee) {
+
+        FindRoomScreen findRoomsScreen = new FindRoomScreen(this, employee);
+
+        findRoomScene = new Scene(findRoomsScreen.getView(), 800, 800);
+        findRoomScene.getStylesheets().add(getClass().getResource("/css/screen-find-room.css").toExternalForm());
+
+        primaryStage.setScene(findRoomScene);
     }
 
     public void exit() {

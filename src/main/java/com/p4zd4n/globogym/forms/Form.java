@@ -21,12 +21,18 @@ public abstract class Form extends GridPane {
     protected Label maxBirthDateLabel;
     protected Label membershipCardStatusLabel;
     protected Label activeLabel;
+    protected Label roomNumberLabel;
+    protected Label minRoomCapacityLabel;
+    protected Label maxRoomCapacityLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
     protected TextField emailField;
     protected TextField firstNameField;
     protected TextField lastNameField;
+    protected TextField roomNumberField;
+    protected TextField minRoomCapacityField;
+    protected TextField maxRoomCapacityField;
 
     protected PasswordField passwordField;
     protected PasswordField confirmPasswordField;
@@ -125,5 +131,20 @@ public abstract class Form extends GridPane {
         activeCheckbox.getStyleClass().add("checkbox");
         inactiveCheckbox = new CheckBox("Inactive");
         inactiveCheckbox.getStyleClass().add("checkbox");
+
+        roomNumberLabel = new Label("Room number:");
+        roomNumberLabel.getStyleClass().add("label");
+        roomNumberField = new TextField();
+        roomNumberField.getStyleClass().add("field");
+
+        minRoomCapacityLabel = new Label("Min. room capacity:");
+        minRoomCapacityLabel.getStyleClass().add("label");
+        minRoomCapacityField = new TextField();
+        minRoomCapacityField.getStyleClass().add("field");
+
+        maxRoomCapacityLabel = new Label("Max. room capacity:");
+        maxRoomCapacityLabel.getStyleClass().add("label");
+        maxRoomCapacityField = new TextField();
+        maxRoomCapacityField.getStyleClass().add("field");
     }
 }

@@ -14,6 +14,7 @@ public class LeftPane extends VBox {
 
     private Button homeButton;
     private Button membersManagementButton;
+    private Button roomsManagementButton;
     private Button paymentsButton;
     private Button membershipCardButton;
     private Button scheduleButton;
@@ -39,7 +40,10 @@ public class LeftPane extends VBox {
             membersManagementButton = new Button("Members Management");
             membersManagementButton.setOnAction(e -> main.showMembersManagementScreen(employee, null));
 
-            getChildren().add(membersManagementButton);
+            roomsManagementButton = new Button("Rooms Management");
+            roomsManagementButton.setOnAction(e -> main.showRoomsManagementScreen(employee, null));
+
+            getChildren().addAll(membersManagementButton, roomsManagementButton);
         }
 
         if (user instanceof ClubMember clubMember) {

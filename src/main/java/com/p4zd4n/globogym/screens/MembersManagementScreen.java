@@ -155,7 +155,6 @@ public class MembersManagementScreen {
 
             {
                 switch (buttonText) {
-                    case "Details" -> actionButton.getStyleClass().add("button-details");
                     case "Update" -> actionButton.getStyleClass().add("button-update");
                     case "Remove" -> actionButton.getStyleClass().add("button-remove");
                 }
@@ -174,11 +173,6 @@ public class MembersManagementScreen {
                 else setGraphic(actionButton);
             }
         };
-    }
-
-    private void displayDetails(ClubMember clubMember) {
-
-        System.out.println("Details for: " + clubMember.getUsername());
     }
 
     private void update(ClubMember clubMember) {
