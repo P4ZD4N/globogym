@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.util.CustomAppointment;
 import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.panes.LeftPane;
@@ -84,7 +85,13 @@ public class ScheduleScreen {
 
         navigationBox = new HBox(10, previousWeekButton);
 
-        if (user instanceof Coach || user instanceof Employee) {
+        if (user instanceof Employee) {
+            navigationBox.getChildren().add(buttonAdd);
+        } else if (
+                user instanceof Coach coach &&
+                coach.getMembershipCard() != null &&
+                coach.getMembershipCard().getMembershipCardStatus().equals(MembershipCardStatus.ACTIVE)
+        ) {
             navigationBox.getChildren().add(buttonAdd);
         }
 
@@ -505,19 +512,36 @@ public class ScheduleScreen {
                             gridPane.addRow(4, freePlacesLabel, freePlacesValue);
 
                             ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
+                            ButtonType signOutButton = new ButtonType("Sign Out", ButtonBar.ButtonData.BACK_PREVIOUS);
                             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-                            alert.getButtonTypes().setAll(signUpButton, okButton);
+                            alert.getButtonTypes().setAll(signUpButton, signOutButton, okButton);
 
                             alert.getDialogPane().setContent(gridPane);
 
-                            alert.getDialogPane().lookupButton(signUpButton).setDisable(freePlacesValue.getText().equals("0"));
-                            alert.getDialogPane().lookupButton(signUpButton).setDisable(LocalDateTime.now().isAfter(classesStartDateTime));
-                            alert.getDialogPane().lookupButton(signUpButton).setDisable(classes.getParticipants().contains(user));
+                            alert.getDialogPane().lookupButton(signUpButton).setDisable(
+                                    !(user instanceof ClubMember) ||
+                                    freePlacesValue.getText().equals("0") ||
+                                    LocalDateTime.now().isAfter(classesStartDateTime) ||
+                                    user instanceof ClubMember clubMember &&
+                                    clubMember.getMembershipCard() == null ||
+                                    user instanceof ClubMember clubMember1 &&
+                                    clubMember1.getMembershipCard().getMembershipCardStatus().equals(MembershipCardStatus.EXPIRED) ||
+                                    classes.getParticipants().contains(user)
+                            );
+
+                            alert.getDialogPane().lookupButton(signOutButton).setDisable(
+                                    !(user instanceof ClubMember) ||
+                                    LocalDateTime.now().isAfter(classesStartDateTime) ||
+                                    !classes.getParticipants().contains(user)
+                            );
 
                             alert.showAndWait().ifPresent(buttonType -> {
 
                                 if (buttonType.getButtonData() == ButtonBar.ButtonData.APPLY) {
                                     classes.addParticipant((ClubMember) user);
+                                    alert.setResult(ButtonType.OK);
+                                } else if (buttonType.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
+                                    classes.removeParticipant((ClubMember) user);
                                     alert.setResult(ButtonType.OK);
                                 } else if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                                     alert.setResult(ButtonType.OK);

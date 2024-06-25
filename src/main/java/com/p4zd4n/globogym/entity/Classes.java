@@ -48,6 +48,16 @@ public class Classes extends Event {
         }
     }
 
+    public void removeParticipant(ClubMember clubMember) {
+
+        if (participants.contains(clubMember)) {
+            participants.remove(clubMember);
+            Event.serializeEvents();
+        } else {
+            System.out.println("Can't remove this participant from classes");
+        }
+    }
+
     public static void addClasses(Classes classes) {
 
         allClasses.add(classes);
