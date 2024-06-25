@@ -89,7 +89,7 @@ public class UpdateUserScreen implements Validatable {
     public void updateUser() {
 
         boolean areAllFieldsFilled = validation.areAllFieldsFilled();
-        boolean isDataValid = validation.isDataValid(user);
+        boolean isDataValid = validation.isDataValid();
 
         if (!areAllFieldsFilled) {
             errorLabel.setText("Not all fields have been filled!");

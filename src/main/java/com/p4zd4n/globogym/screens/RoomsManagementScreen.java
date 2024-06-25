@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class RoomsManagementScreen {
@@ -126,11 +127,28 @@ public class RoomsManagementScreen {
 
     private void update(Room room) {
 
-        System.out.println("Update");
+        main.showUpdateRoomScreen(manager, room);
     }
 
-    private void remove(Room room) {
+    private void remove(Room r) {
 
-        System.out.println("Remove");
+        Optional<Room> roomToRemove = Room.getRooms()
+                .stream()
+                .filter(room -> room.equals(r))
+                .findFirst();
+
+        roomToRemove.ifPresent(room -> {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Deletion");
+            alert.setHeaderText("Are you sure you want to delete this room?");
+            alert.setContentText("This action cannot be undone.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Room.getRooms().remove(r);
+                Room.serializeRooms();
+            }
+        });
     }
 }

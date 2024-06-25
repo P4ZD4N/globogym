@@ -49,20 +49,28 @@ public class Validation {
                     isCapacityValid();
         }
 
-        return isUsernameValid() &&
-                isEmailValid() &&
-                isPasswordValid() &&
-                isFirstNameAndLastNameValid() &&
-                isBirthDateValid();
-    }
+        if (form instanceof RegistrationForm || form instanceof AddUserForm) {
+            return isUsernameValid() &&
+                    isEmailValid() &&
+                    isPasswordValid() &&
+                    isFirstNameAndLastNameValid() &&
+                    isBirthDateValid();
+        }
 
-    public boolean isDataValid(User user) {
+        if (form instanceof UpdateUserForm) {
+            return isUsernameValid(((UpdateUserForm) form).getUser()) &&
+                    isEmailValid(((UpdateUserForm) form).getUser()) &&
+                    isPasswordValid() &&
+                    isFirstNameAndLastNameValid() &&
+                    isBirthDateValid();
+        }
 
-        return isUsernameValid(user) &&
-                isEmailValid(user) &&
-                isPasswordValid() &&
-                isFirstNameAndLastNameValid() &&
-                isBirthDateValid();
+        if (form instanceof UpdateRoomForm) {
+            return isRoomNumberValid(((UpdateRoomForm) form).getRoom()) &&
+                    isCapacityValid();
+        }
+
+        return true;
     }
 
     private boolean isUsernameValid() {
@@ -212,12 +220,7 @@ public class Validation {
 
     private boolean isRoomNumberValid() {
 
-        if (!isNumeric(form.getRoomNumberField().getText())) {
-            validatable.getErrorLabel().setText("Room number must be number!");
-            return false;
-        }
-
-        Room foundRoom = Room.findByRoomNumber(Integer.parseInt(form.getRoomNumberField().getText()));
+        Room foundRoom = getOptionalRoom();
 
         if (foundRoom != null) {
             validatable.getErrorLabel().setText("Room with this number already exist!");
@@ -226,6 +229,31 @@ public class Validation {
 
         return true;
     }
+
+    private boolean isRoomNumberValid(Room r) {
+
+        Room foundRoom = getOptionalRoom();
+
+        if (foundRoom != null && !foundRoom.equals(r)) {
+            validatable.getErrorLabel().setText("Room with this number already exist!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private Room getOptionalRoom() {
+
+        String enteredNumber = form.getRoomNumberField().getText();
+
+        if (!isNumeric(enteredNumber)) {
+            validatable.getErrorLabel().setText("Room number must be number!");
+            return null;
+        }
+
+         return Room.findByRoomNumber(Integer.parseInt(enteredNumber));
+    }
+
 
     private boolean isCapacityValid() {
 

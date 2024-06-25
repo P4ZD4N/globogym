@@ -2,12 +2,18 @@ package com.p4zd4n.globogym.forms;
 
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
+import lombok.Getter;
 
+@Getter
 public class UpdateUserForm extends Form {
+
+    private User user;
 
     public UpdateUserForm(User user) {
 
         super();
+
+        this.user = user;
 
         add(usernameLabel, 0, 0);
         usernameField.setText(user.getUsername());
