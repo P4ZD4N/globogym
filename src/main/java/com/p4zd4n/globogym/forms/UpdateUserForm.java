@@ -27,19 +27,22 @@ public class UpdateUserForm extends Form {
         add(passwordLabel, 0, 2);
         passwordField.setText(updatedUser.getPassword());
         add(passwordField, 1, 2);
-        add(firstNameLabel, 0, 3);
+        add(confirmPasswordLabel, 0, 3);
+        confirmPasswordField.setText(updatedUser.getPassword());
+        add(confirmPasswordField, 1, 3);
+        add(firstNameLabel, 0, 4);
         firstNameField.setText(updatedUser.getFirstName());
-        add(firstNameField, 1, 3);
-        add(lastNameLabel, 0, 4);
+        add(firstNameField, 1, 4);
+        add(lastNameLabel, 0, 5);
         lastNameField.setText(updatedUser.getLastName());
-        add(lastNameField, 1, 4);
-        add(birthDateLabel, 0, 5);
+        add(lastNameField, 1, 5);
+        add(birthDateLabel, 0, 6);
         birthDateField.setValue(updatedUser.getBirthDate());
-        add(birthDateField, 1, 5);
+        add(birthDateField, 1, 6);
         if (updatedUser instanceof Coach coach && updatingUser instanceof Employee) {
-            add(activeLabel, 0, 6);
+            add(activeLabel, 0, 7);
             activeCheckbox.setSelected(coach.isActive());
-            add(activeCheckbox, 1, 6);
+            add(activeCheckbox, 1, 7);
         }
     }
 }

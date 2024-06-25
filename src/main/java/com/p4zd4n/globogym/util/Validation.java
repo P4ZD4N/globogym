@@ -4,6 +4,7 @@ import com.p4zd4n.globogym.entity.Room;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.forms.*;
 import com.p4zd4n.globogym.screens.RegistrationScreen;
+import com.p4zd4n.globogym.screens.UpdateUserScreen;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -173,7 +174,10 @@ public class Validation {
             return false;
         }
 
-        if (!form.getPasswordField().getText().equals(form.getConfirmPasswordField().getText()) && validatable instanceof RegistrationScreen) {
+        if (
+                !form.getPasswordField().getText().equals(form.getConfirmPasswordField().getText()) &&
+                (validatable instanceof RegistrationScreen || validatable instanceof UpdateUserScreen)
+        ) {
             validatable.getErrorLabel().setText("Entered passwords are different!");
             return false;
         }
