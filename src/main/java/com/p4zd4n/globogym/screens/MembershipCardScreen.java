@@ -171,7 +171,7 @@ public class MembershipCardScreen {
         Text ownerName = new Text(clubMember.getFirstName() + " " + clubMember.getLastName());
         ownerName.getStyleClass().add("owner-name");
 
-        Text ownerId = new Text("MID " + clubMember.getId());
+        Text ownerId = new Text("UID " + clubMember.getId());
         ownerId.getStyleClass().add("owner-id");
 
         logoView.setX(10);

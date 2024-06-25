@@ -4,7 +4,6 @@ import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.enums.CoachSpecialization;
-import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
@@ -18,6 +17,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -75,14 +76,13 @@ public class UserAccountScreen {
         changeProfilePictureButton = new Button("Change picture");
         changeProfilePictureButton.setOnAction(e -> changeProfilePicture());
 
-        idLabel = new Label("ID: " + user.getId());
-        usernameLabel = new Label("Username: " + user.getUsername());
-        emailLabel = new Label("Email: " + user.getEmail());
-        firstNameLabel = new Label("First name: " + user.getFirstName());
-        lastNameLabel = new Label("Last name: " + user.getLastName());
+        idLabel = createLabelWithBoldDescriptor("UID ", String.valueOf(user.getId()));
+        usernameLabel = createLabelWithBoldDescriptor("Username: ", user.getUsername());
+        emailLabel = createLabelWithBoldDescriptor("Email: ", user.getEmail());
+        firstNameLabel = createLabelWithBoldDescriptor("First name: ", user.getFirstName());
+        lastNameLabel = createLabelWithBoldDescriptor("Last name: ", user.getLastName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        birthDateLabel = new Label();
-        birthDateLabel.setText("Birth date: " + user.getBirthDate().format(formatter));
+        birthDateLabel = createLabelWithBoldDescriptor("Birth date: ", user.getBirthDate().format(formatter));
 
         updateDataButton = new Button("Update data");
         updateDataButton.setOnAction(e -> updateData());
@@ -96,7 +96,7 @@ public class UserAccountScreen {
             centerRightPane.setSpacing(10);
             centerRightPane.setAlignment(Pos.CENTER);
 
-            Label specializationsLabel = new Label("Specializations");
+            Label specializationsLabel = createLabelWithBoldDescriptor("Specializations", "");
             centerRightPane.getChildren().add(specializationsLabel);
 
             CoachSpecialization.getAllSpecializations()
@@ -123,7 +123,7 @@ public class UserAccountScreen {
             GridPane.setColumnIndex(centerRightPane, 2);
             centerPane.getChildren().add(centerRightPane);
         }
-        centerPane.setHgap(30);
+        centerPane.setHgap(100);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
@@ -147,6 +147,17 @@ public class UserAccountScreen {
             user.setProfilePicturePath(path);
             User.serializeUsers();
         }
+    }
+
+    private Label createLabelWithBoldDescriptor(String label, String value) {
+
+        Text boldText = new Text(label);
+        boldText.setStyle("-fx-font-weight: bold");
+
+        Text normalText = new Text(value);
+        TextFlow textFlow = new TextFlow(boldText, normalText);
+
+        return new Label("", textFlow);
     }
 
     private void updateData() {
