@@ -2,7 +2,10 @@ package com.p4zd4n.globogym.enums;
 
 import lombok.Getter;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.EnumMap;
+import java.util.Map;
 
 @Getter
 public enum OpeningHours {
@@ -24,13 +27,46 @@ public enum OpeningHours {
         this.closingTime = closingTime;
     }
 
-    public boolean isOpenNow() {
+    public static boolean isOpenNow(DayOfWeek dayOfWeek) {
 
-        if (openingTime == null || closingTime == null) {
+        OpeningHours hours = getByDayOfWeek(dayOfWeek);
+
+        if (hours.getOpeningTime() == null || hours.getClosingTime() == null) {
             return false;
         }
 
         LocalTime now = LocalTime.now();
-        return now.isAfter(openingTime) && now.isBefore(closingTime);
+        return now.isAfter(hours.getOpeningTime()) && now.isBefore(hours.getClosingTime());
+    }
+
+    public static OpeningHours getByDayOfWeek(DayOfWeek dayOfWeek) {
+
+        return switch (dayOfWeek) {
+            case MONDAY -> OpeningHours.MONDAY;
+            case TUESDAY -> OpeningHours.TUESDAY;
+            case WEDNESDAY -> OpeningHours.WEDNESDAY;
+            case THURSDAY -> OpeningHours.THURSDAY;
+            case FRIDAY -> OpeningHours.FRIDAY;
+            case SATURDAY -> OpeningHours.SATURDAY;
+            case SUNDAY -> OpeningHours.SUNDAY;
+        };
+    }
+
+    public static Map<DayOfWeek, String> getAllOpeningHours() {
+
+        Map<DayOfWeek, String> openingHoursMap = new EnumMap<>(DayOfWeek.class);
+
+        for (DayOfWeek day : DayOfWeek.values()) {
+
+            OpeningHours hours = getByDayOfWeek(day);
+
+            if (hours.getOpeningTime() == null || hours.getClosingTime() == null) {
+                openingHoursMap.put(day, "Closed");
+            } else {
+                openingHoursMap.put(day, hours.getOpeningTime() + " - " + hours.getClosingTime());
+            }
+        }
+
+        return openingHoursMap;
     }
 }
