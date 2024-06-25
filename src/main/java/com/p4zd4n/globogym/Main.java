@@ -207,9 +207,9 @@ public class Main extends Application {
         primaryStage.setScene(addUserScene);
     }
 
-    public void showUpdateUserScreen(Employee employee, User user) {
+    public void showUpdateUserScreen(User updatingUser, User updatedUser) {
 
-        UpdateUserScreen updateUserScreen = new UpdateUserScreen(this, employee, user);
+        UpdateUserScreen updateUserScreen = new UpdateUserScreen(this, updatingUser, updatedUser);
 
         updateUserScene = new Scene(updateUserScreen.getView(), 800, 800);
         updateUserScene.getStylesheets().add(getClass().getResource("/css/screen-update-user.css").toExternalForm());

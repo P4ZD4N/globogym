@@ -1,39 +1,42 @@
 package com.p4zd4n.globogym.forms;
 
 import com.p4zd4n.globogym.entity.Coach;
+import com.p4zd4n.globogym.entity.Employee;
 import com.p4zd4n.globogym.entity.User;
 import lombok.Getter;
 
 @Getter
 public class UpdateUserForm extends Form {
 
-    private User user;
+    private User updatingUser;
+    private User updatedUser;
 
-    public UpdateUserForm(User user) {
+    public UpdateUserForm(User updatingUser, User updatedUser) {
 
         super();
 
-        this.user = user;
+        this.updatingUser = updatingUser;
+        this.updatedUser = updatedUser;
 
         add(usernameLabel, 0, 0);
-        usernameField.setText(user.getUsername());
+        usernameField.setText(updatedUser.getUsername());
         add(usernameField, 1, 0);
         add(emailLabel, 0, 1);
-        emailField.setText(user.getEmail());
+        emailField.setText(updatedUser.getEmail());
         add(emailField, 1, 1);
         add(passwordLabel, 0, 2);
-        passwordField.setText(user.getPassword());
+        passwordField.setText(updatedUser.getPassword());
         add(passwordField, 1, 2);
         add(firstNameLabel, 0, 3);
-        firstNameField.setText(user.getFirstName());
+        firstNameField.setText(updatedUser.getFirstName());
         add(firstNameField, 1, 3);
         add(lastNameLabel, 0, 4);
-        lastNameField.setText(user.getLastName());
+        lastNameField.setText(updatedUser.getLastName());
         add(lastNameField, 1, 4);
         add(birthDateLabel, 0, 5);
-        birthDateField.setValue(user.getBirthDate());
+        birthDateField.setValue(updatedUser.getBirthDate());
         add(birthDateField, 1, 5);
-        if (user instanceof Coach coach) {
+        if (updatedUser instanceof Coach coach && updatingUser instanceof Employee) {
             add(activeLabel, 0, 6);
             activeCheckbox.setSelected(coach.isActive());
             add(activeCheckbox, 1, 6);

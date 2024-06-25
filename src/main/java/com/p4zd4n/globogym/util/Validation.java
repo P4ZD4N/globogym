@@ -58,8 +58,8 @@ public class Validation {
         }
 
         if (form instanceof UpdateUserForm) {
-            return isUsernameValid(((UpdateUserForm) form).getUser()) &&
-                    isEmailValid(((UpdateUserForm) form).getUser()) &&
+            return isUsernameValid(((UpdateUserForm) form).getUpdatedUser()) &&
+                    isEmailValid(((UpdateUserForm) form).getUpdatedUser()) &&
                     isPasswordValid() &&
                     isFirstNameAndLastNameValid() &&
                     isBirthDateValid();

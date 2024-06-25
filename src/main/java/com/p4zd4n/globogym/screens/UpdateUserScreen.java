@@ -24,8 +24,8 @@ public class UpdateUserScreen implements Validatable {
 
     private Main main;
 
-    private Employee employee;
-    private User user;
+    private User updatingUser;
+    private User updatedUser;
 
     private BorderPane borderPane;
     private BorderPane centerContainer;
@@ -39,11 +39,11 @@ public class UpdateUserScreen implements Validatable {
 
     private Validation validation;
 
-    public UpdateUserScreen(Main main, Employee employee, User user) {
+    public UpdateUserScreen(Main main, User updatingUser, User updatedUser) {
 
         this.main = main;
-        this.employee = employee;
-        this.user = user;
+        this.updatingUser = updatingUser;
+        this.updatedUser = updatedUser;
     }
 
     public Pane getView() {
@@ -56,7 +56,7 @@ public class UpdateUserScreen implements Validatable {
         centerTopContainer.setAlignment(Pos.CENTER);
         centerTopContainer.getChildren().add(errorLabel);
 
-        form = new UpdateUserForm(user);
+        form = new UpdateUserForm(updatingUser, updatedUser);
         form.getStyleClass().add("container");
         form.setVgap(10);
         form.setHgap(10);
@@ -67,9 +67,9 @@ public class UpdateUserScreen implements Validatable {
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
-        borderPane.setTop(new TopPane(main, employee));
+        borderPane.setTop(new TopPane(main, updatingUser));
         borderPane.setCenter(centerContainer);
-        borderPane.setLeft(new LeftPane(main, employee));
+        borderPane.setLeft(new LeftPane(main, updatingUser));
 
         updateButton = new Button("Update");
         updateButton.getStyleClass().add("button");
@@ -106,64 +106,68 @@ public class UpdateUserScreen implements Validatable {
         updateFirstName();
         updateLastName();
         updateBirthDate();
-        if (user instanceof Coach) {
+        if (updatedUser instanceof Coach) {
             updateActiveStatus();
         }
 
         User.serializeUsers();
-        main.showMembersManagementScreen(employee, null);
+        if (updatingUser instanceof Employee employee) {
+            main.showMembersManagementScreen(employee, null);
+        } else {
+            main.showUserAccountScreen(updatingUser);
+        }
     }
 
     public void updateUsername() {
 
-        if (!form.getUsernameField().getText().equals(user.getUsername())) {
+        if (!form.getUsernameField().getText().equals(updatedUser.getUsername())) {
 
-            user.setUsername(form.getUsernameField().getText());
+            updatedUser.setUsername(form.getUsernameField().getText());
         }
     }
 
     public void updateEmail() {
 
-        if (!form.getEmailField().getText().equals(user.getEmail())) {
+        if (!form.getEmailField().getText().equals(updatedUser.getEmail())) {
 
-            user.setEmail(form.getEmailField().getText());
+            updatedUser.setEmail(form.getEmailField().getText());
         }
     }
 
     public void updatePassword() {
 
-        if (!form.getPasswordField().getText().equals(user.getPassword())) {
+        if (!form.getPasswordField().getText().equals(updatedUser.getPassword())) {
 
-            user.setPassword(form.getPasswordField().getText());
+            updatedUser.setPassword(form.getPasswordField().getText());
         }
     }
 
     public void updateFirstName() {
 
-        if (!form.getFirstNameField().getText().equals(user.getFirstName())) {
+        if (!form.getFirstNameField().getText().equals(updatedUser.getFirstName())) {
 
-            user.setFirstName(form.getFirstNameField().getText());
+            updatedUser.setFirstName(form.getFirstNameField().getText());
         }
     }
 
     public void updateLastName() {
 
-        if (!form.getLastNameField().getText().equals(user.getLastName())) {
+        if (!form.getLastNameField().getText().equals(updatedUser.getLastName())) {
 
-            user.setLastName(form.getLastNameField().getText());
+            updatedUser.setLastName(form.getLastNameField().getText());
         }
     }
 
     public void updateBirthDate() {
 
-        if (!form.getBirthDateField().getValue().equals(user.getBirthDate())) {
+        if (!form.getBirthDateField().getValue().equals(updatedUser.getBirthDate())) {
 
-            user.setBirthDate(form.getBirthDateField().getValue());
+            updatedUser.setBirthDate(form.getBirthDateField().getValue());
         }
     }
 
     public void updateActiveStatus() {
 
-        ((Coach) user).setActive(form.getActiveCheckbox().isSelected());
+        ((Coach) updatedUser).setActive(form.getActiveCheckbox().isSelected());
     }
 }
