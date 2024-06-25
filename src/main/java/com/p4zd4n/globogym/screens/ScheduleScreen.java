@@ -296,7 +296,7 @@ public class ScheduleScreen {
                                 boolean sameDate = eventDate.isEqual(classesStart.toLocalDate());
                                 boolean noOverlap = !(eventEndDateTime.isBefore(classesStart) || eventStartDateTime.isAfter(classesEnd));
 
-                                return sameDate && noOverlap;
+                                return room.getNumber().equals(classesEvent.getRoom().getNumber()) && sameDate && noOverlap;
                             });
                 }).toList();
 
