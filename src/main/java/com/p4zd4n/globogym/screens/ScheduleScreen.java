@@ -467,7 +467,7 @@ public class ScheduleScreen {
                             gridPane.setVgap(10);
 
                             Label trainerLabel = new Label("Coach:");
-                            if (!(user instanceof Employee)) {
+                            if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
                                 Label trainerValue = new Label(coachFullName);
                                 gridPane.addRow(0, trainerLabel, trainerValue);
                             } else {
