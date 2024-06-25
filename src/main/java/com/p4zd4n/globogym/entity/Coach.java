@@ -1,6 +1,6 @@
 package com.p4zd4n.globogym.entity;
 
-import com.p4zd4n.globogym.enums.CoachSpecialization;
+import com.p4zd4n.globogym.enums.ClassesType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class Coach extends ClubMember {
     private static final long serialVersionUID = -5076345663056590411L;
 
     private boolean isActive = false;
-    private List<CoachSpecialization> specializations = new ArrayList<>();
+    private List<ClassesType> specializations = new ArrayList<>();
 
     public Coach(
             String username,
@@ -31,15 +31,15 @@ public class Coach extends ClubMember {
         super(username, email, password, firstName, lastName, birthDate);
     }
 
-    public void addSpecialization(CoachSpecialization coachSpecialization) {
+    public void addSpecialization(ClassesType specialization) {
 
-        specializations.add(coachSpecialization);
+        specializations.add(specialization);
         User.serializeUsers();
     }
 
-    public void removeSpecialization(CoachSpecialization coachSpecialization) {
+    public void removeSpecialization(ClassesType specialization) {
 
-        specializations.remove(coachSpecialization);
+        specializations.remove(specialization);
         User.serializeUsers();
     }
 }

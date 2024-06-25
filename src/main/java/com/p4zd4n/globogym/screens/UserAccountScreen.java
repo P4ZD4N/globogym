@@ -3,7 +3,7 @@ package com.p4zd4n.globogym.screens;
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.enums.CoachSpecialization;
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import javafx.geometry.Insets;
@@ -96,19 +96,19 @@ public class UserAccountScreen {
             centerRightPane.setSpacing(10);
             centerRightPane.setAlignment(Pos.CENTER);
 
-            Label specializationsLabel = createLabelWithBoldDescriptor("Specializations", "");
-            centerRightPane.getChildren().add(specializationsLabel);
+            Label specializesInLabel = createLabelWithBoldDescriptor("Specializes in: ", "");
+            centerRightPane.getChildren().add(specializesInLabel);
 
-            CoachSpecialization.getAllSpecializations()
+            ClassesType.getAll()
                     .stream()
-                    .map(coachSpecialization -> {
-                        CheckBox checkBox = new CheckBox(coachSpecialization.name());
-                        checkBox.setSelected(coach.getSpecializations().contains(coachSpecialization));
+                    .map(type -> {
+                        CheckBox checkBox = new CheckBox(type.getType());
+                        checkBox.setSelected(coach.getSpecializations().contains(type));
                         checkBox.setOnAction(e -> {
                             if (checkBox.isSelected()) {
-                                coach.addSpecialization(coachSpecialization);
+                                coach.addSpecialization(type);
                             } else {
-                                coach.removeSpecialization(coachSpecialization);
+                                coach.removeSpecialization(type);
                             }
                         });
                         return checkBox;
