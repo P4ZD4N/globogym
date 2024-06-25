@@ -215,9 +215,9 @@ public class Main extends Application {
         primaryStage.setScene(updateUserScene);
     }
 
-    public void showRoomsManagementScreen(Employee employee, List<Room> rooms) {
+    public void showRoomsManagementScreen(Manager manager, List<Room> rooms) {
 
-        RoomsManagementScreen roomsManagementScreen = new RoomsManagementScreen(this, employee, rooms);
+        RoomsManagementScreen roomsManagementScreen = new RoomsManagementScreen(this, manager, rooms);
 
         roomsManagementScene = new Scene(roomsManagementScreen.getView(), 800, 800);
         roomsManagementScene.getStylesheets().add(getClass().getResource("/css/screen-rooms-management.css").toExternalForm());
@@ -225,9 +225,9 @@ public class Main extends Application {
         primaryStage.setScene(roomsManagementScene);
     }
 
-    public void showFindRoomScreen(Employee employee) {
+    public void showFindRoomScreen(Manager manager) {
 
-        FindRoomScreen findRoomsScreen = new FindRoomScreen(this, employee);
+        FindRoomScreen findRoomsScreen = new FindRoomScreen(this, manager);
 
         findRoomScene = new Scene(findRoomsScreen.getView(), 800, 800);
         findRoomScene.getStylesheets().add(getClass().getResource("/css/screen-find-room.css").toExternalForm());

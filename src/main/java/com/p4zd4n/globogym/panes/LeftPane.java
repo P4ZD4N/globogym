@@ -3,12 +3,11 @@ package com.p4zd4n.globogym.panes;
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.Employee;
+import com.p4zd4n.globogym.entity.Manager;
 import com.p4zd4n.globogym.entity.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
 
 public class LeftPane extends VBox {
 
@@ -40,10 +39,15 @@ public class LeftPane extends VBox {
             membersManagementButton = new Button("Members Management");
             membersManagementButton.setOnAction(e -> main.showMembersManagementScreen(employee, null));
 
-            roomsManagementButton = new Button("Rooms Management");
-            roomsManagementButton.setOnAction(e -> main.showRoomsManagementScreen(employee, null));
+            getChildren().add(membersManagementButton);
+        }
 
-            getChildren().addAll(membersManagementButton, roomsManagementButton);
+        if (user instanceof Manager manager) {
+
+            roomsManagementButton = new Button("Rooms Management");
+            roomsManagementButton.setOnAction(e -> main.showRoomsManagementScreen(manager, null));
+
+            getChildren().add(roomsManagementButton);
         }
 
         if (user instanceof ClubMember clubMember) {

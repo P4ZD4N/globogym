@@ -19,7 +19,7 @@ public class FindRoomScreen {
 
     private Main main;
 
-    private Employee employee;
+    private Manager manager;
 
     private List<Room> foundRooms;
 
@@ -29,11 +29,11 @@ public class FindRoomScreen {
 
     private Button findButton;
 
-    public FindRoomScreen(Main main, Employee employee) {
+    public FindRoomScreen(Main main, Manager manager) {
 
         this.foundRooms = new ArrayList<>();
         this.main = main;
-        this.employee = employee;
+        this.manager = manager;
     }
 
     public Pane getView() {
@@ -55,8 +55,8 @@ public class FindRoomScreen {
         bottomContainer.getChildren().add(findButton);
 
         borderPane.setPadding(new Insets(20, 20, 20, 20));
-        borderPane.setTop(new TopPane(main, employee));
-        borderPane.setLeft(new LeftPane(main, employee));
+        borderPane.setTop(new TopPane(main, manager));
+        borderPane.setLeft(new LeftPane(main, manager));
         borderPane.setCenter(form);
         borderPane.setBottom(bottomContainer);
 
@@ -70,7 +70,7 @@ public class FindRoomScreen {
         findRoomByNumber();
         findRoomsByCapacity();
 
-        main.showRoomsManagementScreen(employee, foundRooms);
+        main.showRoomsManagementScreen(manager, foundRooms);
     }
 
     private void findRoomByNumber() {

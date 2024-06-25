@@ -20,7 +20,7 @@ public class RoomsManagementScreen {
 
     private Main main;
 
-    private Employee employee;
+    private Manager manager;
 
     private List<Room> rooms;
 
@@ -32,13 +32,13 @@ public class RoomsManagementScreen {
 
     private TableView<Room> tableView;
 
-    public RoomsManagementScreen(Main main, Employee employee, List<Room> rooms) {
+    public RoomsManagementScreen(Main main, Manager manager, List<Room> rooms) {
 
         if (rooms != null) {
             this.rooms = rooms;
         }
         this.main = main;
-        this.employee = employee;
+        this.manager = manager;
     }
 
     public Pane getView() {
@@ -46,10 +46,10 @@ public class RoomsManagementScreen {
         centerPane = new CenterPane();
 
         addRoomButton = new Button("Add room");
-        addRoomButton.setOnAction(e -> main.showAddUserScreen(employee));
+        addRoomButton.setOnAction(e -> main.showAddUserScreen(manager));
 
         findRoomButton = new Button("Find room");
-        findRoomButton.setOnAction(e -> main.showFindRoomScreen(employee));
+        findRoomButton.setOnAction(e -> main.showFindRoomScreen(manager));
 
         ObservableList<Room> roomsObservableList = FXCollections.observableArrayList();
         if (rooms == null) {
@@ -66,9 +66,9 @@ public class RoomsManagementScreen {
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
-        borderPane.setTop(new TopPane(main, employee));
+        borderPane.setTop(new TopPane(main, manager));
         borderPane.setCenter(centerPane);
-        borderPane.setLeft(new LeftPane(main, employee));
+        borderPane.setLeft(new LeftPane(main, manager));
 
         return borderPane;
     }
