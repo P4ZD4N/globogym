@@ -1,0 +1,23 @@
+.container {
+    -fx-alignment: center;
+}
+
+.label, .field, .button {
+    -fx-font-size: 20px;
+}
+
+.button {
+    -fx-min-width: 120px;
+    -fx-background-color: #65c9ff;
+    -fx-background-radius: 60px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #4995c5;
+    -fx-cursor: hand;
+}
+
+.error {
+    -fx-text-fill: #c03d3d;
+}

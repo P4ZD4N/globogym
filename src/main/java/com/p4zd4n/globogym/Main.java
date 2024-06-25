@@ -29,6 +29,7 @@ public class Main extends Application {
     private Scene updateUserScene;
     private Scene roomsManagementScene;
     private Scene findRoomScene;
+    private Scene addRoomScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -233,6 +234,16 @@ public class Main extends Application {
         findRoomScene.getStylesheets().add(getClass().getResource("/css/screen-find-room.css").toExternalForm());
 
         primaryStage.setScene(findRoomScene);
+    }
+
+    public void showAddRoomScreen(Manager manager) {
+
+        AddRoomScreen addRoomScreen = new AddRoomScreen(this, manager);
+
+        addRoomScene = new Scene(addRoomScreen.getView(), 800, 800);
+        addRoomScene.getStylesheets().add(getClass().getResource("/css/screen-add-room.css").toExternalForm());
+
+        primaryStage.setScene(addRoomScene);
     }
 
     public void exit() {

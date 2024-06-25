@@ -22,6 +22,7 @@ public abstract class Form extends GridPane {
     protected Label membershipCardStatusLabel;
     protected Label activeLabel;
     protected Label roomNumberLabel;
+    protected Label roomCapacityLabel;
     protected Label minRoomCapacityLabel;
     protected Label maxRoomCapacityLabel;
 
@@ -31,6 +32,7 @@ public abstract class Form extends GridPane {
     protected TextField firstNameField;
     protected TextField lastNameField;
     protected TextField roomNumberField;
+    protected TextField roomCapacityField;
     protected TextField minRoomCapacityField;
     protected TextField maxRoomCapacityField;
 
@@ -136,6 +138,11 @@ public abstract class Form extends GridPane {
         roomNumberLabel.getStyleClass().add("label");
         roomNumberField = new TextField();
         roomNumberField.getStyleClass().add("field");
+
+        roomCapacityLabel = new Label("Room capacity:");
+        roomCapacityLabel.getStyleClass().add("label");
+        roomCapacityField = new TextField();
+        roomCapacityField.getStyleClass().add("field");
 
         minRoomCapacityLabel = new Label("Min. room capacity:");
         minRoomCapacityLabel.getStyleClass().add("label");

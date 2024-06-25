@@ -1,7 +1,8 @@
 package com.p4zd4n.globogym.util;
 
+import com.p4zd4n.globogym.entity.Room;
 import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.forms.Form;
+import com.p4zd4n.globogym.forms.*;
 import com.p4zd4n.globogym.screens.RegistrationScreen;
 
 import java.time.LocalDate;
@@ -26,15 +27,27 @@ public class Validation {
 
     public boolean areAllFieldsFilled() {
 
-        return form.getUsernameField().getText() != null &&
-                form.getEmailField().getText() != null &&
-                form.getPasswordField().getText() != null &&
-                form.getFirstNameField().getText() != null &&
-                form.getLastNameField().getText() != null &&
-                form.getBirthDateField().getValue() != null;
+        if (form instanceof RegistrationForm || form instanceof AddUserForm || form instanceof UpdateUserForm) {
+            return form.getUsernameField().getText() != null &&
+                    form.getEmailField().getText() != null &&
+                    form.getPasswordField().getText() != null &&
+                    form.getFirstNameField().getText() != null &&
+                    form.getLastNameField().getText() != null &&
+                    form.getBirthDateField().getValue() != null;
+        } else if (form instanceof AddRoomForm) {
+            return form.getRoomNumberField().getText() != null &&
+                    form.getRoomCapacityField().getText() != null;
+        } else {
+            return true;
+        }
     }
 
     public boolean isDataValid() {
+
+        if (form instanceof AddRoomForm) {
+            return isRoomNumberValid() &&
+                    isCapacityValid();
+        }
 
         return isUsernameValid() &&
                 isEmailValid() &&
@@ -195,5 +208,44 @@ public class Validation {
         }
 
         return true;
+    }
+
+    private boolean isRoomNumberValid() {
+
+        if (!isNumeric(form.getRoomNumberField().getText())) {
+            validatable.getErrorLabel().setText("Room number must be number!");
+            return false;
+        }
+
+        Room foundRoom = Room.findByRoomNumber(Integer.parseInt(form.getRoomNumberField().getText()));
+
+        if (foundRoom != null) {
+            validatable.getErrorLabel().setText("Room with this number already exist!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isCapacityValid() {
+
+        String enteredCapacity = form.getRoomCapacityField().getText();
+
+        if (!isNumeric(enteredCapacity)) {
+            validatable.getErrorLabel().setText("Room capacity must be number!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isNumeric(String string) {
+
+        try {
+            Double.parseDouble(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

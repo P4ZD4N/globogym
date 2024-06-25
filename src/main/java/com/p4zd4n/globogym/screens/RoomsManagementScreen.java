@@ -46,7 +46,7 @@ public class RoomsManagementScreen {
         centerPane = new CenterPane();
 
         addRoomButton = new Button("Add room");
-        addRoomButton.setOnAction(e -> main.showAddUserScreen(manager));
+        addRoomButton.setOnAction(e -> main.showAddRoomScreen(manager));
 
         findRoomButton = new Button("Find room");
         findRoomButton.setOnAction(e -> main.showFindRoomScreen(manager));
