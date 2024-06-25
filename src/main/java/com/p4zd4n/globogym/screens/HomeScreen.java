@@ -8,7 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-public class ClubMemberDashboardScreen {
+public class HomeScreen {
 
     private Main main;
 
@@ -16,7 +16,7 @@ public class ClubMemberDashboardScreen {
 
     private BorderPane borderPane;
 
-    public ClubMemberDashboardScreen(Main main, User user) {
+    public HomeScreen(Main main, User user) {
 
         this.main = main;
         this.user = user;

@@ -25,7 +25,7 @@ public class LeftPane extends VBox {
         setSpacing(10);
 
         homeButton = new Button("Home");
-        homeButton.setOnAction(e -> main.showClubMemberDashboardScreen(user));
+        homeButton.setOnAction(e -> main.showHomeScreen(user));
 
         scheduleButton = new Button("Schedule");
         scheduleButton.setOnAction(e -> main.showScheduleScreen(user));

@@ -120,7 +120,7 @@ public class LoginScreen {
             return;
         }
 
-        main.showClubMemberDashboardScreen(user);
+        main.showHomeScreen(user);
         usernameOrEmailField.clear();
         passwordField.clear();
         errorLabel.setText("");

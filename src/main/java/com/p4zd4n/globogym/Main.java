@@ -18,7 +18,7 @@ public class Main extends Application {
     private Scene mainScene;
     private Scene loginScene;
     private Scene registrationScene;
-    private Scene clubMemberDashboardScene;
+    private Scene homeScene;
     private Scene membersManagementScene;
     private Scene userAccountScene;
     private Scene scheduleScene;
@@ -127,14 +127,14 @@ public class Main extends Application {
         primaryStage.setScene(registrationScene);
     }
 
-    public void showClubMemberDashboardScreen(User user) {
+    public void showHomeScreen(User user) {
 
-        ClubMemberDashboardScreen clubMemberDashboardScreen = new ClubMemberDashboardScreen(this, user);
+        HomeScreen homeScreen = new HomeScreen(this, user);
 
-        clubMemberDashboardScene = new Scene(clubMemberDashboardScreen.getView(), 800, 800);
-        clubMemberDashboardScene.getStylesheets().add(getClass().getResource("/css/screen-club-member-dashboard.css").toExternalForm());
+        homeScene = new Scene(homeScreen.getView(), 800, 800);
+        homeScene.getStylesheets().add(getClass().getResource("/css/screen-home.css").toExternalForm());
 
-        primaryStage.setScene(clubMemberDashboardScene);
+        primaryStage.setScene(homeScene);
     }
 
     public void showMembersManagementScreen(Employee employee, List<User> clubMembers) {
