@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Map;
 
 
@@ -34,6 +33,7 @@ public class HomeScreen {
     private BorderPane borderPane;
     private VBox centerPane;
 
+    private Label welcomeLabel;
     private Label isOpenLabel;
 
     private TableView<OpeningHours> tableView;
@@ -51,6 +51,8 @@ public class HomeScreen {
         centerPane.setPadding(new Insets(10, 10, 10, 10));
         centerPane.setSpacing(20);
 
+        welcomeLabel = new Label("Welcome, " + user.getFirstName() + "!");
+
         isOpenLabel = new Label(OpeningHours.isOpenNow(LocalDate.now().getDayOfWeek()) ? "Open now!" : "Closed now!");
         if (isOpenLabel.getText().equals("Open now!")) {
             isOpenLabel.getStyleClass().add("open");
@@ -58,7 +60,7 @@ public class HomeScreen {
             isOpenLabel.getStyleClass().add("closed");
         }
 
-        centerPane.getChildren().add(isOpenLabel);
+        centerPane.getChildren().addAll(welcomeLabel, isOpenLabel);
 
         ObservableList<OpeningHours> openingHoursObservableList = FXCollections.observableArrayList();
         initTable(openingHoursObservableList);
