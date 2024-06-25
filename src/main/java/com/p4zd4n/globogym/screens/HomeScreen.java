@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -107,6 +108,22 @@ public class HomeScreen {
         }
 
         tableView.setItems(openingHoursObservableList);
+
+        tableView.setRowFactory(tv -> new TableRow<OpeningHours>() {
+            @Override
+            protected void updateItem(OpeningHours item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setStyle("");
+                } else {
+                    if (item.name().equalsIgnoreCase(LocalDate.now().getDayOfWeek().name())) {
+                        setStyle("-fx-background-color: #3ece70;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
 
         centerPane.getChildren().add(tableView);
     }
