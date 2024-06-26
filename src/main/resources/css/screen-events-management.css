@@ -48,17 +48,6 @@
     -fx-cursor: hand;
 }
 
-.button-update {
-    -fx-min-width: 80px;
-    -fx-background-color: #2db22e;
-    -fx-text-fill: white;
-}
-
-.button-update:hover {
-    -fx-background-color: #258a26;
-    -fx-cursor: hand;
-}
-
 .button-remove {
     -fx-min-width: 80px;
     -fx-background-color: #f13f3f;

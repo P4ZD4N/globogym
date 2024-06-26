@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class EventsManagementScreen {
@@ -138,9 +139,6 @@ public class EventsManagementScreen {
         TableColumn<Event, Void> participantsCol = new TableColumn<>();
         participantsCol.setCellFactory(param -> createButtonTableCell("Participants", this::showParticipants));
 
-        TableColumn<Event, Void> updateEventCol = new TableColumn<>();
-        updateEventCol.setCellFactory(param -> createButtonTableCell("Update", this::update));
-
         TableColumn<Event, Void> removeEventCol = new TableColumn<>();
         removeEventCol.setCellFactory(param -> createButtonTableCell("Remove", this::remove));
 
@@ -153,7 +151,6 @@ public class EventsManagementScreen {
         tableView.getColumns().add(coachCol);
         tableView.getColumns().add(roomCol);
         tableView.getColumns().add(participantsCol);
-        tableView.getColumns().add(updateEventCol);
         tableView.getColumns().add(removeEventCol);
 
         tableView.setPrefHeight(300);
@@ -166,7 +163,6 @@ public class EventsManagementScreen {
             {
                 switch (buttonText) {
                     case "Participants" -> actionButton.getStyleClass().add("button-participants");
-                    case "Update" -> actionButton.getStyleClass().add("button-update");
                     case "Remove" -> actionButton.getStyleClass().add("button-remove");
                 }
 
@@ -207,13 +203,17 @@ public class EventsManagementScreen {
         main.showClassesParticipantsScreen(employee, (Classes) event);
     }
 
-    private void update(Event event) {
-
-        System.out.println("update" + event);
-    }
-
     private void remove(Event event) {
 
-        System.out.println("remove" + event);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Are you sure you want to delete this event?");
+        alert.setContentText("This action cannot be undone.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Event.getEvents().remove(event);
+            Event.serializeEvents();
+        }
     }
 }
