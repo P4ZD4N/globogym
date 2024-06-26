@@ -49,7 +49,6 @@ public class Event implements Serializable {
             System.out.println("Events successfully saved to events.bin");
         } catch (IOException e) {
             System.err.println("Error with writing events to events.bin");
-            e.printStackTrace();
         }
     }
 
@@ -67,7 +66,6 @@ public class Event implements Serializable {
             System.out.println("Events successfully read from events.bin");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error with reading events from events.bin");
-            e.printStackTrace();
         }
     }
 

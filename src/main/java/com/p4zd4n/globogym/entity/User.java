@@ -71,7 +71,6 @@ public class User implements Serializable {
             System.out.println("Users successfully saved to users.bin");
         } catch (IOException e) {
             System.err.println("Error with writing users to users.bin");
-            e.printStackTrace();
         }
     }
 
@@ -89,7 +88,6 @@ public class User implements Serializable {
             System.out.println("Users successfully read from users.bin");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error with reading users from users.bin");
-            e.printStackTrace();
         }
     }
 

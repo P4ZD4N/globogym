@@ -24,7 +24,7 @@ public class Room implements Serializable {
     public Room(Integer number, Integer capacity) {
 
         if (!rooms.stream().filter(room -> room.getNumber().equals(number)).findFirst().isEmpty()) {
-            throw new IllegalArgumentException();
+            System.out.println("You can't create two rooms with the same number!");
         }
 
         this.number = number;
@@ -52,7 +52,6 @@ public class Room implements Serializable {
             System.out.println("Rooms successfully saved to rooms.bin");
         } catch (IOException e) {
             System.err.println("Error with writing rooms to rooms.bin");
-            e.printStackTrace();
         }
     }
 
@@ -68,7 +67,6 @@ public class Room implements Serializable {
             System.out.println("Rooms successfully read from rooms.bin");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error with reading rooms from rooms.bin");
-            e.printStackTrace();
         }
     }
 
@@ -78,5 +76,14 @@ public class Room implements Serializable {
 
     public static void setRooms(List<Room> rooms) {
         Room.rooms = rooms;
+    }
+
+    public static Room findByNumber(Integer number) {
+
+        Optional<Room> foundRoom = rooms.stream()
+                .filter(room -> room.getNumber().equals(number))
+                .findFirst();
+
+        return foundRoom.orElse(null);
     }
 }

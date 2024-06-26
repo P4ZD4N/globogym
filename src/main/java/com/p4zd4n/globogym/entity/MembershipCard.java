@@ -72,7 +72,6 @@ public class MembershipCard implements Serializable {
             System.out.println("Membership cards successfully saved to membershipCards.bin");
         } catch (IOException e) {
             System.err.println("Error with writing membership cards to membershipCards.bin");
-            e.printStackTrace();
         }
     }
 
@@ -90,7 +89,6 @@ public class MembershipCard implements Serializable {
             System.out.println("Membership cards successfully read from membershipCards.bin");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error with reading membership cards from membershipCards.bin");
-            e.printStackTrace();
         }
     }
 
