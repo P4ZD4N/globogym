@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.Coach;
+import com.p4zd4n.globogym.entity.Employee;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.panes.LeftPane;
@@ -114,6 +115,16 @@ public class UserAccountScreen {
                         return checkBox;
                     })
                     .forEach(centerRightPane.getChildren()::add);
+        }
+
+        if (user instanceof Employee employee) {
+
+            centerRightPane = new VBox();
+            centerRightPane.setSpacing(10);
+            centerRightPane.setAlignment(Pos.CENTER);
+
+            Label monthlySalaryLabel = createLabelWithBoldDescriptor("Monthly salary: ", employee.getSalary() + " zł");
+            centerRightPane.getChildren().add(monthlySalaryLabel);
         }
 
         GridPane.setColumnIndex(profilePicturePane, 0);
