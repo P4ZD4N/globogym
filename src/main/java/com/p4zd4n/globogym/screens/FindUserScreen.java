@@ -1,10 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.forms.FindUserForm;
 import com.p4zd4n.globogym.panes.LeftPane;
@@ -46,7 +43,7 @@ public class FindUserScreen {
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
 
-        form = new FindUserForm();
+        form = new FindUserForm(employee);
         form.getStyleClass().add("container");
         form.setVgap(10);
         form.setHgap(10);
@@ -85,12 +82,17 @@ public class FindUserScreen {
 
     private void findUsersByAccountType() {
 
-        if (!form.getClubMemberCheckBox().isSelected() && !form.getCoachCheckbox().isSelected()) {
+        if (!form.getClubMemberCheckBox().isSelected() &&
+            !form.getCoachCheckbox().isSelected() &&
+            !form.getEmployeeCheckbox().isSelected()) {
             User.getUsers().stream()
                     .filter(user -> user instanceof ClubMember && !(user instanceof Coach))
                     .forEach(foundUsers::add);
             User.getUsers().stream()
                     .filter(user -> user instanceof Coach)
+                    .forEach(foundUsers::add);
+            User.getUsers().stream()
+                    .filter(user -> user instanceof Employee && !(user instanceof Manager))
                     .forEach(foundUsers::add);
             return;
         }
@@ -106,6 +108,12 @@ public class FindUserScreen {
         if (form.getCoachCheckbox().isSelected()) {
             User.getUsers().stream()
                     .filter(user -> user instanceof Coach)
+                    .forEach(usersFoundByAccountType::add);
+        }
+
+        if (form.getEmployeeCheckbox().isSelected()) {
+            User.getUsers().stream()
+                    .filter(user -> user instanceof Employee && !(user instanceof Manager))
                     .forEach(usersFoundByAccountType::add);
         }
 

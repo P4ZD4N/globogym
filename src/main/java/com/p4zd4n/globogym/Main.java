@@ -3,7 +3,6 @@ package com.p4zd4n.globogym;
 import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
-import com.p4zd4n.globogym.forms.AddOtherEventForm;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -21,7 +20,7 @@ public class Main extends Application {
     private Scene loginScene;
     private Scene registrationScene;
     private Scene homeScene;
-    private Scene membersManagementScene;
+    private Scene usersManagementScene;
     private Scene userAccountScene;
     private Scene scheduleScene;
     private Scene paymentsScene;
@@ -157,12 +156,12 @@ public class Main extends Application {
 
     public void showMembersManagementScreen(Employee employee, List<User> clubMembers) {
 
-        MembersManagementScreen membersManagementScreen = new MembersManagementScreen(this, employee, clubMembers);
+        UsersManagementScreen usersManagementScreen = new UsersManagementScreen(this, employee, clubMembers);
 
-        membersManagementScene = new Scene(membersManagementScreen.getView(), 800, 800);
-        membersManagementScene.getStylesheets().add(getClass().getResource("/css/screen-members-management.css").toExternalForm());
+        usersManagementScene = new Scene(usersManagementScreen.getView(), 800, 800);
+        usersManagementScene.getStylesheets().add(getClass().getResource("/css/screen-members-management.css").toExternalForm());
 
-        primaryStage.setScene(membersManagementScene);
+        primaryStage.setScene(usersManagementScene);
     }
 
     public void showUserAccountScreen(User user) {

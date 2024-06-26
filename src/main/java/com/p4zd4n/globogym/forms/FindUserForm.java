@@ -1,11 +1,13 @@
 package com.p4zd4n.globogym.forms;
 
+import com.p4zd4n.globogym.entity.Employee;
+import com.p4zd4n.globogym.entity.Manager;
 import lombok.Getter;
 
 @Getter
 public class FindUserForm extends Form {
 
-    public FindUserForm() {
+    public FindUserForm(Employee employee) {
 
         super();
 
@@ -19,8 +21,10 @@ public class FindUserForm extends Form {
         add(firstNameField, 1, 3);
         add(lastNameLabel, 0, 4);
         add(lastNameField, 1, 4);
+        minDateLabel.setText("Min. birth date:");
         add(minDateLabel, 0, 5);
         add(minDateField, 1, 5);
+        maxDateLabel.setText("Max. birth date:");
         add(maxDateLabel, 0, 6);
         add(maxDateField, 1, 6);
         add(membershipCardStatusLabel, 0, 7);
@@ -28,6 +32,9 @@ public class FindUserForm extends Form {
         add(activeCheckbox, 0, 8);
         add(inactiveCheckbox, 1, 8);
         add(clubMemberCheckBox, 0, 9);
-        add(coachCheckbox, 1, 9);
+        add(coachCheckbox, 0, 10);
+        if (employee instanceof Manager) {
+            add(employeeCheckbox, 0, 11);
+        }
     }
 }

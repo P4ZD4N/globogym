@@ -1,7 +1,12 @@
 package com.p4zd4n.globogym.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class Employee extends User {
 
     private Double salary;

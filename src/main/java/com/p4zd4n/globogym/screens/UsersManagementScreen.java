@@ -1,10 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
@@ -22,11 +19,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class MembersManagementScreen {
+public class UsersManagementScreen {
 
     private Main main;
 
-    private List<ClubMember> clubMembers;
+    private List<User> users;
 
     private Employee employee;
 
@@ -36,13 +33,17 @@ public class MembersManagementScreen {
     private Button addMemberButton;
     private Button findMemberButton;
 
-    private TableView<ClubMember> tableView;
+    private TableView<User> tableView;
 
-    public MembersManagementScreen(Main main, Employee employee, List<User> clubMembers) {
+    public UsersManagementScreen(Main main, Employee employee, List<User> users) {
 
 
-        if (clubMembers != null) {
-            this.clubMembers = clubMembers.stream()
+        if (users != null && employee instanceof Manager) {
+            this.users = users;
+        }
+
+        if (users != null && !(employee instanceof Manager)) {
+            this.users = users.stream()
                     .filter(user -> user instanceof ClubMember)
                     .map(user -> (ClubMember) user)
                     .collect(Collectors.toList());
@@ -61,14 +62,18 @@ public class MembersManagementScreen {
         findMemberButton = new Button("Find member");
         findMemberButton.setOnAction(e -> main.showFindUserScreen(employee));
 
-        ObservableList<ClubMember> usersObservableList = FXCollections.observableArrayList();
-        if (clubMembers == null) {
-            clubMembers = User.getUsers()
-                    .stream().filter(user -> user instanceof ClubMember)
-                    .map(user -> (ClubMember) user)
+        ObservableList<User> usersObservableList = FXCollections.observableArrayList();
+        if (users == null && employee instanceof Manager) {
+            users = User.getUsers();
+        }
+
+        if (users == null && !(employee instanceof Manager)) {
+            users = User.getUsers()
+                    .stream()
+                    .filter(user -> user instanceof ClubMember)
                     .toList();
         }
-        usersObservableList.addAll(clubMembers);
+        usersObservableList.addAll(users);
 
         initTable(usersObservableList);
 
@@ -86,40 +91,44 @@ public class MembersManagementScreen {
         return borderPane;
     }
 
-    private void initTable(ObservableList<ClubMember> usersObservableList) {
+    private void initTable(ObservableList<User> usersObservableList) {
 
         tableView = new TableView<>(usersObservableList);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        TableColumn<ClubMember, String> idCol = new TableColumn<>("ID");
+        TableColumn<User, String> idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<ClubMember, String> accountTypeCol = new TableColumn<>("Type");
+        TableColumn<User, String> accountTypeCol = new TableColumn<>("Type");
         accountTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));
 
-        TableColumn<ClubMember, String> usernameCol = new TableColumn<>("Username");
+        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<ClubMember, String> firstNameCol = new TableColumn<>("First Name");
+        TableColumn<User, String> firstNameCol = new TableColumn<>("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
-        TableColumn<ClubMember, String> lastNameCol = new TableColumn<>("Last Name");
+        TableColumn<User, String> lastNameCol = new TableColumn<>("Last Name");
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
-        TableColumn<ClubMember, String> emailCol = new TableColumn<>("Email");
+        TableColumn<User, String> emailCol = new TableColumn<>("Email");
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        TableColumn<ClubMember, String> birthDateCol = new TableColumn<>("Birth date");
+        TableColumn<User, String> birthDateCol = new TableColumn<>("Birth date");
         birthDateCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
 
-        TableColumn<ClubMember, String> membershipCardStatusCol = new TableColumn<>("Card");
-        membershipCardStatusCol.setCellValueFactory(cellData -> new SimpleStringProperty(
-                    cellData.getValue().getMembershipCard() == null
-                            ? "No card"
-                            : cellData.getValue().getMembershipCard().getMembershipCardStatus().toString()
-                ));
+        TableColumn<User, String> membershipCardStatusCol = new TableColumn<>("Card");
+        membershipCardStatusCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof ClubMember clubMember) {
+                return new SimpleStringProperty(clubMember.getMembershipCard() == null
+                        ? "No card"
+                        : clubMember.getMembershipCard().getMembershipCardStatus().toString());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
 
-        TableColumn<ClubMember, String> activeCol = new TableColumn<>("Active");
+        TableColumn<User, String> activeCol = new TableColumn<>("Active");
         activeCol.setCellValueFactory(cellData -> {
             if (cellData.getValue() instanceof Coach coach) {
                 return new SimpleStringProperty(coach.isActive() ? "Yes" : "No");
@@ -128,10 +137,10 @@ public class MembersManagementScreen {
             }
         });
 
-        TableColumn<ClubMember, Void> updateMemberCol = new TableColumn<>();
+        TableColumn<User, Void> updateMemberCol = new TableColumn<>();
         updateMemberCol.setCellFactory(param -> createButtonTableCell("Update", this::update));
 
-        TableColumn<ClubMember, Void> removeMemberCol = new TableColumn<>();
+        TableColumn<User, Void> removeMemberCol = new TableColumn<>();
         removeMemberCol.setCellFactory(param -> createButtonTableCell("Remove", this::remove));
 
         tableView.getColumns().add(idCol);
@@ -149,7 +158,7 @@ public class MembersManagementScreen {
         tableView.setPrefHeight(300);
     }
 
-    private TableCell<ClubMember, Void> createButtonTableCell(String buttonText, Consumer<ClubMember> action) {
+    private TableCell<User, Void> createButtonTableCell(String buttonText, Consumer<User> action) {
         return new TableCell<>() {
             private final Button actionButton = new Button(buttonText);
 
@@ -161,8 +170,8 @@ public class MembersManagementScreen {
 
                 actionButton.setOnAction(event -> {
 
-                    ClubMember clubMember = getTableView().getItems().get(getIndex());
-                    action.accept(clubMember);
+                    User user = getTableView().getItems().get(getIndex());
+                    action.accept(user);
                 });
             }
 
@@ -175,19 +184,19 @@ public class MembersManagementScreen {
         };
     }
 
-    private void update(ClubMember clubMember) {
+    private void update(User user) {
 
-        main.showUpdateUserScreen(employee, clubMember);
+        main.showUpdateUserScreen(employee, user);
     }
 
-    private void remove(ClubMember clubMember) {
+    private void remove(User user) {
 
         Optional<User> userToRemove = User.getUsers()
                 .stream()
-                .filter(user -> user.equals(clubMember))
+                .filter(u -> u.equals(user))
                 .findFirst();
 
-        userToRemove.ifPresent(user -> {
+        userToRemove.ifPresent(u -> {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Deletion");

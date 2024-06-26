@@ -37,7 +37,7 @@ public class LeftPane extends VBox {
 
         if (user instanceof Employee employee) {
 
-            membersManagementButton = new Button("Members Management");
+            membersManagementButton = new Button("Users Management");
             membersManagementButton.setOnAction(e -> main.showMembersManagementScreen(employee, null));
 
             eventsManagementButton = new Button("Events Management");

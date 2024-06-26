@@ -106,6 +106,11 @@ public class UpdateUserScreen implements Validatable {
         updateFirstName();
         updateLastName();
         updateBirthDate();
+
+        if (updatedUser instanceof Employee) {
+            updateSalary();
+        }
+
         if (updatedUser instanceof Coach) {
             updateActiveStatus();
         }
@@ -164,6 +169,11 @@ public class UpdateUserScreen implements Validatable {
 
             updatedUser.setBirthDate(form.getBirthDateField().getValue());
         }
+    }
+
+    private void updateSalary() {
+
+        ((Employee) updatedUser).setSalary(Double.valueOf(form.getSalaryTextField().getText()));
     }
 
     public void updateActiveStatus() {

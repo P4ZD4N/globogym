@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.forms;
 
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.Employee;
+import com.p4zd4n.globogym.entity.Manager;
 import com.p4zd4n.globogym.entity.User;
 import lombok.Getter;
 
@@ -39,10 +40,15 @@ public class UpdateUserForm extends Form {
         add(birthDateLabel, 0, 6);
         birthDateField.setValue(updatedUser.getBirthDate());
         add(birthDateField, 1, 6);
+        if (updatedUser instanceof Employee employee && updatingUser instanceof Manager) {
+            add(salaryLabel, 0, 7);
+            salaryTextField.setText(String.valueOf(employee.getSalary()));
+            add(salaryTextField, 1, 7);
+        }
         if (updatedUser instanceof Coach coach && updatingUser instanceof Employee) {
-            add(activeLabel, 0, 7);
+            add(activeLabel, 0, 8);
             activeCheckbox.setSelected(coach.isActive());
-            add(activeCheckbox, 1, 7);
+            add(activeCheckbox, 1, 8);
         }
     }
 }

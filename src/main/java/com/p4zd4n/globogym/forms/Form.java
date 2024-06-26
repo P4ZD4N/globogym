@@ -39,6 +39,7 @@ public abstract class Form extends GridPane {
     protected Label eventEndTimeLabel;
     protected Label coachLabel;
     protected Label classesTypeLabel;
+    protected Label salaryLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
@@ -51,6 +52,7 @@ public abstract class Form extends GridPane {
     protected TextField maxRoomCapacityField;
     protected TextField eventNameTextField;
     protected TextField eventDescriptionTextField;
+    protected TextField salaryTextField;
 
     protected PasswordField passwordField;
     protected PasswordField confirmPasswordField;
@@ -62,6 +64,7 @@ public abstract class Form extends GridPane {
 
     protected CheckBox clubMemberCheckBox;
     protected CheckBox coachCheckbox;
+    protected CheckBox employeeCheckbox;
     protected CheckBox activeCheckbox;
     protected CheckBox inactiveCheckbox;
     protected CheckBox eventCheckbox;
@@ -131,6 +134,9 @@ public abstract class Form extends GridPane {
 
         coachCheckbox = new CheckBox("Coach");
         coachCheckbox.getStyleClass().add("checkbox");
+
+        employeeCheckbox = new CheckBox("Employee");
+        employeeCheckbox.getStyleClass().add("checkbox");
 
         birthDateLabel = new Label("Birth date:");
         birthDateLabel.getStyleClass().add("label");
@@ -278,5 +284,11 @@ public abstract class Form extends GridPane {
         classesTypeComboBox.getItems().add(null);
         classesTypeComboBox.getItems().addAll(
                 ClassesType.getAll().stream().map(ClassesType::getType).toList());
+
+        salaryLabel = new Label("Salary:");
+        salaryLabel.getStyleClass().add("label");
+
+        salaryTextField = new TextField();
+        salaryTextField.getStyleClass().add("field");
     }
 }
