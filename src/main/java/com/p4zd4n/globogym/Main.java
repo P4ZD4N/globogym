@@ -63,66 +63,15 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        Room room1 = new Room(1, 10);
-        Room.serializeRooms();
-
-        ClubMember testClubMember = new ClubMember(
-                "clubm",
-                "clubm@gmail.com",
-                "!Test123",
-                "Wiktor",
-                "Chudy",
-                LocalDate.of(2003, 8, 1));
-        System.out.println("testClubMember registered successfully!");
-
-        Coach testCoach = new Coach(
-                "coach",
-                "coach@gmail.com",
-                "!Test123",
-                "Wiktor",
-                "Chudy",
-                LocalDate.of(2003, 8, 1));
-        testCoach.setActive(true);
-        testCoach.setSpecializations(List.of(ClassesType.ENDURANCE, ClassesType.REHABILITATION, ClassesType.WEIGHT_LOSS));
-        System.out.println("testCoach registered successfully!");
-
-        Coach testCoach1 = new Coach(
-                "coach1",
-                "coach1@gmail.com",
-                "!Test123",
-                "Eryk",
-                "Chudy",
-                LocalDate.of(2003, 8, 1));
-        testCoach1.setActive(true);
-        testCoach1.setSpecializations(List.of(ClassesType.CARDIO, ClassesType.WOMEN_TRAINING, ClassesType.REHABILITATION));
-        System.out.println("testCoach registered successfully!");
-
-        Employee testEmployee = new Employee(
-                "emp",
-                "emp@gmail.com",
-                "!Test123",
-                "Wiktor",
-                "Chudy",
-                LocalDate.of(2003, 8, 1),
-                4000.0);
-        System.out.println("testEmployee registered successfully!");
-
-        Manager manager = new Manager(
-                "man",
-                "man@gmail.com",
-                "!Test123",
-                "Wiktor",
-                "Chudy",
-                LocalDate.of(2003, 8, 1),
-                4000.0);
-        System.out.println("manager registered successfully!");
-
-        User.serializeUsers();
-
         Event.deserializeEvents();
         Room.deserializeRooms();
         User.deserializeUsers();
         MembershipCard.deserializeMembershipCards();
+
+        createExampleUsers();
+
+        User.serializeUsers();
+
         MembershipCard.getMembershipCards()
                     .stream()
                     .filter(membershipCard -> membershipCard.getExpirationDate().isBefore(LocalDate.now()))
@@ -325,6 +274,75 @@ public class Main extends Application {
         primaryStage.setScene(statisticsScene);
     }
 
+    private static void createExampleUsers() {
+
+        if (Room.findByNumber(1) == null) {
+            Room room1 = new Room(1, 10);
+            Room.serializeRooms();
+        }
+
+        if (User.findByUsername("testClubm") == null) {
+            ClubMember testClubMember = new ClubMember(
+                    "testClubm",
+                    "testClubm@gmail.com",
+                    "!Test123",
+                    "Wiktor",
+                    "Chudy",
+                    LocalDate.of(2000, 4, 16));
+            System.out.println("testClubMember registered successfully!");
+        }
+
+        if (User.findByUsername("testCoach1") == null) {
+            Coach testCoach = new Coach(
+                    "testCoach1",
+                    "testCoach1@gmail.com",
+                    "!Test123",
+                    "Robert",
+                    "Mocny",
+                    LocalDate.of(2003, 8, 1));
+            testCoach.setActive(true);
+            testCoach.setSpecializations(List.of(ClassesType.ENDURANCE, ClassesType.REHABILITATION, ClassesType.WEIGHT_LOSS));
+            System.out.println("testCoach registered successfully!");
+        }
+
+        if (User.findByUsername("testCoach2") == null) {
+            Coach testCoach1 = new Coach(
+                    "testCoach2",
+                    "testCoach2@gmail.com",
+                    "!Test123",
+                    "Eryk",
+                    "Wilk",
+                    LocalDate.of(2004, 10, 11));
+            testCoach1.setActive(true);
+            testCoach1.setSpecializations(List.of(ClassesType.CARDIO, ClassesType.WOMEN_TRAINING, ClassesType.REHABILITATION));
+            System.out.println("testCoach registered successfully!");
+        }
+
+        if (User.findByUsername("testEmp") == null) {
+            Employee testEmployee = new Employee(
+                    "testEmp",
+                    "testEmp@gmail.com",
+                    "!Test123",
+                    "Jan",
+                    "Kowalski",
+                    LocalDate.of(2002, 9, 11),
+                    4000.0);
+            System.out.println("testEmployee registered successfully!");
+        }
+
+        if (User.findByUsername("testMan") == null) {
+            Manager manager = new Manager(
+                    "testMan",
+                    "testMan@gmail.com",
+                    "!Test123",
+                    "Karol",
+                    "Krawczyk",
+                    LocalDate.of(1999, 1, 19),
+                    4000.0);
+            System.out.println("manager registered successfully!");
+        }
+
+    }
 
     public void exit() {
 
