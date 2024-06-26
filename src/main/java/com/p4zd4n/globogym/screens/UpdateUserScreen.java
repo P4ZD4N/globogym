@@ -1,10 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.forms.UpdateUserForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
@@ -107,7 +104,7 @@ public class UpdateUserScreen implements Validatable {
         updateLastName();
         updateBirthDate();
 
-        if (updatedUser instanceof Employee) {
+        if (updatedUser instanceof Employee && updatingUser instanceof Manager) {
             updateSalary();
         }
 
