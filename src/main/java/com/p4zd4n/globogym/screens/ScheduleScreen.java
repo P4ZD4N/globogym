@@ -683,9 +683,15 @@ public class ScheduleScreen {
 
                                 if (buttonType.getButtonData() == ButtonBar.ButtonData.APPLY) {
                                     classes.addParticipant((ClubMember) user);
+                                    ((ClubMember) user).addClassesParticipatedIn(classes);
+                                    Event.serializeEvents();
+                                    User.serializeUsers();
                                     alert.setResult(ButtonType.OK);
                                 } else if (buttonType.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
                                     classes.removeParticipant((ClubMember) user);
+                                    ((ClubMember) user).removeClassesParticipatedIn(classes);
+                                    Event.serializeEvents();
+                                    User.serializeUsers();
                                     alert.setResult(ButtonType.OK);
                                 } else if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                                     alert.setResult(ButtonType.OK);

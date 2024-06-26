@@ -142,6 +142,8 @@ public class ClassesParticipantsScreen {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             classes.getParticipants().remove(clubMember);
+            clubMember.removeClassesParticipatedIn(classes);
+            User.serializeUsers();
             Event.serializeEvents();
         }
     }
@@ -192,6 +194,8 @@ public class ClassesParticipantsScreen {
                     classes.getParticipants().add(clubMember);
                     updatePlacesStatusLabel();
                     tableView.getItems().add(clubMember);
+                    clubMember.addClassesParticipatedIn(classes);
+                    User.serializeUsers();
                     Event.serializeEvents();
                     dialog.close();
                 }
