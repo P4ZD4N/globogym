@@ -1,8 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.Room;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.enums.OpeningHours;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;

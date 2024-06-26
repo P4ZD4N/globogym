@@ -1,6 +1,6 @@
 package com.p4zd4n.globogym;
 
-import com.p4zd4n.globogym.entity.*;
+import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.screens.*;

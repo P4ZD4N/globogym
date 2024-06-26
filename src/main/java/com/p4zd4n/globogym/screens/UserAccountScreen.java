@@ -1,9 +1,9 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.Coach;
+import com.p4zd4n.globogym.entities.Employee;
+import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;

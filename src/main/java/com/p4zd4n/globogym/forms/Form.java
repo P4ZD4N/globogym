@@ -1,8 +1,8 @@
 package com.p4zd4n.globogym.forms;
 
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.Room;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.Coach;
+import com.p4zd4n.globogym.entities.Room;
+import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import javafx.scene.control.*;

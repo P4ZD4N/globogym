@@ -1,14 +1,14 @@
 package com.p4zd4n.globogym.screens.add;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.Event;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.Employee;
+import com.p4zd4n.globogym.entities.Event;
+import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.forms.add.AddOtherEventForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
-import com.p4zd4n.globogym.util.Validatable;
-import com.p4zd4n.globogym.util.Validation;
+import com.p4zd4n.globogym.utils.Validatable;
+import com.p4zd4n.globogym.utils.Validation;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

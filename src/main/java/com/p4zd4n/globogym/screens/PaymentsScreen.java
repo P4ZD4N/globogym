@@ -1,7 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
+import com.p4zd4n.globogym.entities.ClubMember;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;

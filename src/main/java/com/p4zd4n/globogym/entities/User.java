@@ -1,8 +1,5 @@
-package com.p4zd4n.globogym.entity;
+package com.p4zd4n.globogym.entities;
 
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
 

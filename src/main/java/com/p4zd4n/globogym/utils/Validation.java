@@ -1,7 +1,7 @@
-package com.p4zd4n.globogym.util;
+package com.p4zd4n.globogym.utils;
 
-import com.p4zd4n.globogym.entity.Room;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.Room;
+import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.forms.*;
 import com.p4zd4n.globogym.forms.add.AddOtherEventForm;
 import com.p4zd4n.globogym.forms.add.AddRoomForm;

@@ -1,7 +1,7 @@
 package com.p4zd4n.globogym.panes;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

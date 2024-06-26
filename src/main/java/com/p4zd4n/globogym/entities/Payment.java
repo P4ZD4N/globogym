@@ -1,4 +1,4 @@
-package com.p4zd4n.globogym.entity;
+package com.p4zd4n.globogym.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

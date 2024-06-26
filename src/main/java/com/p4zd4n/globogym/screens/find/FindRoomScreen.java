@@ -1,7 +1,7 @@
 package com.p4zd4n.globogym.screens.find;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.*;
+import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.forms.find.FindRoomForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;

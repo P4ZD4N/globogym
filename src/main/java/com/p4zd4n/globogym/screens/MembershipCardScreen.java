@@ -1,14 +1,14 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.MembershipCard;
+import com.p4zd4n.globogym.entities.ClubMember;
+import com.p4zd4n.globogym.entities.Coach;
+import com.p4zd4n.globogym.entities.MembershipCard;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
-import com.p4zd4n.globogym.util.EmptySpace;
+import com.p4zd4n.globogym.utils.EmptySpace;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -18,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;

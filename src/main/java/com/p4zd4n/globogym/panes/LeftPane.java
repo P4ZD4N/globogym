@@ -1,10 +1,10 @@
 package com.p4zd4n.globogym.panes;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.Manager;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.ClubMember;
+import com.p4zd4n.globogym.entities.Employee;
+import com.p4zd4n.globogym.entities.Manager;
+import com.p4zd4n.globogym.entities.User;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

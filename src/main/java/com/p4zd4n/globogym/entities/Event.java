@@ -1,6 +1,5 @@
-package com.p4zd4n.globogym.entity;
+package com.p4zd4n.globogym.entities;
 
-import com.p4zd4n.globogym.enums.ClassesType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

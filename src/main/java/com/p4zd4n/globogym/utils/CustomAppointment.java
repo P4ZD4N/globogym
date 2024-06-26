@@ -1,8 +1,7 @@
-package com.p4zd4n.globogym.util;
+package com.p4zd4n.globogym.utils;
 
-import com.p4zd4n.globogym.entity.Classes;
-import com.p4zd4n.globogym.entity.Event;
-import com.p4zd4n.globogym.enums.ClassesType;
+import com.p4zd4n.globogym.entities.Classes;
+import com.p4zd4n.globogym.entities.Event;
 import jfxtras.scene.control.agenda.Agenda;
 import lombok.Getter;
 import lombok.Setter;

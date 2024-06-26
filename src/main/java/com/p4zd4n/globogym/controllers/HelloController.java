@@ -1,4 +1,4 @@
-package com.p4zd4n.globogym.controller;
+package com.p4zd4n.globogym.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

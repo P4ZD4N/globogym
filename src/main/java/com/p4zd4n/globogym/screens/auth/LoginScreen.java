@@ -1,8 +1,8 @@
 package com.p4zd4n.globogym.screens.auth;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.Coach;
-import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.entities.Coach;
+import com.p4zd4n.globogym.entities.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

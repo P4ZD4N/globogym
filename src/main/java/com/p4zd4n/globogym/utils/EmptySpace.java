@@ -1,4 +1,4 @@
-package com.p4zd4n.globogym.util;
+package com.p4zd4n.globogym.utils;
 
 import javafx.scene.layout.Region;
 
