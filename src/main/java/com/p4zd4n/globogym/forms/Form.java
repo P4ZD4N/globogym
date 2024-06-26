@@ -1,16 +1,15 @@
 package com.p4zd4n.globogym.forms;
 
-import com.p4zd4n.globogym.entity.MembershipCard;
+import com.p4zd4n.globogym.entity.Coach;
+import com.p4zd4n.globogym.entity.Room;
+import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import jfxtras.scene.control.CalendarTimePicker;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 public abstract class Form extends GridPane {
@@ -23,8 +22,8 @@ public abstract class Form extends GridPane {
     protected Label firstNameLabel;
     protected Label lastNameLabel;
     protected Label birthDateLabel;
-    protected Label minBirthDateLabel;
-    protected Label maxBirthDateLabel;
+    protected Label minDateLabel;
+    protected Label maxDateLabel;
     protected Label membershipCardStatusLabel;
     protected Label activeLabel;
     protected Label roomNumberLabel;
@@ -37,6 +36,7 @@ public abstract class Form extends GridPane {
     protected Label eventEndDateLabel;
     protected Label eventStartTimeLabel;
     protected Label eventEndTimeLabel;
+    protected Label coachLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
@@ -62,14 +62,18 @@ public abstract class Form extends GridPane {
     protected CheckBox coachCheckbox;
     protected CheckBox activeCheckbox;
     protected CheckBox inactiveCheckbox;
+    protected CheckBox eventCheckbox;
+    protected CheckBox classesCheckbox;
 
     protected DatePicker birthDateField;
-    protected DatePicker minBirthDateField;
-    protected DatePicker maxBirthDateField;
+    protected DatePicker minDateField;
+    protected DatePicker maxDateField;
     protected DatePicker eventStartDateField;
     protected DatePicker eventEndDateField;
 
     protected ComboBox<MembershipCardStatus> membershipCardStatusComboBox;
+    protected ComboBox<String> coachComboBox;
+    protected ComboBox<Integer> roomComboBox;
 
     protected CalendarTimePicker eventStartTimePicker;
     protected CalendarTimePicker eventEndTimePicker;
@@ -130,15 +134,15 @@ public abstract class Form extends GridPane {
         birthDateField = new DatePicker();
         birthDateField.getStyleClass().add("field");
 
-        minBirthDateLabel = new Label("Min. birth date:");
-        minBirthDateLabel.getStyleClass().add("label");
-        minBirthDateField = new DatePicker();
-        minBirthDateField.getStyleClass().add("field");
+        minDateLabel = new Label();
+        minDateLabel.getStyleClass().add("label");
+        minDateField = new DatePicker();
+        minDateField.getStyleClass().add("field");
 
-        maxBirthDateLabel = new Label("Max. birth date:");
-        maxBirthDateLabel.getStyleClass().add("label");
-        maxBirthDateField = new DatePicker();
-        maxBirthDateField.getStyleClass().add("field");
+        maxDateLabel = new Label();
+        maxDateLabel.getStyleClass().add("label");
+        maxDateField = new DatePicker();
+        maxDateField.getStyleClass().add("field");
 
         membershipCardStatusLabel = new Label("Card status:");
         membershipCardStatusLabel.getStyleClass().add("label");
@@ -241,5 +245,27 @@ public abstract class Form extends GridPane {
         eventEndTimeLabel.getStyleClass().add("label");
         eventEndTimePicker = new CalendarTimePicker();
         eventEndTimePicker.getStyleClass().add("field");
+
+        eventCheckbox = new CheckBox("Event");
+        eventCheckbox.getStyleClass().add("checkbox");
+
+        classesCheckbox = new CheckBox("Classes");
+        classesCheckbox.getStyleClass().add("checkbox");
+
+        coachLabel = new Label("Coach:");
+        coachLabel.getStyleClass().add("label");
+
+        coachComboBox = new ComboBox<>();
+        coachComboBox.getItems().addAll(
+                User.getUsers().stream()
+                        .filter(user -> user instanceof Coach)
+                        .map(user -> "ID: " +
+                                user.getId() + ", " +
+                                user.getFirstName() + " " +
+                                user.getLastName())
+                        .toList());
+
+        roomComboBox = new ComboBox<>();
+        roomComboBox.getItems().addAll(Room.getRooms().stream().map(Room::getNumber).toList());
     }
 }

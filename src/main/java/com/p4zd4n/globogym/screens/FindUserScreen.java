@@ -184,8 +184,8 @@ public class FindUserScreen {
 
     private void findUsersByBirthDate() {
 
-        LocalDate minDate = form.getMinBirthDateField().getValue();
-        LocalDate maxDate = form.getMaxBirthDateField().getValue();
+        LocalDate minDate = form.getMinDateField().getValue();
+        LocalDate maxDate = form.getMaxDateField().getValue();
 
         if (minDate == null && maxDate == null) {
             return;
@@ -201,7 +201,7 @@ public class FindUserScreen {
                     .forEach(usersFoundByBirthDate::add);
         }
 
-        if (form.getMaxBirthDateField().getValue() != null) {
+        if (form.getMaxDateField().getValue() != null) {
 
             User.getUsers()
                     .stream()

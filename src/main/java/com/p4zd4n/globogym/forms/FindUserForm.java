@@ -19,10 +19,10 @@ public class FindUserForm extends Form {
         add(firstNameField, 1, 3);
         add(lastNameLabel, 0, 4);
         add(lastNameField, 1, 4);
-        add(minBirthDateLabel, 0, 5);
-        add(minBirthDateField, 1, 5);
-        add(maxBirthDateLabel, 0, 6);
-        add(maxBirthDateField, 1, 6);
+        add(minDateLabel, 0, 5);
+        add(minDateField, 1, 5);
+        add(maxDateLabel, 0, 6);
+        add(maxDateField, 1, 6);
         add(membershipCardStatusLabel, 0, 7);
         add(membershipCardStatusComboBox, 1, 7);
         add(activeCheckbox, 0, 8);

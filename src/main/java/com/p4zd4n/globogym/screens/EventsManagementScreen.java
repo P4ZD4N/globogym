@@ -56,7 +56,7 @@ public class EventsManagementScreen {
         addOtherEventButton.setOnAction(e -> main.showAddOtherEventScreen(employee));
 
         findEventButton = new Button("Find event");
-        findEventButton.setOnAction(e -> main.showFindUserScreen(employee));
+        findEventButton.setOnAction(e -> main.showFindEventScreen(employee));
 
         ObservableList<Event> eventsObservableList = FXCollections.observableArrayList();
         if (events == null) {
@@ -93,8 +93,6 @@ public class EventsManagementScreen {
 
         TableColumn<Event, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         TableColumn<Event, String> startDateCol = new TableColumn<>("Start date");
         startDateCol.setCellValueFactory(cellData -> {

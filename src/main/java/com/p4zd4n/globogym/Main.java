@@ -35,6 +35,7 @@ public class Main extends Application {
     private Scene updateRoomScene;
     private Scene eventsManagementScene;
     private Scene addOtherEventScene;
+    private Scene findEventScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -291,6 +292,16 @@ public class Main extends Application {
         addOtherEventScene.getStylesheets().add(getClass().getResource("/css/screen-add-other-event.css").toExternalForm());
 
         primaryStage.setScene(addOtherEventScene);
+    }
+
+    public void showFindEventScreen(Employee employee) {
+
+        FindEventScreen findEventScreen = new FindEventScreen(this, employee);
+
+        findEventScene = new Scene(findEventScreen.getView(), 800, 800);
+        findEventScene.getStylesheets().add(getClass().getResource("/css/screen-find-event.css").toExternalForm());
+
+        primaryStage.setScene(findEventScene);
     }
 
     public void exit() {
