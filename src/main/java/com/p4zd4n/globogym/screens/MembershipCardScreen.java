@@ -128,6 +128,7 @@ public class MembershipCardScreen {
             infoLabel.setText("Successfully bought membership!");
             clubMember.setMembershipCard(new MembershipCard(clubMember));
             clubMember.reduceBalance(membershipCardPrice);
+            main.showMembershipCardScreen(clubMember);
             MembershipCard.serializeMembershipCards();
             return;
         }
@@ -136,6 +137,7 @@ public class MembershipCardScreen {
             infoLabel.setText("Successfully renewed membership!");
             membershipCard.renew();
             clubMember.reduceBalance(membershipCardPrice);
+            main.showMembershipCardScreen(clubMember);
             MembershipCard.serializeMembershipCards();
         } else {
             errorLabel.setText("Not enough money! Your current balance: " + clubMember.getBalance());
