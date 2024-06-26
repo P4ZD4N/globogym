@@ -3,10 +3,8 @@ package com.p4zd4n.globogym.screens;
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.Employee;
 import com.p4zd4n.globogym.entity.Event;
-import com.p4zd4n.globogym.entity.Manager;
-import com.p4zd4n.globogym.entity.Room;
+import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.forms.AddOtherEventForm;
-import com.p4zd4n.globogym.forms.AddRoomForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import com.p4zd4n.globogym.util.Validatable;
@@ -77,7 +75,7 @@ public class AddOtherEventScreen implements Validatable {
 
         addButton = new Button("Add");
         addButton.getStyleClass().add("button");
-        addButton.setOnAction(e -> addRoom());
+        addButton.setOnAction(e -> addEvent());
 
         bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
@@ -90,7 +88,7 @@ public class AddOtherEventScreen implements Validatable {
         return borderPane;
     }
 
-    public void addRoom() {
+    public void addEvent() {
 
         boolean areAllFieldsFilled = validation.areAllFieldsFilled();
         boolean isDataValid = validation.isDataValid();
@@ -120,6 +118,9 @@ public class AddOtherEventScreen implements Validatable {
                 endDateTime
         );
 
+        employee.addEventCreatedByEmployee(event);
+
+        User.serializeUsers();
         Event.serializeEvents();
         System.out.println("Added event successfully!");
 

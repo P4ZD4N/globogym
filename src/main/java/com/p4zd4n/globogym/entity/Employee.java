@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class Employee extends User {
 
     private Double salary;
+    private List<Event> eventsCreatedByEmployee = new ArrayList<>();
 
     public Employee(
             String username,
@@ -23,5 +26,10 @@ public class Employee extends User {
 
         super(username, email, password, firstName, lastName, birthDate);
         this.salary = salary;
+    }
+
+    public void addEventCreatedByEmployee(Event event) {
+
+        eventsCreatedByEmployee.add(event);
     }
 }

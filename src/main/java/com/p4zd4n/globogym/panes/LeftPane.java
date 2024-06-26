@@ -32,6 +32,7 @@ public class LeftPane extends VBox {
         scheduleButton.setOnAction(e -> main.showScheduleScreen(user));
 
         statisticsButton = new Button("Statistics");
+        statisticsButton.setOnAction(e -> main.showStatisticsScreen(user));
 
         getChildren().add(homeButton);
 

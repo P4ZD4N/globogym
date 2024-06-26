@@ -79,7 +79,7 @@ public class ScheduleScreen {
         previousWeekButton = new Button("<");
         previousWeekButton.setOnAction(e -> navigateToPreviousWeek());
 
-        buttonAdd = new Button("Add event");
+        buttonAdd = new Button("Add classes");
         buttonAdd.setOnAction(e -> chooseEventCoachAndType());
 
         nextWeekButton = new Button(">");
@@ -127,8 +127,6 @@ public class ScheduleScreen {
         } else if (user instanceof Employee) {
             showAlertForEmployee();
         }
-
-
     }
 
     private void showAlertForCoach(Coach coach) {
@@ -546,6 +544,13 @@ public class ScheduleScreen {
         Classes classes = new Classes(classesType, eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, coach, Room.findByRoomNumber(selectedRoomNumber));
         Classes.addClasses(classes);
 
+        if (user instanceof Employee employee) {
+            employee.addEventCreatedByEmployee(classes);
+        } else if (user instanceof Coach coach1) {
+            coach1.addClassesCreatedByCoach(classes);
+        }
+
+        User.serializeUsers();
         Event.serializeEvents();
         Room.serializeRooms();
     }

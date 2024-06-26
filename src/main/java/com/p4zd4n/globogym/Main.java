@@ -36,6 +36,7 @@ public class Main extends Application {
     private Scene addOtherEventScene;
     private Scene findEventScene;
     private Scene classesParticipantsScene;
+    private Scene statisticsScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -313,6 +314,17 @@ public class Main extends Application {
 
         primaryStage.setScene(classesParticipantsScene);
     }
+
+    public void showStatisticsScreen(User user) {
+
+        StatisticsScreen statisticsScreen = new StatisticsScreen(this, user);
+
+        statisticsScene = new Scene(statisticsScreen.getView(), 800, 800);
+        statisticsScene.getStylesheets().add(getClass().getResource("/css/screen-statistics.css").toExternalForm());
+
+        primaryStage.setScene(statisticsScene);
+    }
+
 
     public void exit() {
 

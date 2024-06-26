@@ -18,6 +18,7 @@ public class Coach extends ClubMember {
 
     private boolean isActive = false;
     private List<ClassesType> specializations = new ArrayList<>();
+    private List<Classes> classesCreatedByCoach = new ArrayList<>();
 
     public Coach(
             String username,
@@ -41,5 +42,10 @@ public class Coach extends ClubMember {
 
         specializations.remove(specialization);
         User.serializeUsers();
+    }
+
+    public void addClassesCreatedByCoach(Classes classes) {
+
+        classesCreatedByCoach.add(classes);
     }
 }
