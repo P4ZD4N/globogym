@@ -3,6 +3,7 @@ package com.p4zd4n.globogym.forms;
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.Room;
 import com.p4zd4n.globogym.entity.User;
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -37,6 +38,7 @@ public abstract class Form extends GridPane {
     protected Label eventStartTimeLabel;
     protected Label eventEndTimeLabel;
     protected Label coachLabel;
+    protected Label classesTypeLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
@@ -72,6 +74,7 @@ public abstract class Form extends GridPane {
     protected DatePicker eventEndDateField;
 
     protected ComboBox<MembershipCardStatus> membershipCardStatusComboBox;
+    protected ComboBox<String> classesTypeComboBox;
     protected ComboBox<String> coachComboBox;
     protected ComboBox<Integer> roomComboBox;
 
@@ -267,5 +270,13 @@ public abstract class Form extends GridPane {
 
         roomComboBox = new ComboBox<>();
         roomComboBox.getItems().addAll(Room.getRooms().stream().map(Room::getNumber).toList());
+
+        classesTypeLabel = new Label("Classes type:");
+        classesTypeLabel.getStyleClass().add("label");
+
+        classesTypeComboBox = new ComboBox<>();
+        classesTypeComboBox.getItems().add(null);
+        classesTypeComboBox.getItems().addAll(
+                ClassesType.getAll().stream().map(ClassesType::getType).toList());
     }
 }

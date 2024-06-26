@@ -2,6 +2,7 @@ package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.*;
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.forms.FindEventForm;
 import com.p4zd4n.globogym.forms.FindUserForm;
 import com.p4zd4n.globogym.panes.LeftPane;
@@ -71,6 +72,7 @@ public class FindEventScreen {
         findEventById();
         findEventsByName();
         findEventsByStartDate();
+        findEventsByClassesType();
         findEventsByCoach();
         findEventsByRoom();
 
@@ -172,6 +174,22 @@ public class FindEventScreen {
         eventsFoundByMinStartDate.retainAll(eventsFoundByMaxStartDate);
 
         foundEvents.retainAll(eventsFoundByMinStartDate);
+    }
+
+    private void findEventsByClassesType() {
+
+        String selectedType = form.getClassesTypeComboBox().getValue();
+
+        if (selectedType == null) {
+            return;
+        }
+
+        List<Event> eventsFoundByClassesType = Event.getEvents()
+                .stream()
+                .filter(event -> event instanceof Classes classes && classes.getClassesType().equals(ClassesType.getByString(selectedType)))
+                .toList();
+
+        foundEvents.retainAll(eventsFoundByClassesType);
     }
 
     private void findEventsByCoach() {

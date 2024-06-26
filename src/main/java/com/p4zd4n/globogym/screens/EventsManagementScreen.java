@@ -91,6 +91,14 @@ public class EventsManagementScreen {
         TableColumn<Event, String> eventTypeCol = new TableColumn<>("Type");
         eventTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));
 
+        TableColumn<Event, String> classesTypeCol = new TableColumn<>("Classes type");
+        classesTypeCol.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof Classes classes) {
+                return new SimpleStringProperty(classes.getClassesType().getType());
+            } else {
+                return new SimpleStringProperty("");
+            }
+        });
         TableColumn<Event, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -138,6 +146,7 @@ public class EventsManagementScreen {
 
         tableView.getColumns().add(idCol);
         tableView.getColumns().add(eventTypeCol);
+        tableView.getColumns().add(classesTypeCol);
         tableView.getColumns().add(nameCol);
         tableView.getColumns().add(startDateCol);
         tableView.getColumns().add(endDateCol);

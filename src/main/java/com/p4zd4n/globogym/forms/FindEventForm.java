@@ -16,11 +16,13 @@ public class FindEventForm extends Form {
         maxDateLabel.setText("Max start date:");
         add(maxDateLabel, 0, 3);
         add(maxDateField, 1, 3);
-        add(coachLabel, 0, 4);
-        add(coachComboBox, 1, 4);
-        add(roomNumberLabel, 0, 5);
-        add(roomComboBox, 1, 5);
-        add(eventCheckbox, 0, 6);
-        add(classesCheckbox, 1, 6);
+        add(classesTypeLabel, 0, 4);
+        add(classesTypeComboBox, 1, 4);
+        add(coachLabel, 0, 5);
+        add(coachComboBox, 1, 5);
+        add(roomNumberLabel, 0, 6);
+        add(roomComboBox, 1, 6);
+        add(eventCheckbox, 0, 7);
+        add(classesCheckbox, 1, 7);
     }
 }
