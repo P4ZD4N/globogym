@@ -14,6 +14,7 @@ public class ClubMember extends User {
     private static final long serialVersionUID = -4495183180571699662L;
 
     private MembershipCard membershipCard;
+    private List<Classes> classesParticipatedIn = new ArrayList<>();
     private List<Payment> paymentsHistory = new ArrayList<>();
     protected Double balance = 0D;
 
@@ -37,5 +38,15 @@ public class ClubMember extends User {
 
         paymentsHistory.add(new Payment(date, amount));
         User.serializeUsers();
+    }
+
+    public void addClassesParticipatedIn(Classes classes) {
+
+        classesParticipatedIn.add(classes);
+    }
+
+    public void removeClassesParticipatedIn(Classes classes) {
+
+        classesParticipatedIn.remove(classes);
     }
 }
