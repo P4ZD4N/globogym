@@ -21,16 +21,15 @@ public class Event implements Serializable {
     private static Long counter = 1L;
 
     private Long id;
-    private ClassesType classesType;
+
     private String name;
     private String description;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
-    public Event(ClassesType classesType, String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public Event(String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
 
         this.id = counter++;
-        this.classesType = classesType;
         this.name = name;
         this.description = description;
         this.startDateTime = startDateTime;

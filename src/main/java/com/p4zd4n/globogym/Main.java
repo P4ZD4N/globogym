@@ -3,6 +3,7 @@ package com.p4zd4n.globogym;
 import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
+import com.p4zd4n.globogym.forms.AddOtherEventForm;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -32,6 +33,8 @@ public class Main extends Application {
     private Scene findRoomScene;
     private Scene addRoomScene;
     private Scene updateRoomScene;
+    private Scene eventsManagementScene;
+    private Scene addOtherEventScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -268,6 +271,26 @@ public class Main extends Application {
         updateRoomScene.getStylesheets().add(getClass().getResource("/css/screen-update-room.css").toExternalForm());
 
         primaryStage.setScene(updateRoomScene);
+    }
+
+    public void showEventsManagementScreen(Employee employee, List<Event> events) {
+
+        EventsManagementScreen eventsManagementScreen = new EventsManagementScreen(this, employee, events);
+
+        eventsManagementScene = new Scene(eventsManagementScreen.getView(), 800, 800);
+        eventsManagementScene.getStylesheets().add(getClass().getResource("/css/screen-events-management.css").toExternalForm());
+
+        primaryStage.setScene(eventsManagementScene);
+    }
+
+    public void showAddOtherEventScreen(Employee employee) {
+
+        AddOtherEventScreen addOtherEventScreen = new AddOtherEventScreen(this, employee);
+
+        addOtherEventScene = new Scene(addOtherEventScreen.getView(), 800, 800);
+        addOtherEventScene.getStylesheets().add(getClass().getResource("/css/screen-add-other-event.css").toExternalForm());
+
+        primaryStage.setScene(addOtherEventScene);
     }
 
     public void exit() {

@@ -18,13 +18,15 @@ public class Classes extends Event {
     private static final long serialVersionUID = -5047333787692779181L;
     private static List<Classes> allClasses = new ArrayList<>();
 
+    private ClassesType classesType;
     private Coach coach;
     private Room room;
     private List<ClubMember> participants = new ArrayList<>();
 
     public Classes(ClassesType classesType, String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, Coach coach, Room room) {
-        super(classesType, name, description, startDateTime, endDateTime);
+        super(name, description, startDateTime, endDateTime);
 
+        this.classesType = classesType;
         this.coach = coach;
         this.room = room;
 

@@ -7,6 +7,9 @@ import com.p4zd4n.globogym.screens.RegistrationScreen;
 import com.p4zd4n.globogym.screens.UpdateUserScreen;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +41,11 @@ public class Validation {
         } else if (form instanceof AddRoomForm) {
             return form.getRoomNumberField().getText() != null &&
                     form.getRoomCapacityField().getText() != null;
+        } else if (form instanceof AddOtherEventForm) {
+            return form.getEventNameTextField().getText() != null &&
+                    form.getEventDescriptionTextField().getText() != null &&
+                    form.getEventStartDateField().getValue() != null &&
+                    form.getEventEndDateField().getValue() != null;
         } else {
             return true;
         }
@@ -69,6 +77,12 @@ public class Validation {
         if (form instanceof UpdateRoomForm) {
             return isRoomNumberValid(((UpdateRoomForm) form).getRoom()) &&
                     isCapacityValid();
+        }
+
+        if (form instanceof AddOtherEventForm) {
+            return isEventNameValid() &&
+                    isEventDescriptionValid() &&
+                    isEventTimeValid();
         }
 
         return true;
@@ -279,5 +293,50 @@ public class Validation {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private boolean isEventNameValid() {
+
+        String enteredName = form.getEventNameTextField().getText();
+
+        if (isNumeric(enteredName)) {
+            validatable.getErrorLabel().setText("Name shouldn't be numeric!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isEventDescriptionValid() {
+
+        String enteredDescription = form.getEventDescriptionTextField().getText();
+
+        if (isNumeric(enteredDescription)) {
+            validatable.getErrorLabel().setText("Description shouldn't be numeric!");
+            return false;
+        }
+
+        if (enteredDescription.length() > 100) {
+            validatable.getErrorLabel().setText("Description should consist of max. 100 characters! (Currently " + enteredDescription.length() + ")");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean  isEventTimeValid() {
+
+        LocalDate startDate = form.getEventStartDateField().getValue();
+        LocalDate endDate = form.getEventEndDateField().getValue();
+
+        LocalTime startTime = LocalTime.ofInstant(form.getEventStartTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
+        LocalTime endTime = LocalTime.ofInstant(form.getEventEndTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
+
+        if (startDate.equals(endDate) && startTime.isAfter(endTime)) {
+            validatable.getErrorLabel().setText("Invalid time!");
+            return false;
+        }
+
+        return true;
     }
 }

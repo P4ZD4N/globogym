@@ -606,7 +606,7 @@ public class ScheduleScreen {
                             Label coachLabel = new Label("Coach:");
                             if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
                                 Label coachValue = new Label(coachFullName);
-                                gridPane.addRow(0, coachLabel, coachValue);
+                                gridPane.addRow(1, coachLabel, coachValue);
                             } else {
                                 ComboBox<String> coachValue = new ComboBox<>();
 
@@ -631,24 +631,24 @@ public class ScheduleScreen {
                                     classes.setCoach((Coach) User.findById(coachId));
                                     Event.serializeEvents();
                                 });
-                                gridPane.addRow(1, coachLabel, coachValue);
+                                gridPane.addRow(2, coachLabel, coachValue);
                             }
 
                             Label startLabel = new Label("Start Date/Time:");
                             Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(2, startLabel, startValue);
+                            gridPane.addRow(3, startLabel, startValue);
 
                             Label endLabel = new Label("End Date/Time:");
                             Label endValue = new Label(classesEndDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(3, endLabel, endValue);
+                            gridPane.addRow(4, endLabel, endValue);
 
                             Label roomLabel = new Label("Room:");
                             Label roomValue = new Label(roomNumber.toString());
-                            gridPane.addRow(4, roomLabel, roomValue);
+                            gridPane.addRow(5, roomLabel, roomValue);
 
                             Label freePlacesLabel = new Label("Free places:");
                             Label freePlacesValue = new Label(Integer.toString(roomCapacity - participants.size()));
-                            gridPane.addRow(5, freePlacesLabel, freePlacesValue);
+                            gridPane.addRow(6, freePlacesLabel, freePlacesValue);
 
                             ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
                             ButtonType signOutButton = new ButtonType("Sign Out", ButtonBar.ButtonData.BACK_PREVIOUS);

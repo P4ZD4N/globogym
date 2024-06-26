@@ -2,9 +2,15 @@ package com.p4zd4n.globogym.forms;
 
 import com.p4zd4n.globogym.entity.MembershipCard;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import jfxtras.scene.control.CalendarTimePicker;
 import lombok.Getter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 public abstract class Form extends GridPane {
@@ -25,6 +31,12 @@ public abstract class Form extends GridPane {
     protected Label roomCapacityLabel;
     protected Label minRoomCapacityLabel;
     protected Label maxRoomCapacityLabel;
+    protected Label eventNameLabel;
+    protected Label eventDescriptionLabel;
+    protected Label eventStartDateLabel;
+    protected Label eventEndDateLabel;
+    protected Label eventStartTimeLabel;
+    protected Label eventEndTimeLabel;
 
     protected TextField idTextField;
     protected TextField usernameField;
@@ -35,6 +47,8 @@ public abstract class Form extends GridPane {
     protected TextField roomCapacityField;
     protected TextField minRoomCapacityField;
     protected TextField maxRoomCapacityField;
+    protected TextField eventNameTextField;
+    protected TextField eventDescriptionTextField;
 
     protected PasswordField passwordField;
     protected PasswordField confirmPasswordField;
@@ -52,8 +66,13 @@ public abstract class Form extends GridPane {
     protected DatePicker birthDateField;
     protected DatePicker minBirthDateField;
     protected DatePicker maxBirthDateField;
+    protected DatePicker eventStartDateField;
+    protected DatePicker eventEndDateField;
 
     protected ComboBox<MembershipCardStatus> membershipCardStatusComboBox;
+
+    protected CalendarTimePicker eventStartTimePicker;
+    protected CalendarTimePicker eventEndTimePicker;
 
     public Form() {
 
@@ -153,5 +172,74 @@ public abstract class Form extends GridPane {
         maxRoomCapacityLabel.getStyleClass().add("label");
         maxRoomCapacityField = new TextField();
         maxRoomCapacityField.getStyleClass().add("field");
+
+        eventNameLabel = new Label("Event name:");
+        eventNameLabel.getStyleClass().add("label");
+        eventNameTextField = new TextField();
+        eventNameTextField.getStyleClass().add("field");
+
+        eventDescriptionLabel = new Label("Event description:");
+        eventDescriptionLabel.getStyleClass().add("label");
+        eventDescriptionTextField = new TextField();
+        eventDescriptionTextField.getStyleClass().add("field");
+
+        eventStartDateLabel = new Label("Start date:");
+        eventStartDateLabel.getStyleClass().add("label");
+        eventStartDateField = new DatePicker();
+        eventStartDateField.getStyleClass().add("field");
+        eventStartDateField.setDayCellFactory(picker -> new DateCell() {
+
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #c03d3d;");
+                }
+            }
+        });
+
+        eventEndDateLabel = new Label("End date:");
+        eventEndDateLabel.getStyleClass().add("label");
+        eventEndDateField = new DatePicker();
+        eventEndDateField.getStyleClass().add("field");
+        eventEndDateField.setDisable(true);
+        eventEndDateField.setDayCellFactory(picker -> new DateCell() {
+
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                LocalDate startDate = eventStartDateField.getValue();
+                if (startDate != null && date.isBefore(startDate)) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #c03d3d;");
+                }
+            }
+        });
+        eventStartDateField.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue != null && eventEndDateField.getValue() != null && newValue.isAfter(eventEndDateField.getValue())) {
+                eventEndDateField.setValue(newValue);
+            }
+
+            if (newValue != null && !newValue.isBefore(LocalDate.now())) {
+                eventEndDateField.setDisable(false);
+            } else {
+                eventEndDateField.setDisable(true);
+                eventEndDateField.setValue(null);
+            }
+        });
+
+        eventStartTimeLabel = new Label("Start time:");
+        eventStartTimeLabel.getStyleClass().add("label");
+        eventStartTimePicker = new CalendarTimePicker();
+        eventStartTimePicker.getStyleClass().add("field");
+
+        eventEndTimeLabel = new Label("End time:");
+        eventEndTimeLabel.getStyleClass().add("label");
+        eventEndTimePicker = new CalendarTimePicker();
+        eventEndTimePicker.getStyleClass().add("field");
     }
 }
