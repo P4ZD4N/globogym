@@ -194,7 +194,8 @@ public class EventsManagementScreen {
     }
 
     private void showParticipants(Event event) {
-        System.out.println("show" + event);
+
+        main.showClassesParticipantsScreen(employee, (Classes) event);
     }
 
     private void update(Event event) {
