@@ -8,6 +8,7 @@ import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.util.EmptySpace;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -101,7 +103,9 @@ public class MembershipCardScreen {
         centerPane.getChildren().add(cardStatus);
         centerPane.getChildren().add(purchaseDate);
         centerPane.getChildren().add(expirationDate);
+        centerPane.getChildren().add(new EmptySpace(40));
         createAndAddCardViewToCenterPane();
+        centerPane.getChildren().add(new EmptySpace(40));
         centerPane.getChildren().add(buyRenewCardButton);
 
         borderPane = new BorderPane();
