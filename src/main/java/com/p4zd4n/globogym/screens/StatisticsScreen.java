@@ -57,7 +57,14 @@ public class StatisticsScreen {
         return borderPane;
     }
 
-    private void initStatisticsForClubMember(ClubMember clubMember) {}
+    private void initStatisticsForClubMember(ClubMember clubMember) {
+
+        Label numberOfClassesParticipatedIn = createLabelWithBoldDescriptor(
+                "Number of classes participated in: ", String.valueOf(clubMember.getClassesParticipatedIn().size())
+        );
+
+        centerPane.getChildren().addAll(numberOfClassesParticipatedIn);
+    }
 
     private void initStatisticsForCoach(Coach coach) {
 
