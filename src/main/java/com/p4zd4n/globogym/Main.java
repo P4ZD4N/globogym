@@ -314,7 +314,7 @@ public class Main extends Application {
                     "Wilk",
                     LocalDate.of(2004, 10, 11));
             testCoach1.setActive(true);
-            testCoach1.setSpecializations(List.of(ClassesType.CARDIO, ClassesType.WOMEN_TRAINING, ClassesType.REHABILITATION));
+            testCoach1.setSpecializations(List.of(ClassesType.CARDIO, ClassesType.WOMEN_TRAINING, ClassesType.STRENGTH));
             System.out.println("testCoach registered successfully!");
         }
 
