@@ -1,11 +1,10 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.management;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.*;
 import com.p4zd4n.globogym.panes.CenterPane;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

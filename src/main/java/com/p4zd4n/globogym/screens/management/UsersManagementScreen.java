@@ -1,4 +1,4 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.management;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.*;

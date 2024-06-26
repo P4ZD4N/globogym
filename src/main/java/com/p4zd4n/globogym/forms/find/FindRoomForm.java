@@ -1,5 +1,6 @@
-package com.p4zd4n.globogym.forms;
+package com.p4zd4n.globogym.forms.find;
 
+import com.p4zd4n.globogym.forms.Form;
 import lombok.Getter;
 
 @Getter

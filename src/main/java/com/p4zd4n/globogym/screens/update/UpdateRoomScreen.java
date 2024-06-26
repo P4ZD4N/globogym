@@ -1,10 +1,8 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.update;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.Employee;
-import com.p4zd4n.globogym.entity.Event;
-import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.forms.AddOtherEventForm;
+import com.p4zd4n.globogym.entity.*;
+import com.p4zd4n.globogym.forms.update.UpdateRoomForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import com.p4zd4n.globogym.util.Validatable;
@@ -18,34 +16,31 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-
 @Getter
-public class AddOtherEventScreen implements Validatable {
+public class UpdateRoomScreen implements Validatable {
 
     private Main main;
 
-    private Employee employee;
+    private Manager manager;
+    private Room room;
 
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private AddOtherEventForm form;
+    private UpdateRoomForm form;
     private HBox bottomContainer;
 
     private Label errorLabel;
 
-    private Button addButton;
+    private Button updateButton;
 
     private Validation validation;
 
-    public AddOtherEventScreen(Main main, Employee employee) {
+    public UpdateRoomScreen(Main main, Manager manager, Room room) {
 
         this.main = main;
-        this.employee = employee;
+        this.manager = manager;
+        this.room = room;
     }
 
     public Pane getView() {
@@ -58,7 +53,7 @@ public class AddOtherEventScreen implements Validatable {
         centerTopContainer.setAlignment(Pos.CENTER);
         centerTopContainer.getChildren().add(errorLabel);
 
-        form = new AddOtherEventForm();
+        form = new UpdateRoomForm(room);
         form.getStyleClass().add("container");
         form.setVgap(10);
         form.setHgap(10);
@@ -69,17 +64,17 @@ public class AddOtherEventScreen implements Validatable {
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
-        borderPane.setTop(new TopPane(main, employee));
+        borderPane.setTop(new TopPane(main, manager));
         borderPane.setCenter(centerContainer);
-        borderPane.setLeft(new LeftPane(main, employee));
+        borderPane.setLeft(new LeftPane(main, manager));
 
-        addButton = new Button("Add");
-        addButton.getStyleClass().add("button");
-        addButton.setOnAction(e -> addEvent());
+        updateButton = new Button("Update");
+        updateButton.getStyleClass().add("button");
+        updateButton.setOnAction(e -> updateRoom());
 
         bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
-        bottomContainer.getChildren().add(addButton);
+        bottomContainer.getChildren().add(updateButton);
 
         borderPane.setBottom(bottomContainer);
 
@@ -88,7 +83,7 @@ public class AddOtherEventScreen implements Validatable {
         return borderPane;
     }
 
-    public void addEvent() {
+    public void updateRoom() {
 
         boolean areAllFieldsFilled = validation.areAllFieldsFilled();
         boolean isDataValid = validation.isDataValid();
@@ -102,28 +97,26 @@ public class AddOtherEventScreen implements Validatable {
             return;
         }
 
-        LocalDate startDate = form.getEventStartDateField().getValue();
-        LocalDate endDate = form.getEventEndDateField().getValue();
+        updateRoomNumber();
+        updateRoomCapacity();
 
-        LocalTime startTime = LocalTime.ofInstant(form.getEventStartTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
-        LocalTime endTime = LocalTime.ofInstant(form.getEventEndTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
+        Room.serializeRooms();
+        main.showRoomsManagementScreen(manager, null);
+    }
 
-        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+    private void updateRoomNumber() {
 
-        Event event = new Event(
-                form.getEventNameTextField().getText(),
-                form.getEventDescriptionTextField().getText(),
-                startDateTime,
-                endDateTime
-        );
+        if (!form.getRoomNumberField().getText().equals(String.valueOf(room.getNumber()))) {
 
-        employee.addEventCreatedByEmployee(event);
+            room.setNumber(Integer.parseInt(form.getRoomNumberField().getText()));
+        }
+    }
 
-        User.serializeUsers();
-        Event.serializeEvents();
-        System.out.println("Added event successfully!");
+    private void updateRoomCapacity() {
 
-        main.showEventsManagementScreen(employee, null);
+        if (!form.getRoomCapacityField().getText().equals(String.valueOf(room.getCapacity()))) {
+
+            room.setCapacity(Integer.parseInt(form.getRoomCapacityField().getText()));
+        }
     }
 }

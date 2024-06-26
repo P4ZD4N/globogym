@@ -1,11 +1,10 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.add;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entity.ClubMember;
-import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.Employee;
+import com.p4zd4n.globogym.entity.Event;
 import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.forms.AddUserForm;
+import com.p4zd4n.globogym.forms.add.AddOtherEventForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import com.p4zd4n.globogym.util.Validatable;
@@ -19,8 +18,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 @Getter
-public class AddUserScreen implements Validatable {
+public class AddOtherEventScreen implements Validatable {
 
     private Main main;
 
@@ -29,7 +33,7 @@ public class AddUserScreen implements Validatable {
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private AddUserForm form;
+    private AddOtherEventForm form;
     private HBox bottomContainer;
 
     private Label errorLabel;
@@ -38,7 +42,7 @@ public class AddUserScreen implements Validatable {
 
     private Validation validation;
 
-    public AddUserScreen(Main main, Employee employee) {
+    public AddOtherEventScreen(Main main, Employee employee) {
 
         this.main = main;
         this.employee = employee;
@@ -54,7 +58,7 @@ public class AddUserScreen implements Validatable {
         centerTopContainer.setAlignment(Pos.CENTER);
         centerTopContainer.getChildren().add(errorLabel);
 
-        form = new AddUserForm();
+        form = new AddOtherEventForm();
         form.getStyleClass().add("container");
         form.setVgap(10);
         form.setHgap(10);
@@ -71,7 +75,7 @@ public class AddUserScreen implements Validatable {
 
         addButton = new Button("Add");
         addButton.getStyleClass().add("button");
-        addButton.setOnAction(e -> addUser());
+        addButton.setOnAction(e -> addEvent());
 
         bottomContainer = new HBox(10);
         bottomContainer.setAlignment(Pos.CENTER);
@@ -84,7 +88,7 @@ public class AddUserScreen implements Validatable {
         return borderPane;
     }
 
-    public void addUser() {
+    public void addEvent() {
 
         boolean areAllFieldsFilled = validation.areAllFieldsFilled();
         boolean isDataValid = validation.isDataValid();
@@ -98,39 +102,28 @@ public class AddUserScreen implements Validatable {
             return;
         }
 
-        if (form.getGroup().getSelectedToggle().equals(form.getClubMemberRadioButton())) {
+        LocalDate startDate = form.getEventStartDateField().getValue();
+        LocalDate endDate = form.getEventEndDateField().getValue();
 
-            ClubMember clubMember = new ClubMember(
-                    form.getUsernameField().getText(),
-                    form.getEmailField().getText(),
-                    form.getPasswordField().getText(),
-                    form.getFirstNameField().getText(),
-                    form.getLastNameField().getText(),
-                    form.getBirthDateField().getValue());
+        LocalTime startTime = LocalTime.ofInstant(form.getEventStartTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
+        LocalTime endTime = LocalTime.ofInstant(form.getEventEndTimePicker().getCalendar().getTime().toInstant(), ZoneId.systemDefault());
 
-            User.serializeUsers();
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
-            System.out.println("Club member registered successfully!");
+        Event event = new Event(
+                form.getEventNameTextField().getText(),
+                form.getEventDescriptionTextField().getText(),
+                startDateTime,
+                endDateTime
+        );
 
-        } else {
+        employee.addEventCreatedByEmployee(event);
 
-            Coach coach = new Coach(
-                    form.getUsernameField().getText(),
-                    form.getEmailField().getText(),
-                    form.getPasswordField().getText(),
-                    form.getFirstNameField().getText(),
-                    form.getLastNameField().getText(),
-                    form.getBirthDateField().getValue());
+        User.serializeUsers();
+        Event.serializeEvents();
+        System.out.println("Added event successfully!");
 
-            if (form.getActiveCheckbox().isSelected()) {
-                coach.setActive(true);
-            }
-
-            User.serializeUsers();
-
-            System.out.println("Coach registered successfully!");
-        }
-
-        main.showMembersManagementScreen(employee, null);
+        main.showEventsManagementScreen(employee, null);
     }
 }

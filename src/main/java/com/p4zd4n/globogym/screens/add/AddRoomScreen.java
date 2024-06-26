@@ -1,8 +1,8 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.add;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.*;
-import com.p4zd4n.globogym.forms.AddRoomForm;
+import com.p4zd4n.globogym.forms.add.AddRoomForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
 import com.p4zd4n.globogym.util.Validatable;

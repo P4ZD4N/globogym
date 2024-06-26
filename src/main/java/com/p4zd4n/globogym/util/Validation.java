@@ -3,11 +3,16 @@ package com.p4zd4n.globogym.util;
 import com.p4zd4n.globogym.entity.Room;
 import com.p4zd4n.globogym.entity.User;
 import com.p4zd4n.globogym.forms.*;
-import com.p4zd4n.globogym.screens.RegistrationScreen;
-import com.p4zd4n.globogym.screens.UpdateUserScreen;
+import com.p4zd4n.globogym.forms.add.AddOtherEventForm;
+import com.p4zd4n.globogym.forms.add.AddRoomForm;
+import com.p4zd4n.globogym.forms.add.AddUserForm;
+import com.p4zd4n.globogym.forms.auth.RegistrationForm;
+import com.p4zd4n.globogym.forms.update.UpdateRoomForm;
+import com.p4zd4n.globogym.forms.update.UpdateUserForm;
+import com.p4zd4n.globogym.screens.auth.RegistrationScreen;
+import com.p4zd4n.globogym.screens.update.UpdateUserScreen;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -324,7 +329,7 @@ public class Validation {
         return true;
     }
 
-    private boolean  isEventTimeValid() {
+    private boolean isEventTimeValid() {
 
         LocalDate startDate = form.getEventStartDateField().getValue();
         LocalDate endDate = form.getEventEndDateField().getValue();

@@ -1,10 +1,10 @@
-package com.p4zd4n.globogym.screens;
+package com.p4zd4n.globogym.screens.auth;
 
 import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entity.ClubMember;
 import com.p4zd4n.globogym.entity.Coach;
 import com.p4zd4n.globogym.entity.User;
-import com.p4zd4n.globogym.forms.RegistrationForm;
+import com.p4zd4n.globogym.forms.auth.RegistrationForm;
 import com.p4zd4n.globogym.util.Validatable;
 import com.p4zd4n.globogym.util.Validation;
 import javafx.geometry.Insets;
