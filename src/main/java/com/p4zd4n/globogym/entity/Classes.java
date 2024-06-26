@@ -1,5 +1,6 @@
 package com.p4zd4n.globogym.entity;
 
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,21 +18,18 @@ public class Classes extends Event {
     private static final long serialVersionUID = -5047333787692779181L;
     private static List<Classes> allClasses = new ArrayList<>();
 
-    private User user;
     private Coach coach;
     private Room room;
     private List<ClubMember> participants = new ArrayList<>();
 
-    public Classes(String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, User user, Room room) {
-        super(name, description, startDateTime, endDateTime);
+    public Classes(ClassesType classesType, String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, Coach coach, Room room) {
+        super(classesType, name, description, startDateTime, endDateTime);
 
-        if (user instanceof Coach || user instanceof Employee) {
+        this.coach = coach;
+        this.room = room;
 
-            this.user = user;
-            this.room = room;
+        allClasses.add(this);
 
-            allClasses.add(this);
-        }
     }
 
     public void addParticipant(ClubMember clubMember) {

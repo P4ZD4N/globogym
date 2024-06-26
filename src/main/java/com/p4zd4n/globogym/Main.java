@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym;
 
 import com.p4zd4n.globogym.entity.*;
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.screens.*;
 import javafx.application.Application;
@@ -77,6 +78,18 @@ public class Main extends Application {
                 "Chudy",
                 LocalDate.of(2003, 8, 1));
         testCoach.setActive(true);
+        testCoach.setSpecializations(List.of(ClassesType.ENDURANCE, ClassesType.REHABILITATION, ClassesType.WEIGHT_LOSS));
+        System.out.println("testCoach registered successfully!");
+
+        Coach testCoach1 = new Coach(
+                "coach1",
+                "coach1@gmail.com",
+                "!Test123",
+                "Eryk",
+                "Chudy",
+                LocalDate.of(2003, 8, 1));
+        testCoach1.setActive(true);
+        testCoach1.setSpecializations(List.of(ClassesType.CARDIO, ClassesType.WOMEN_TRAINING, ClassesType.REHABILITATION));
         System.out.println("testCoach registered successfully!");
 
         Employee testEmployee = new Employee(

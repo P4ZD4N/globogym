@@ -1,6 +1,7 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
+import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.util.CustomAppointment;
 import com.p4zd4n.globogym.entity.*;
@@ -24,7 +25,6 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ScheduleScreen {
@@ -58,6 +58,8 @@ public class ScheduleScreen {
     private LocalDateTime eventEndDateTime;
     private String eventTitle;
     private String eventDescription;
+    private ClassesType classesType;
+    private Coach coach;
 
     public ScheduleScreen(Main main, User user) {
 
@@ -78,7 +80,7 @@ public class ScheduleScreen {
         previousWeekButton.setOnAction(e -> navigateToPreviousWeek());
 
         buttonAdd = new Button("Add event");
-        buttonAdd.setOnAction(e -> chooseEventDate(eventDate));
+        buttonAdd.setOnAction(e -> chooseEventCoachAndType());
 
         nextWeekButton = new Button(">");
         nextWeekButton.setOnAction(e -> navigateToNextWeek());
@@ -118,6 +120,151 @@ public class ScheduleScreen {
         agenda.setDisplayedLocalDateTime(startOfWeek);
     }
 
+    private void chooseEventCoachAndType() {
+
+        if (user instanceof Coach coach) {
+            showAlertForCoach(coach);
+        } else if (user instanceof Employee) {
+            showAlertForEmployee();
+        }
+
+
+    }
+
+    private void showAlertForCoach(Coach coach) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Choose event coach and type");
+        alert.setHeaderText("Please select a coach and event type:");
+
+        Label coachLabel = new Label("ID: " + coach.getId() + ", " + coach.getFirstName() + " " + coach.getLastName());
+        ComboBox<String> claseesTypeComboBox = new ComboBox<>();
+
+        claseesTypeComboBox.getItems().addAll(
+                coach.getSpecializations()
+                        .stream()
+                        .map(ClassesType::getType)
+                        .toList()
+        );
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
+
+        gridPane.add(new Label("Coach:"), 0, 0);
+        gridPane.add(coachLabel, 1, 0);
+
+        gridPane.add(new Label("Classes Type:"), 0, 1);
+        gridPane.add(claseesTypeComboBox, 1, 1);
+
+        alert.getDialogPane().setContent(gridPane);
+
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        alert.getDialogPane().lookupButton(okButton).setDisable(true);
+
+        ChangeListener<String> changeListener = (observable, oldValue, newValue) -> {
+
+            boolean disableButton = claseesTypeComboBox.getValue() == null;
+            alert.getDialogPane().lookupButton(okButton).setDisable(disableButton);
+        };
+
+        claseesTypeComboBox.valueProperty().addListener(changeListener);
+
+        alert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == okButton) {
+
+                this.coach = coach;
+                classesType = ClassesType.getByString(claseesTypeComboBox.getValue());
+
+                chooseEventDate(eventDate);
+            }
+        });
+    }
+
+    private void showAlertForEmployee() {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Choose event coach and type");
+        alert.setHeaderText("Please select a coach and event type:");
+
+        ComboBox<String> coachComboBox = new ComboBox<>();
+        ComboBox<String> classesTypeComboBox = new ComboBox<>();
+
+        coachComboBox.getItems().addAll(User.getUsers().stream()
+                .filter(u -> u instanceof Coach)
+                .map(user -> "ID: " +
+                        user.getId() + ", " +
+                        user.getFirstName() + " " +
+                        user.getLastName()
+                )
+                .toList()
+        );
+
+        coachComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+            classesTypeComboBox.getItems().clear();
+
+            String[] stringElements = newValue.split(" ");
+            Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
+            Coach foundCoach = (Coach) User.findById(coachId);
+
+            classesTypeComboBox.getItems().addAll(
+                    foundCoach.getSpecializations()
+                            .stream()
+                            .map(ClassesType::getType)
+                            .toList()
+            );
+        });
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20));
+
+        gridPane.add(new Label("Coach:"), 0, 0);
+        gridPane.add(coachComboBox, 1, 0);
+
+        gridPane.add(new Label("Classes Type:"), 0, 1);
+        gridPane.add(classesTypeComboBox, 1, 1);
+
+        alert.getDialogPane().setContent(gridPane);
+
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+
+        alert.getDialogPane().lookupButton(okButton).setDisable(true);
+
+        ChangeListener<String> changeListener = (observable, oldValue, newValue) -> {
+
+            boolean disableButton = coachComboBox.getValue() == null || classesTypeComboBox.getValue() == null;
+            alert.getDialogPane().lookupButton(okButton).setDisable(disableButton);
+        };
+
+        coachComboBox.valueProperty().addListener(changeListener);
+        classesTypeComboBox.valueProperty().addListener(changeListener);
+
+        alert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == okButton) {
+
+                String selectedCoach = coachComboBox.getValue();
+                String[] stringElements = selectedCoach.split(" ");
+                Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
+                coach = (Coach) User.findById(coachId);
+
+                classesType = ClassesType.getByString(classesTypeComboBox.getValue());
+
+                chooseEventDate(eventDate);
+            }
+        });
+    }
+
     private void chooseEventDate(DatePicker eventDate) {
 
         StringConverter<Integer> converter = new StringConverter<Integer>() {
@@ -150,6 +297,8 @@ public class ScheduleScreen {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Choose event date");
         alert.setHeaderText("Please select a date:");
+        ButtonType backButton = new ButtonType("Back", ButtonBar.ButtonData.BACK_PREVIOUS);
+        alert.getButtonTypes().add(backButton);
 
         if (eventDate == null)
             this.eventDate.setValue(LocalDate.now());
@@ -252,6 +401,8 @@ public class ScheduleScreen {
                 eventEndDateTime = LocalDateTime.of(selectedDate, LocalTime.of(selectedEndHour, selectedEndMinute));
 
                 chooseEventRoom();
+            } else if (buttonType == backButton) {
+                chooseEventCoachAndType();
             }
         });
     }
@@ -392,17 +543,8 @@ public class ScheduleScreen {
 
     public void addEvent() {
 
-        if (user instanceof Coach specificUser) {
-            Classes classes = new Classes(eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, specificUser, Room.findByRoomNumber(selectedRoomNumber));
-            classes.setCoach(specificUser);
-            Classes.addClasses(classes);
-        } else if (user instanceof Employee specificUser) {
-            Classes classes = new Classes(eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, specificUser, Room.findByRoomNumber(selectedRoomNumber));
-            Classes.addClasses(classes);
-        } else {
-            System.out.println("Unsupported user type.");
-            return;
-        }
+        Classes classes = new Classes(classesType, eventTitle, eventDescription, eventStartDateTime, eventEndDateTime, coach, Room.findByRoomNumber(selectedRoomNumber));
+        Classes.addClasses(classes);
 
         Event.serializeEvents();
         Room.serializeRooms();
@@ -438,17 +580,8 @@ public class ScheduleScreen {
                         if (focusedAppointment instanceof CustomAppointment customAppointment &&
                                 customAppointment.getEvent() instanceof Classes classes) {
 
-                            String coachFullName = "";
-
-                            if (classes.getCoach() == null) {
-                                coachFullName = "-";
-                            } else {
-                                String coachFirstName = classes.getCoach().getFirstName();
-                                String coachLastName = classes.getCoach().getLastName();
-                                coachFullName = (coachFirstName != null ? coachFirstName : "") + " " +
-                                        (coachLastName != null ? coachLastName : "");
-                            }
-
+                            String classesType = classes.getClassesType().getType();
+                            String coachFullName = classes.getCoach().getFirstName() + " " + classes.getCoach().getLastName();
                             LocalDateTime classesStartDateTime = classes.getStartDateTime();
                             LocalDateTime classesEndDateTime = classes.getEndDateTime();
                             Integer roomNumber = classes.getRoom().getNumber();
@@ -466,16 +599,21 @@ public class ScheduleScreen {
                             gridPane.setHgap(10);
                             gridPane.setVgap(10);
 
-                            Label trainerLabel = new Label("Coach:");
-                            if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
-                                Label trainerValue = new Label(coachFullName);
-                                gridPane.addRow(0, trainerLabel, trainerValue);
-                            } else {
-                                ComboBox<String> trainerValue = new ComboBox<>();
+                            Label classesTypeLabel = new Label("Classes type: ");
+                            Label classesTypeValue = new Label(classesType);
+                            gridPane.addRow(0, classesTypeLabel, classesTypeValue);
 
-                                trainerValue.getItems().addAll(User.getUsers()
+                            Label coachLabel = new Label("Coach:");
+                            if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
+                                Label coachValue = new Label(coachFullName);
+                                gridPane.addRow(0, coachLabel, coachValue);
+                            } else {
+                                ComboBox<String> coachValue = new ComboBox<>();
+
+                                coachValue.getItems().addAll(User.getUsers()
                                         .stream()
                                         .filter(u -> u instanceof Coach)
+                                        .filter(c -> ((Coach) c).getSpecializations().contains(classes.getClassesType()))
                                         .map(user -> "ID: " +
                                             user.getId() + ", " +
                                             user.getFirstName() + " " +
@@ -484,32 +622,33 @@ public class ScheduleScreen {
                                         .toList()
                                 );
 
-                                trainerValue.setValue(coachFullName);
-                                trainerValue.setOnAction(event -> {
-                                    String selectedCoach = trainerValue.getValue();
+
+                                coachValue.setValue(coachFullName);
+                                coachValue.setOnAction(event -> {
+                                    String selectedCoach = coachValue.getValue();
                                     String[] stringElements = selectedCoach.split(" ");
                                     Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
                                     classes.setCoach((Coach) User.findById(coachId));
                                     Event.serializeEvents();
                                 });
-                                gridPane.addRow(0, trainerLabel, trainerValue);
+                                gridPane.addRow(1, coachLabel, coachValue);
                             }
 
                             Label startLabel = new Label("Start Date/Time:");
                             Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(1, startLabel, startValue);
+                            gridPane.addRow(2, startLabel, startValue);
 
                             Label endLabel = new Label("End Date/Time:");
                             Label endValue = new Label(classesEndDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(2, endLabel, endValue);
+                            gridPane.addRow(3, endLabel, endValue);
 
                             Label roomLabel = new Label("Room:");
                             Label roomValue = new Label(roomNumber.toString());
-                            gridPane.addRow(3, roomLabel, roomValue);
+                            gridPane.addRow(4, roomLabel, roomValue);
 
                             Label freePlacesLabel = new Label("Free places:");
                             Label freePlacesValue = new Label(Integer.toString(roomCapacity - participants.size()));
-                            gridPane.addRow(4, freePlacesLabel, freePlacesValue);
+                            gridPane.addRow(5, freePlacesLabel, freePlacesValue);
 
                             ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
                             ButtonType signOutButton = new ButtonType("Sign Out", ButtonBar.ButtonData.BACK_PREVIOUS);
