@@ -9,10 +9,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +56,7 @@ public class ClassesParticipantsScreen {
         placesStatusLabel = new Label("Places status: " + classes.getParticipants().size() + " / " + classes.getRoom().getCapacity());
 
         addParticipantButton = new Button("Add participant");
-        addParticipantButton.setOnAction(e -> main.showAddUserScreen(employee));
+        addParticipantButton.setOnAction(e -> showUsersList());
 
         ObservableList<ClubMember> participantsObservableList = FXCollections.observableArrayList();
         participantsObservableList.addAll(classes.getParticipants());
@@ -140,5 +144,68 @@ public class ClassesParticipantsScreen {
             classes.getParticipants().remove(clubMember);
             Event.serializeEvents();
         }
+    }
+
+    private void showUsersList() {
+
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(main.getPrimaryStage());
+
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.setPadding(new Insets(10));
+
+        TextField searchField = new TextField();
+        searchField.setPromptText("Search by last name");
+
+        ListView<String> usersListView = new ListView<>();
+        ObservableList<String> users = FXCollections.observableArrayList(
+                User.getUsers().stream()
+                        .filter(user -> user instanceof ClubMember)
+                        .map(user -> user.getUsername() + " (" + user.getFirstName() + " " + user.getLastName() + ")")
+                        .collect(Collectors.toList())
+        );
+        usersListView.setItems(users);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            List<String> filteredUsers = User.getUsers().stream()
+                    .filter(user -> user instanceof ClubMember)
+                    .filter(user -> user.getLastName().toLowerCase().contains(newValue.toLowerCase()))
+                    .map(user -> user.getUsername() + " (" + user.getFirstName() + " " + user.getLastName() + ")")
+                    .collect(Collectors.toList());
+
+            usersListView.setItems(FXCollections.observableArrayList(filteredUsers));
+        });
+
+        Button addButton = new Button("Add");
+        addButton.setOnAction(e -> {
+
+            String selectedUser = usersListView.getSelectionModel().getSelectedItem();
+
+            if (selectedUser != null) {
+
+                String username = selectedUser.split(" ")[0];
+                ClubMember clubMember = (ClubMember) User.findByUsername(username);
+
+                if (clubMember != null && !classes.getParticipants().contains(clubMember)) {
+                    classes.getParticipants().add(clubMember);
+                    updatePlacesStatusLabel();
+                    tableView.getItems().add(clubMember);
+                    Event.serializeEvents();
+                    dialog.close();
+                }
+            }
+        });
+
+        dialogVbox.getChildren().addAll(new Label("Select a user to add:"), searchField, usersListView, addButton);
+
+        Scene dialogScene = new Scene(dialogVbox, 300, 300);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void updatePlacesStatusLabel() {
+        placesStatusLabel.setText("Places status: " + classes.getParticipants().size() + " / " + classes.getRoom().getCapacity());
     }
 }
