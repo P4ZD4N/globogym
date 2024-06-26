@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -92,11 +94,19 @@ public class EventsManagementScreen {
         TableColumn<Event, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         TableColumn<Event, String> startDateCol = new TableColumn<>("Start date");
-        startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        startDateCol.setCellValueFactory(cellData -> {
+            LocalDateTime startDateTime = cellData.getValue().getStartDateTime();
+            return new SimpleStringProperty(startDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        });
 
         TableColumn<Event, String> endDateCol = new TableColumn<>("End date");
-        endDateCol.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        endDateCol.setCellValueFactory(cellData -> {
+            LocalDateTime endDateTime = cellData.getValue().getEndDateTime();
+            return new SimpleStringProperty(endDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        });
 
         TableColumn<Event, String> coachCol = new TableColumn<>("Coach");
         coachCol.setCellValueFactory(cellData -> {
@@ -162,9 +172,25 @@ public class EventsManagementScreen {
 
             @Override
             protected void updateItem(Void item, boolean empty) {
+
                 super.updateItem(item, empty);
-                if (empty) setGraphic(null);
-                else setGraphic(actionButton);
+
+                if (empty || getTableView().getItems().get(getIndex()) == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Event event = getTableView().getItems().get(getIndex());
+
+                if ("Participants".equals(buttonText)) {
+                    if (event instanceof Classes) {
+                        setGraphic(actionButton);
+                    } else {
+                        setGraphic(null);
+                    }
+                } else {
+                    setGraphic(actionButton);
+                }
             }
         };
     }
