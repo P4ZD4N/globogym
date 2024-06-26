@@ -13,3 +13,31 @@
     -fx-background-color: #4995c5;
     -fx-cursor: hand;
 }
+
+.event {
+    -fx-background-color: #b0204a;
+}
+
+.cardio {
+    -fx-background-color: #25b020;
+}
+
+.strength {
+    -fx-background-color: #b07220;
+}
+
+.endurance {
+    -fx-background-color: #206fb0;
+}
+
+.weight-loss {
+    -fx-background-color: #a846d9;
+}
+
+.rehabilitation {
+    -fx-background-color: #ecdc2f;
+}
+
+.women-training {
+    -fx-background-color: #fb95ff;
+}

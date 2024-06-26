@@ -509,6 +509,7 @@ public class ScheduleScreen {
         gridPane.add(titleTextField, 1, 0);
 
         TextArea descriptionTextArea = new TextArea();
+        descriptionTextArea.setWrapText(true);
         gridPane.add(new Label("Description:"), 0, 1);
         gridPane.add(descriptionTextArea, 1, 1);
 
@@ -550,6 +551,8 @@ public class ScheduleScreen {
             coach1.addClassesCreatedByCoach(classes);
         }
 
+        main.showScheduleScreen(user);
+
         User.serializeUsers();
         Event.serializeEvents();
         Room.serializeRooms();
@@ -572,6 +575,7 @@ public class ScheduleScreen {
 
         loadedEvents.forEach(event -> {
             CustomAppointment customAppointment = new CustomAppointment(event);
+            customAppointment.setColor(event);
             agenda.appointments().add(customAppointment);
         });
 
@@ -597,6 +601,7 @@ public class ScheduleScreen {
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.getDialogPane().setMaxWidth(500);
                             alert.setTitle(classesName + " details");
                             alert.setHeaderText(classesDescription);
 
