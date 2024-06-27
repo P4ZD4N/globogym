@@ -181,8 +181,11 @@ public class EventsManagementScreen {
                 Event event = getTableView().getItems().get(getIndex());
 
                 if ("Participants".equals(buttonText)) {
-                    if (event instanceof Classes) {
-                        setGraphic(actionButton);
+                    if (event instanceof Classes classes) {
+
+                        if (classes.getStartDateTime().isAfter(LocalDateTime.now())) {
+                            setGraphic(actionButton);
+                        }
                     } else {
                         setGraphic(null);
                     }
