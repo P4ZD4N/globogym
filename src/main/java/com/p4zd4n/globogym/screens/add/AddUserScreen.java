@@ -1,10 +1,7 @@
 package com.p4zd4n.globogym.screens.add;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entities.ClubMember;
-import com.p4zd4n.globogym.entities.Coach;
-import com.p4zd4n.globogym.entities.Employee;
-import com.p4zd4n.globogym.entities.User;
+import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.forms.add.AddUserForm;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
@@ -54,7 +51,7 @@ public class AddUserScreen implements Validatable {
         centerTopContainer.setAlignment(Pos.CENTER);
         centerTopContainer.getChildren().add(errorLabel);
 
-        form = new AddUserForm();
+        form = new AddUserForm(employee);
         form.getStyleClass().add("container");
         form.setVgap(10);
         form.setHgap(10);
@@ -99,38 +96,81 @@ public class AddUserScreen implements Validatable {
         }
 
         if (form.getGroup().getSelectedToggle().equals(form.getClubMemberRadioButton())) {
-
-            ClubMember clubMember = new ClubMember(
-                    form.getUsernameField().getText(),
-                    form.getEmailField().getText(),
-                    form.getPasswordField().getText(),
-                    form.getFirstNameField().getText(),
-                    form.getLastNameField().getText(),
-                    form.getBirthDateField().getValue());
-
-            User.serializeUsers();
-
-            System.out.println("Club member registered successfully!");
-
+            addClubMember();
+        } else if (form.getGroup().getSelectedToggle().equals(form.getCoachRadioButton())){
+            addCoach();
+        } else if (form.getGroup().getSelectedToggle().equals(form.getEmployeeRadioButton())) {
+            addEmployee();
         } else {
-
-            Coach coach = new Coach(
-                    form.getUsernameField().getText(),
-                    form.getEmailField().getText(),
-                    form.getPasswordField().getText(),
-                    form.getFirstNameField().getText(),
-                    form.getLastNameField().getText(),
-                    form.getBirthDateField().getValue());
-
-            if (form.getActiveCheckbox().isSelected()) {
-                coach.setActive(true);
-            }
-
-            User.serializeUsers();
-
-            System.out.println("Coach registered successfully!");
+            addManager();
         }
 
         main.showMembersManagementScreen(employee, null);
+    }
+
+    private void addClubMember() {
+
+        ClubMember clubMember = new ClubMember(
+                form.getUsernameField().getText(),
+                form.getEmailField().getText(),
+                form.getPasswordField().getText(),
+                form.getFirstNameField().getText(),
+                form.getLastNameField().getText(),
+                form.getBirthDateField().getValue());
+
+        User.serializeUsers();
+
+        System.out.println("Club member registered successfully!");
+    }
+
+    private void addCoach() {
+
+        Coach coach = new Coach(
+                form.getUsernameField().getText(),
+                form.getEmailField().getText(),
+                form.getPasswordField().getText(),
+                form.getFirstNameField().getText(),
+                form.getLastNameField().getText(),
+                form.getBirthDateField().getValue());
+
+        if (form.getActiveCheckbox().isSelected()) {
+            coach.setActive(true);
+        }
+
+        User.serializeUsers();
+
+        System.out.println("Coach registered successfully!");
+    }
+
+    private void addEmployee() {
+
+        Employee employee = new Employee(
+                form.getUsernameField().getText(),
+                form.getEmailField().getText(),
+                form.getPasswordField().getText(),
+                form.getFirstNameField().getText(),
+                form.getLastNameField().getText(),
+                form.getBirthDateField().getValue(),
+                Double.valueOf(form.getSalaryTextField().getText()));
+
+        User.serializeUsers();
+
+        System.out.println("Employee registered successfully!");
+    }
+
+    private void addManager() {
+
+        Manager manager = new Manager(
+                form.getUsernameField().getText(),
+                form.getEmailField().getText(),
+                form.getPasswordField().getText(),
+                form.getFirstNameField().getText(),
+                form.getLastNameField().getText(),
+                form.getBirthDateField().getValue(),
+                Double.valueOf(form.getSalaryTextField().getText()));
+
+        User.serializeUsers();
+
+        System.out.println("Manager registered successfully!");
     }
 }

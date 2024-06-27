@@ -61,6 +61,8 @@ public abstract class Form extends GridPane {
 
     protected RadioButton clubMemberRadioButton;
     protected RadioButton coachRadioButton;
+    protected RadioButton employeeRadioButton;
+    protected RadioButton managerRadioButton;
 
     protected CheckBox clubMemberCheckBox;
     protected CheckBox coachCheckbox;
@@ -128,6 +130,12 @@ public abstract class Form extends GridPane {
 
         coachRadioButton = new RadioButton("Coach (approval required!)");
         coachRadioButton.getStyleClass().add("radio-button");
+
+        employeeRadioButton = new RadioButton("Employee");
+        employeeRadioButton.getStyleClass().add("radio-button");
+
+        managerRadioButton = new RadioButton("Manager");
+        managerRadioButton.getStyleClass().add("radio-button");
 
         clubMemberCheckBox = new CheckBox("Club member");
         clubMemberCheckBox.getStyleClass().add("checkbox");
