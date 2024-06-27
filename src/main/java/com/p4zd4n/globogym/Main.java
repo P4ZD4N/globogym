@@ -61,13 +61,13 @@ public class Main extends Application {
         LoginScreen loginScreen = new LoginScreen(this);
         RegistrationScreen registrationScreen = new RegistrationScreen(this);
 
-        mainScene = new Scene(mainScreen.getView(), 800, 800);
+        mainScene = new Scene(mainScreen.getView(), 1200, 800);
         mainScene.getStylesheets().add(getClass().getResource("/css/screen-main.css").toExternalForm());
 
-        loginScene = new Scene(loginScreen.getView(), 800, 800);
+        loginScene = new Scene(loginScreen.getView(), 1200, 800);
         loginScene.getStylesheets().add(getClass().getResource("/css/screen-login.css").toExternalForm());
 
-        registrationScene = new Scene(registrationScreen.getView(), 800, 800);
+        registrationScene = new Scene(registrationScreen.getView(), 1200, 800);
         registrationScene.getStylesheets().add(getClass().getResource("/css/screen-register.css").toExternalForm());
 
         primaryStage.setScene(mainScene);
@@ -112,7 +112,7 @@ public class Main extends Application {
 
         HomeScreen homeScreen = new HomeScreen(this, user);
 
-        homeScene = new Scene(homeScreen.getView(), 800, 800);
+        homeScene = new Scene(homeScreen.getView(), 1200, 800);
         homeScene.getStylesheets().add(getClass().getResource("/css/screen-home.css").toExternalForm());
 
         primaryStage.setScene(homeScene);
@@ -122,7 +122,7 @@ public class Main extends Application {
 
         UsersManagementScreen usersManagementScreen = new UsersManagementScreen(this, employee, clubMembers);
 
-        usersManagementScene = new Scene(usersManagementScreen.getView(), 800, 800);
+        usersManagementScene = new Scene(usersManagementScreen.getView(), 1200, 800);
         usersManagementScene.getStylesheets().add(getClass().getResource("/css/screen-members-management.css").toExternalForm());
 
         primaryStage.setScene(usersManagementScene);
@@ -132,7 +132,7 @@ public class Main extends Application {
 
         UserAccountScreen userAccountScreen = new UserAccountScreen(this, user);
 
-        userAccountScene = new Scene(userAccountScreen.getView(), 800, 800);
+        userAccountScene = new Scene(userAccountScreen.getView(), 1200, 800);
         userAccountScene.getStylesheets().add(getClass().getResource("/css/screen-user-account.css").toExternalForm());
 
         primaryStage.setScene(userAccountScene);
@@ -142,7 +142,7 @@ public class Main extends Application {
 
         ScheduleScreen scheduleScreen = new ScheduleScreen(this, user);
 
-        scheduleScene = new Scene(scheduleScreen.getView(), 800, 800);
+        scheduleScene = new Scene(scheduleScreen.getView(), 1200, 800);
         scheduleScene.getStylesheets().add(getClass().getResource("/css/screen-schedule.css").toExternalForm());
 
         primaryStage.setScene(scheduleScene);
@@ -152,7 +152,7 @@ public class Main extends Application {
 
         PaymentsScreen paymentsScreen = new PaymentsScreen(this, clubMember);
 
-        paymentsScene = new Scene(paymentsScreen.getView(), 800, 800);
+        paymentsScene = new Scene(paymentsScreen.getView(), 1200, 800);
         paymentsScene.getStylesheets().add(getClass().getResource("/css/screen-payments.css").toExternalForm());
 
         primaryStage.setScene(paymentsScene);
@@ -162,7 +162,7 @@ public class Main extends Application {
 
         MembershipCardScreen membershipCardScreen = new MembershipCardScreen(this, clubMember);
 
-        membershipCardScene = new Scene(membershipCardScreen.getView(), 800, 800);
+        membershipCardScene = new Scene(membershipCardScreen.getView(), 1200, 800);
         membershipCardScene.getStylesheets().add(getClass().getResource("/css/screen-membership-card.css").toExternalForm());
 
         primaryStage.setScene(membershipCardScene);
@@ -172,7 +172,7 @@ public class Main extends Application {
 
         FindUserScreen findUserScreen = new FindUserScreen(this, employee);
 
-        findUserScene = new Scene(findUserScreen.getView(), 800, 800);
+        findUserScene = new Scene(findUserScreen.getView(), 1200, 800);
         findUserScene.getStylesheets().add(getClass().getResource("/css/screen-find-user.css").toExternalForm());
 
         primaryStage.setScene(findUserScene);
@@ -182,7 +182,7 @@ public class Main extends Application {
 
         AddUserScreen addUserScreen = new AddUserScreen(this, employee);
 
-        addUserScene = new Scene(addUserScreen.getView(), 800, 800);
+        addUserScene = new Scene(addUserScreen.getView(), 1200, 800);
         addUserScene.getStylesheets().add(getClass().getResource("/css/screen-add-user.css").toExternalForm());
 
         primaryStage.setScene(addUserScene);
@@ -192,7 +192,7 @@ public class Main extends Application {
 
         UpdateUserScreen updateUserScreen = new UpdateUserScreen(this, updatingUser, updatedUser);
 
-        updateUserScene = new Scene(updateUserScreen.getView(), 800, 800);
+        updateUserScene = new Scene(updateUserScreen.getView(), 1200, 800);
         updateUserScene.getStylesheets().add(getClass().getResource("/css/screen-update-user.css").toExternalForm());
 
         primaryStage.setScene(updateUserScene);
@@ -202,7 +202,7 @@ public class Main extends Application {
 
         RoomsManagementScreen roomsManagementScreen = new RoomsManagementScreen(this, manager, rooms);
 
-        roomsManagementScene = new Scene(roomsManagementScreen.getView(), 800, 800);
+        roomsManagementScene = new Scene(roomsManagementScreen.getView(), 1200, 800);
         roomsManagementScene.getStylesheets().add(getClass().getResource("/css/screen-rooms-management.css").toExternalForm());
 
         primaryStage.setScene(roomsManagementScene);
@@ -212,7 +212,7 @@ public class Main extends Application {
 
         FindRoomScreen findRoomsScreen = new FindRoomScreen(this, manager);
 
-        findRoomScene = new Scene(findRoomsScreen.getView(), 800, 800);
+        findRoomScene = new Scene(findRoomsScreen.getView(), 1200, 800);
         findRoomScene.getStylesheets().add(getClass().getResource("/css/screen-find-room.css").toExternalForm());
 
         primaryStage.setScene(findRoomScene);
@@ -222,7 +222,7 @@ public class Main extends Application {
 
         AddRoomScreen addRoomScreen = new AddRoomScreen(this, manager);
 
-        addRoomScene = new Scene(addRoomScreen.getView(), 800, 800);
+        addRoomScene = new Scene(addRoomScreen.getView(), 1200, 800);
         addRoomScene.getStylesheets().add(getClass().getResource("/css/screen-add-room.css").toExternalForm());
 
         primaryStage.setScene(addRoomScene);
@@ -232,7 +232,7 @@ public class Main extends Application {
 
         UpdateRoomScreen updateRoomScreen = new UpdateRoomScreen(this, manager, room);
 
-        updateRoomScene = new Scene(updateRoomScreen.getView(), 800, 800);
+        updateRoomScene = new Scene(updateRoomScreen.getView(), 1200, 800);
         updateRoomScene.getStylesheets().add(getClass().getResource("/css/screen-update-room.css").toExternalForm());
 
         primaryStage.setScene(updateRoomScene);
@@ -242,7 +242,7 @@ public class Main extends Application {
 
         EventsManagementScreen eventsManagementScreen = new EventsManagementScreen(this, employee, events);
 
-        eventsManagementScene = new Scene(eventsManagementScreen.getView(), 800, 800);
+        eventsManagementScene = new Scene(eventsManagementScreen.getView(), 1200, 800);
         eventsManagementScene.getStylesheets().add(getClass().getResource("/css/screen-events-management.css").toExternalForm());
 
         primaryStage.setScene(eventsManagementScene);
@@ -252,7 +252,7 @@ public class Main extends Application {
 
         AddOtherEventScreen addOtherEventScreen = new AddOtherEventScreen(this, employee);
 
-        addOtherEventScene = new Scene(addOtherEventScreen.getView(), 800, 800);
+        addOtherEventScene = new Scene(addOtherEventScreen.getView(), 1200, 800);
         addOtherEventScene.getStylesheets().add(getClass().getResource("/css/screen-add-other-event.css").toExternalForm());
 
         primaryStage.setScene(addOtherEventScene);
@@ -262,7 +262,7 @@ public class Main extends Application {
 
         FindEventScreen findEventScreen = new FindEventScreen(this, employee);
 
-        findEventScene = new Scene(findEventScreen.getView(), 800, 800);
+        findEventScene = new Scene(findEventScreen.getView(), 1200, 800);
         findEventScene.getStylesheets().add(getClass().getResource("/css/screen-find-event.css").toExternalForm());
 
         primaryStage.setScene(findEventScene);
@@ -272,7 +272,7 @@ public class Main extends Application {
 
         ClassesParticipantsScreen classesParticipantsScreen = new ClassesParticipantsScreen(this, employee, classes);
 
-        classesParticipantsScene = new Scene(classesParticipantsScreen.getView(), 800, 800);
+        classesParticipantsScene = new Scene(classesParticipantsScreen.getView(), 1200, 800);
         classesParticipantsScene.getStylesheets().add(getClass().getResource("/css/screen-classes-participants.css").toExternalForm());
 
         primaryStage.setScene(classesParticipantsScene);
@@ -282,7 +282,7 @@ public class Main extends Application {
 
         StatisticsScreen statisticsScreen = new StatisticsScreen(this, user);
 
-        statisticsScene = new Scene(statisticsScreen.getView(), 800, 800);
+        statisticsScene = new Scene(statisticsScreen.getView(), 1200, 800);
         statisticsScene.getStylesheets().add(getClass().getResource("/css/screen-statistics.css").toExternalForm());
 
         primaryStage.setScene(statisticsScene);
