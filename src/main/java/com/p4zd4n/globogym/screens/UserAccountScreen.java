@@ -153,6 +153,7 @@ public class UserAccountScreen {
             String path = selectedFile.getAbsolutePath();
             user.setProfilePicturePath(path);
             User.serializeUsers();
+            main.showUserAccountScreen(user);
         }
     }
 
