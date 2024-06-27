@@ -144,6 +144,8 @@ public class ClassesParticipantsScreen {
             clubMember.removeClassesParticipatedIn(classes);
             User.serializeUsers();
             Event.serializeEvents();
+
+            main.showClassesParticipantsScreen(employee, classes);
         }
     }
 
@@ -163,6 +165,7 @@ public class ClassesParticipantsScreen {
         ObservableList<String> users = FXCollections.observableArrayList(
                 User.getUsers().stream()
                         .filter(user -> user instanceof ClubMember)
+                        .filter(user -> !classes.getParticipants().contains(user))
                         .map(user -> user.getUsername() + " (" + user.getFirstName() + " " + user.getLastName() + ")")
                         .collect(Collectors.toList())
         );
@@ -180,6 +183,7 @@ public class ClassesParticipantsScreen {
         });
 
         Button addButton = new Button("Add");
+        addButton.setDisable(true);
         addButton.setOnAction(e -> {
 
             String selectedUser = usersListView.getSelectionModel().getSelectedItem();
@@ -199,6 +203,12 @@ public class ClassesParticipantsScreen {
                     dialog.close();
                 }
             }
+
+            main.showClassesParticipantsScreen(employee, classes);
+        });
+
+        usersListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            addButton.setDisable(newValue == null);
         });
 
         dialogVbox.getChildren().addAll(new Label("Select a user to add:"), searchField, usersListView, addButton);
