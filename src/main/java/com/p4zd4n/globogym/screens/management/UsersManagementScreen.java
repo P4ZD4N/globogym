@@ -56,10 +56,10 @@ public class UsersManagementScreen {
 
         centerPane = new CenterPane();
 
-        addMemberButton = new Button("Add member");
+        addMemberButton = new Button("Add user");
         addMemberButton.setOnAction(e -> main.showAddUserScreen(employee));
 
-        findMemberButton = new Button("Find member");
+        findMemberButton = new Button("Find user");
         findMemberButton.setOnAction(e -> main.showFindUserScreen(employee));
 
         ObservableList<User> usersObservableList = FXCollections.observableArrayList();
