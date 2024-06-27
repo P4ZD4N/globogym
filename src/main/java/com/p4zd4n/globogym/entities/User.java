@@ -1,5 +1,6 @@
 package com.p4zd4n.globogym.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class User implements Serializable {
 
     @Serial
