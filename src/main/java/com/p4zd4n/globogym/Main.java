@@ -290,7 +290,7 @@ public class Main extends Application {
 
     private static void createExampleUsers() {
 
-        if (Room.findByNumber(1) == null) {
+        if (Room.findByRoomNumber(1) == null) {
             Room room1 = new Room(1, 10);
             Room.serializeRooms();
         }
