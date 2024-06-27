@@ -134,7 +134,7 @@ public class UserAccountScreen {
             GridPane.setColumnIndex(centerRightPane, 2);
             centerPane.getChildren().add(centerRightPane);
         }
-        centerPane.setHgap(100);
+        centerPane.setHgap(80);
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
