@@ -86,12 +86,13 @@ public class AddOtherEventScreen implements Validatable {
     public void addEvent() {
 
         boolean areAllFieldsFilled = validation.areAllFieldsFilled();
-        boolean isDataValid = validation.isDataValid();
 
         if (!areAllFieldsFilled) {
             errorLabel.setText("Not all fields have been filled!");
             return;
         }
+
+        boolean isDataValid = validation.isDataValid();
 
         if (!isDataValid) {
             return;
