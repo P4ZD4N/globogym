@@ -22,7 +22,6 @@ public class Event implements Serializable {
     private static Long counter = 1L;
 
     private Long id;
-
     private String name;
     private String description;
     private LocalDateTime startDateTime;
@@ -76,10 +75,6 @@ public class Event implements Serializable {
 
     public static void setEvents(List<Event> events) {
         Event.events = events;
-    }
-
-    public static Long getCounter() {
-        return counter;
     }
 
     public static void setCounter(Long counter) {

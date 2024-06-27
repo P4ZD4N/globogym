@@ -43,22 +43,6 @@ public class User implements Serializable {
         users.add(this);
     }
 
-    public static Long getCounter() {
-        return counter;
-    }
-
-    public static void setCounter(Long counter) {
-        User.counter = counter;
-    }
-
-    public static List<User> getUsers() {
-        return users;
-    }
-
-    public static void setUsers(List<User> users) {
-        User.users = users;
-    }
-
     public static void serializeUsers() {
 
         try (FileOutputStream fileOut = new FileOutputStream("users.bin");
@@ -102,8 +86,8 @@ public class User implements Serializable {
     public static User findByUsername(String username) {
 
         Optional<User> foundUser = users.stream()
-                                        .filter(user -> user.getUsername().equals(username))
-                                        .findFirst();
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst();
 
         return foundUser.orElse(null);
     }
@@ -111,9 +95,21 @@ public class User implements Serializable {
     public static User findByEmail(String email) {
 
         Optional<User> foundUser = users.stream()
-                                        .filter(user -> user.getEmail().equals(email))
-                                        .findFirst();
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst();
 
         return foundUser.orElse(null);
+    }
+
+    public static void setCounter(Long counter) {
+        User.counter = counter;
+    }
+
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    public static void setUsers(List<User> users) {
+        User.users = users;
     }
 }

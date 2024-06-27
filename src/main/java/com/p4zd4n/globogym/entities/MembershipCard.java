@@ -49,6 +49,7 @@ public class MembershipCard implements Serializable {
     }
 
     public void renew() {
+
         membershipCardStatus = MembershipCardStatus.ACTIVE;
         expirationDate = expirationDate.plusMonths(1);
     }
@@ -92,10 +93,6 @@ public class MembershipCard implements Serializable {
         }
     }
 
-    public static Long getCounter() {
-        return counter;
-    }
-
     public static void setCounter(Long counter) {
         MembershipCard.counter = counter;
     }
@@ -112,15 +109,7 @@ public class MembershipCard implements Serializable {
         return coachPrice;
     }
 
-    public static void setCoachPrice(Double coachPrice) {
-        MembershipCard.coachPrice = coachPrice;
-    }
-
     public static Double getClubMemberPrice() {
         return clubMemberPrice;
-    }
-
-    public static void setClubMemberPrice(Double clubMemberPrice) {
-        MembershipCard.clubMemberPrice = clubMemberPrice;
     }
 }

@@ -77,13 +77,4 @@ public class Room implements Serializable {
     public static void setRooms(List<Room> rooms) {
         Room.rooms = rooms;
     }
-
-    public static Room findByNumber(Integer number) {
-
-        Optional<Room> foundRoom = rooms.stream()
-                .filter(room -> room.getNumber().equals(number))
-                .findFirst();
-
-        return foundRoom.orElse(null);
-    }
 }

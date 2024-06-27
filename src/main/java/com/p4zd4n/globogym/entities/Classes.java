@@ -18,12 +18,13 @@ public class Classes extends Event {
     private static final long serialVersionUID = -5047333787692779181L;
     private static List<Classes> allClasses = new ArrayList<>();
 
+    private List<ClubMember> participants = new ArrayList<>();
     private ClassesType classesType;
     private Coach coach;
     private Room room;
-    private List<ClubMember> participants = new ArrayList<>();
 
     public Classes(ClassesType classesType, String name, String description, LocalDateTime startDateTime, LocalDateTime endDateTime, Coach coach, Room room) {
+
         super(name, description, startDateTime, endDateTime);
 
         this.classesType = classesType;
@@ -31,7 +32,6 @@ public class Classes extends Event {
         this.room = room;
 
         allClasses.add(this);
-
     }
 
     public void addParticipant(ClubMember clubMember) {
@@ -63,13 +63,5 @@ public class Classes extends Event {
         allClasses.add(classes);
 
         Event.serializeEvents();
-    }
-
-    public static List<Classes> getAllClasses() {
-        return allClasses;
-    }
-
-    public static void setAllClasses(List<Classes> allClasses) {
-        Classes.allClasses = allClasses;
     }
 }
