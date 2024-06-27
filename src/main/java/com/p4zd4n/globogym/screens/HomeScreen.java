@@ -1,10 +1,11 @@
 package com.p4zd4n.globogym.screens;
 
 import com.p4zd4n.globogym.Main;
-import com.p4zd4n.globogym.entities.User;
+import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.enums.OpeningHours;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.utils.EmptySpace;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +21,12 @@ import javafx.scene.layout.VBox;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class HomeScreen {
@@ -34,6 +40,8 @@ public class HomeScreen {
 
     private Label welcomeLabel;
     private Label isOpenLabel;
+    private Label nextClassesYouParticipateIn;
+    private Label nextClassesYouAreCoachIn;
 
     private TableView<OpeningHours> tableView;
 
@@ -63,6 +71,53 @@ public class HomeScreen {
 
         ObservableList<OpeningHours> openingHoursObservableList = FXCollections.observableArrayList();
         initTable(openingHoursObservableList);
+
+        if (user instanceof ClubMember clubMember) {
+
+            Optional<Classes> closestClassesYouParticipateIn = findClosestClasses(clubMember.getClassesParticipatedIn());
+
+            if(closestClassesYouParticipateIn.isPresent()) {
+
+                String classesName = closestClassesYouParticipateIn.get().getName();
+                String classesType = closestClassesYouParticipateIn.get().getClassesType().getType();
+                String classesStartDateTime = closestClassesYouParticipateIn.get().getStartDateTime().format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                nextClassesYouParticipateIn = new Label(
+                        "Next classes you participate in: " + classesName + ", " + classesType + ", " + classesStartDateTime
+                );
+                nextClassesYouParticipateIn.setMaxWidth(500);
+                nextClassesYouParticipateIn.setWrapText(true);
+
+                centerPane.getChildren().addAll(new EmptySpace(20), nextClassesYouParticipateIn);
+
+                if (clubMember instanceof Coach coach) {
+
+                    Optional<Classes> closestClassesYouAreCoachIn = findClosestClasses(
+                            Event.getEvents()
+                                    .stream()
+                                    .filter(event -> event instanceof Classes)
+                                    .map(event -> (Classes) event)
+                                    .filter(classes -> classes.getCoach().getId().equals(coach.getId()))
+                                    .toList()
+                    );
+
+                    if (closestClassesYouAreCoachIn.isPresent()) {
+
+                        classesName = closestClassesYouAreCoachIn.get().getName();
+                        classesType = closestClassesYouAreCoachIn.get().getClassesType().getType();
+                        classesStartDateTime = closestClassesYouAreCoachIn.get().getStartDateTime().format(
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                        nextClassesYouAreCoachIn = new Label(
+                                "Next classes you are coach in: " + classesName + ", " + classesType + ", " + classesStartDateTime
+                        );
+                        nextClassesYouAreCoachIn.setMaxWidth(500);
+                        nextClassesYouAreCoachIn.setWrapText(true);
+
+                        centerPane.getChildren().add(nextClassesYouAreCoachIn);
+                    }
+                }
+            }
+        }
 
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(20, 20, 20, 20));
@@ -127,5 +182,14 @@ public class HomeScreen {
         });
 
         centerPane.getChildren().add(tableView);
+    }
+
+    public static Optional<Classes> findClosestClasses(List<Classes> classes) {
+
+        LocalDate today = LocalDate.now();
+
+        return classes
+                .stream()
+                .min(Comparator.comparingLong(c -> Math.abs(ChronoUnit.DAYS.between(today, c.getStartDateTime()))));
     }
 }

@@ -72,7 +72,11 @@ public class StatisticsScreen {
                 "Number of classes created: ", String.valueOf(coach.getClassesCreatedByCoach().size())
         );
 
-        centerPane.getChildren().addAll(numberOfClassesCreated);
+        Label numberOfClassesParticipatedIn = createLabelWithBoldDescriptor(
+                "Number of classes participated in: ", String.valueOf(coach.getClassesParticipatedIn().size())
+        );
+
+        centerPane.getChildren().addAll(numberOfClassesCreated, numberOfClassesParticipatedIn);
     }
 
     private void initStatisticsForEmployee(Employee employee) {
