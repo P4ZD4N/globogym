@@ -1,6 +1,5 @@
 package com.p4zd4n.globogym.forms.add;
 
-import com.p4zd4n.globogym.Main;
 import com.p4zd4n.globogym.entities.Employee;
 import com.p4zd4n.globogym.entities.Manager;
 import com.p4zd4n.globogym.forms.Form;
@@ -15,34 +14,13 @@ public class AddUserForm extends Form {
         clubMemberRadioButton.setSelected(true);
 
         coachRadioButton.setToggleGroup(group);
-        coachRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                add(activeLabel, 0, 8);
-                add(activeCheckbox, 1, 8);
-            } else {
-                getChildren().removeAll(activeLabel, activeCheckbox);
-            }
-        });
+        coachRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> addOrRemoveActiveFields(newValue));
 
         employeeRadioButton.setToggleGroup(group);
-        employeeRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                add(salaryLabel, 0, 8);
-                add(salaryTextField, 1, 8);
-            } else {
-                getChildren().removeAll(salaryLabel, salaryTextField);
-            }
-        });
+        employeeRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> addOrRemoveSalaryFields(newValue));
 
         managerRadioButton.setToggleGroup(group);
-        managerRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                add(salaryLabel, 0, 8);
-                add(salaryTextField, 1, 8);
-            } else {
-                getChildren().removeAll(salaryLabel, salaryTextField);
-            }
-        });
+        managerRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> addOrRemoveSalaryFields(newValue));
 
         add(clubMemberRadioButton, 0, 0);
         coachRadioButton.setText("Coach");
@@ -63,5 +41,25 @@ public class AddUserForm extends Form {
         add(lastNameField, 1, 6);
         add(birthDateLabel, 0, 7);
         add(birthDateField, 1, 7);
+    }
+
+    private void addOrRemoveActiveFields(Boolean newValue) {
+
+        if (newValue) {
+            add(activeLabel, 0, 8);
+            add(activeCheckbox, 1, 8);
+        } else {
+            getChildren().removeAll(activeLabel, activeCheckbox);
+        }
+    }
+
+    private void addOrRemoveSalaryFields(Boolean newValue) {
+
+        if (newValue) {
+            add(salaryLabel, 0, 8);
+            add(salaryTextField, 1, 8);
+        } else {
+            getChildren().removeAll(salaryLabel, salaryTextField);
+        }
     }
 }
