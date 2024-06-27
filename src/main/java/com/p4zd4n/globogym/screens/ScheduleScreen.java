@@ -114,8 +114,8 @@ public class ScheduleScreen {
 
     private void chooseEventCoachAndType() {
 
-        if (user instanceof Coach coach) {
-            showAlertForCoach(coach);
+        if (user instanceof Coach coach1) {
+            showAlertForCoach(coach1);
         } else if (user instanceof Employee) {
             showAlertForEmployee();
         }
@@ -355,7 +355,6 @@ public class ScheduleScreen {
             }
         });
 
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -578,122 +577,8 @@ public class ScheduleScreen {
 
                     if (!selectedAppointments.isEmpty()) {
                         Agenda.Appointment focusedAppointment = selectedAppointments.getFirst();
-                        if (focusedAppointment instanceof CustomAppointment customAppointment &&
-                                customAppointment.getEvent() instanceof Classes classes) {
-
-                            String classesType = classes.getClassesType().getType();
-                            String coachFullName = classes.getCoach().getFirstName() + " " + classes.getCoach().getLastName();
-                            LocalDateTime classesStartDateTime = classes.getStartDateTime();
-                            LocalDateTime classesEndDateTime = classes.getEndDateTime();
-                            Integer roomNumber = classes.getRoom().getNumber();
-                            Integer roomCapacity = classes.getRoom().getCapacity();
-                            String classesName = classes.getName();
-                            String classesDescription = classes.getDescription();
-                            List<ClubMember> participants = classes.getParticipants();
-                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.getDialogPane().setMaxWidth(500);
-                            alert.setTitle(classesName + " details");
-                            alert.setHeaderText(classesDescription);
-
-                            GridPane gridPane = new GridPane();
-                            gridPane.setHgap(10);
-                            gridPane.setVgap(10);
-
-                            Label classesTypeLabel = new Label("Classes type: ");
-                            Label classesTypeValue = new Label(classesType);
-                            gridPane.addRow(0, classesTypeLabel, classesTypeValue);
-
-                            Label coachLabel = new Label("Coach:");
-                            if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
-                                Label coachValue = new Label(coachFullName);
-                                gridPane.addRow(1, coachLabel, coachValue);
-                            } else {
-                                ComboBox<String> coachValue = new ComboBox<>();
-
-                                coachValue.getItems().addAll(User.getUsers()
-                                        .stream()
-                                        .filter(u -> u instanceof Coach)
-                                        .filter(c -> ((Coach) c).getSpecializations().contains(classes.getClassesType()))
-                                        .map(user -> "ID: " +
-                                            user.getId() + ", " +
-                                            user.getFirstName() + " " +
-                                            user.getLastName()
-                                        )
-                                        .toList()
-                                );
-
-
-                                coachValue.setValue(coachFullName);
-                                coachValue.setOnAction(event -> {
-                                    String selectedCoach = coachValue.getValue();
-                                    String[] stringElements = selectedCoach.split(" ");
-                                    Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
-                                    classes.setCoach((Coach) User.findById(coachId));
-                                    Event.serializeEvents();
-                                });
-                                gridPane.addRow(2, coachLabel, coachValue);
-                            }
-
-                            Label startLabel = new Label("Start Date/Time:");
-                            Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(3, startLabel, startValue);
-
-                            Label endLabel = new Label("End Date/Time:");
-                            Label endValue = new Label(classesEndDateTime.format(dateTimeFormatter));
-                            gridPane.addRow(4, endLabel, endValue);
-
-                            Label roomLabel = new Label("Room:");
-                            Label roomValue = new Label(roomNumber.toString());
-                            gridPane.addRow(5, roomLabel, roomValue);
-
-                            Label freePlacesLabel = new Label("Free places:");
-                            Label freePlacesValue = new Label(Integer.toString(roomCapacity - participants.size()));
-                            gridPane.addRow(6, freePlacesLabel, freePlacesValue);
-
-                            ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
-                            ButtonType signOutButton = new ButtonType("Sign Out", ButtonBar.ButtonData.BACK_PREVIOUS);
-                            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-                            alert.getButtonTypes().setAll(signUpButton, signOutButton, okButton);
-
-                            alert.getDialogPane().setContent(gridPane);
-
-                            alert.getDialogPane().lookupButton(signUpButton).setDisable(
-                                    !(user instanceof ClubMember) ||
-                                    freePlacesValue.getText().equals("0") ||
-                                    LocalDateTime.now().isAfter(classesStartDateTime) ||
-                                    user instanceof ClubMember clubMember &&
-                                    clubMember.getMembershipCard() == null ||
-                                    user instanceof ClubMember clubMember1 &&
-                                    clubMember1.getMembershipCard().getMembershipCardStatus().equals(MembershipCardStatus.EXPIRED) ||
-                                    classes.getParticipants().contains(user)
-                            );
-
-                            alert.getDialogPane().lookupButton(signOutButton).setDisable(
-                                    !(user instanceof ClubMember) ||
-                                    LocalDateTime.now().isAfter(classesStartDateTime) ||
-                                    !classes.getParticipants().contains(user)
-                            );
-
-                            alert.showAndWait().ifPresent(buttonType -> {
-
-                                if (buttonType.getButtonData() == ButtonBar.ButtonData.APPLY) {
-                                    classes.addParticipant((ClubMember) user);
-                                    ((ClubMember) user).addClassesParticipatedIn(classes);
-                                    Event.serializeEvents();
-                                    User.serializeUsers();
-                                    alert.setResult(ButtonType.OK);
-                                } else if (buttonType.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
-                                    classes.removeParticipant((ClubMember) user);
-                                    ((ClubMember) user).removeClassesParticipatedIn(classes);
-                                    Event.serializeEvents();
-                                    User.serializeUsers();
-                                    alert.setResult(ButtonType.OK);
-                                } else if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                                    alert.setResult(ButtonType.OK);
-                                }
-                            });
+                        if (focusedAppointment instanceof CustomAppointment customAppointment && customAppointment.getEvent() instanceof Classes classes) {
+                            showAlertWithClassesDetails(classes);
                         } else {
                             System.out.println("Focused appointment is not an instance of CustomAppointment or CustomAppointment does not contain Classes.");
                         }
@@ -705,5 +590,134 @@ public class ScheduleScreen {
                 }
             }
         });
+    }
+
+    private void showAlertWithClassesDetails(Classes classes) {
+
+        String classesType = classes.getClassesType().getType();
+        String classesName = classes.getName();
+        String classesDescription = classes.getDescription();
+        String coachFullName = classes.getCoach().getFirstName() + " " + classes.getCoach().getLastName();
+        LocalDateTime classesStartDateTime = classes.getStartDateTime();
+        LocalDateTime classesEndDateTime = classes.getEndDateTime();
+        Integer roomNumber = classes.getRoom().getNumber();
+        Integer roomCapacity = classes.getRoom().getCapacity();
+        List<ClubMember> participants = classes.getParticipants();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        Alert detailsAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        detailsAlert.getDialogPane().setMaxWidth(500);
+        detailsAlert.setTitle(classesName + " details");
+        detailsAlert.setHeaderText(classesDescription);
+
+        GridPane detailsAlertPane = new GridPane();
+        detailsAlertPane.setHgap(10);
+        detailsAlertPane.setVgap(10);
+
+        Label classesTypeLabel = new Label("Classes type: ");
+        Label classesTypeValue = new Label(classesType);
+        detailsAlertPane.addRow(0, classesTypeLabel, classesTypeValue);
+
+        Label coachLabel = new Label("Coach:");
+        if (!(user instanceof Employee) || LocalDateTime.now().isAfter(classesStartDateTime)) {
+            Label coachValue = new Label(coachFullName);
+            detailsAlertPane.addRow(1, coachLabel, coachValue);
+        } else {
+            createComboBoxToSelectCoach(detailsAlertPane, coachLabel, classes);
+        }
+
+        Label startLabel = new Label("Start Date/Time:");
+        Label startValue = new Label(classesStartDateTime.format(dateTimeFormatter));
+        detailsAlertPane.addRow(3, startLabel, startValue);
+
+        Label endLabel = new Label("End Date/Time:");
+        Label endValue = new Label(classesEndDateTime.format(dateTimeFormatter));
+        detailsAlertPane.addRow(4, endLabel, endValue);
+
+        Label roomLabel = new Label("Room:");
+        Label roomValue = new Label(roomNumber.toString());
+        detailsAlertPane.addRow(5, roomLabel, roomValue);
+
+        Label freePlacesLabel = new Label("Free places:");
+        Label freePlacesValue = new Label(Integer.toString(roomCapacity - participants.size()));
+        detailsAlertPane.addRow(6, freePlacesLabel, freePlacesValue);
+
+        createButtonsForAlert(detailsAlert, freePlacesValue, classes, classesStartDateTime);
+
+        detailsAlert.getDialogPane().setContent(detailsAlertPane);
+        detailsAlert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType.getButtonData() == ButtonBar.ButtonData.APPLY) {
+
+                classes.addParticipant((ClubMember) user);
+
+                ((ClubMember) user).addClassesParticipatedIn(classes);
+                Event.serializeEvents();
+                User.serializeUsers();
+
+                detailsAlert.setResult(ButtonType.OK);
+
+            } else if (buttonType.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
+
+                classes.removeParticipant((ClubMember) user);
+
+                ((ClubMember) user).removeClassesParticipatedIn(classes);
+                Event.serializeEvents();
+                User.serializeUsers();
+
+                detailsAlert.setResult(ButtonType.OK);
+
+            } else if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                detailsAlert.setResult(ButtonType.OK);
+            }
+        });
+    }
+
+    private void createComboBoxToSelectCoach(GridPane detailsAlertPane, Label coachLabel, Classes classes) {
+
+        String coachFullName = classes.getCoach().getFirstName() + " " + classes.getCoach().getLastName();
+        ComboBox<String> coachValue = new ComboBox<>();
+
+        coachValue.getItems().addAll(User.getUsers()
+                .stream()
+                .filter(user -> user instanceof Coach)
+                .filter(coach -> ((Coach) coach).getSpecializations().contains(classes.getClassesType()))
+                .map(user -> "ID: " + user.getId() + ", " + user.getFirstName() + " " + user.getLastName())
+                .toList()
+        );
+        coachValue.setValue(coachFullName);
+        coachValue.setOnAction(event -> {
+            String selectedCoach = coachValue.getValue();
+            String[] stringElements = selectedCoach.split(" ");
+            Long coachId = Long.parseLong(stringElements[1].substring(0, stringElements[1].length() - 1));
+            classes.setCoach((Coach) User.findById(coachId));
+            Event.serializeEvents();
+        });
+
+        detailsAlertPane.addRow(2, coachLabel, coachValue);
+    }
+
+    private void createButtonsForAlert(Alert detailsAlert, Label freePlacesValue, Classes classes, LocalDateTime classesStartDateTime) {
+
+        ButtonType signUpButton = new ButtonType("Sign Up", ButtonBar.ButtonData.APPLY);
+        ButtonType signOutButton = new ButtonType("Sign Out", ButtonBar.ButtonData.BACK_PREVIOUS);
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        detailsAlert.getButtonTypes().setAll(signUpButton, signOutButton, okButton);
+
+        detailsAlert.getDialogPane().lookupButton(signUpButton).setDisable(
+                !(user instanceof ClubMember) ||
+                freePlacesValue.getText().equals("0") ||
+                LocalDateTime.now().isAfter(classesStartDateTime) ||
+                user instanceof ClubMember clubMember &&
+                clubMember.getMembershipCard() == null ||
+                user instanceof ClubMember clubMember1 &&
+                clubMember1.getMembershipCard().getMembershipCardStatus().equals(MembershipCardStatus.EXPIRED) ||
+                classes.getParticipants().contains(user)
+        );
+
+        detailsAlert.getDialogPane().lookupButton(signOutButton).setDisable(
+                !(user instanceof ClubMember) ||
+                LocalDateTime.now().isAfter(classesStartDateTime) ||
+                !classes.getParticipants().contains(user)
+        );
     }
 }
