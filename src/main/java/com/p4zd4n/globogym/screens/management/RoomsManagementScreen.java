@@ -143,6 +143,7 @@ public class RoomsManagementScreen {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Room.getRooms().remove(r);
                 Room.serializeRooms();
+                main.showRoomsManagementScreen(manager, null);
             }
         });
     }
