@@ -5,6 +5,7 @@ import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.enums.MembershipCardStatus;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.utils.BoldDescriptorLabel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -58,7 +59,7 @@ public class StatisticsScreen {
 
     private void initStatisticsForClubMember(ClubMember clubMember) {
 
-        Label numberOfClassesParticipatedIn = createLabelWithBoldDescriptor(
+        Label numberOfClassesParticipatedIn = new BoldDescriptorLabel(
                 "Number of classes participated in: ", String.valueOf(clubMember.getClassesParticipatedIn().size())
         );
 
@@ -67,11 +68,11 @@ public class StatisticsScreen {
 
     private void initStatisticsForCoach(Coach coach) {
 
-        Label numberOfClassesCreated = createLabelWithBoldDescriptor(
+        Label numberOfClassesCreated = new BoldDescriptorLabel(
                 "Number of classes created: ", String.valueOf(coach.getClassesCreatedByCoach().size())
         );
 
-        Label numberOfClassesParticipatedIn = createLabelWithBoldDescriptor(
+        Label numberOfClassesParticipatedIn = new BoldDescriptorLabel(
                 "Number of classes participated in: ", String.valueOf(coach.getClassesParticipatedIn().size())
         );
 
@@ -80,7 +81,7 @@ public class StatisticsScreen {
 
     private void initStatisticsForEmployee(Employee employee) {
 
-        Label numberOfEventsCreated = createLabelWithBoldDescriptor(
+        Label numberOfEventsCreated = new BoldDescriptorLabel(
                 "Number of events created: ", String.valueOf(employee.getEventsCreatedByEmployee().size())
         );
 
@@ -104,11 +105,11 @@ public class StatisticsScreen {
                 .sum();
 
 
-        Label numberOfEventsCreated = createLabelWithBoldDescriptor(
+        Label numberOfEventsCreated = new BoldDescriptorLabel(
                 "Number of events created: ", String.valueOf(manager.getEventsCreatedByEmployee().size())
         );
 
-        Label participantsStatsToday = createLabelWithBoldDescriptor(
+        Label participantsStatsToday = new BoldDescriptorLabel(
                 "Participants today (Signed Up / All places): ", participantsToday + " / " + allPlacesToday
         );
 
@@ -138,22 +139,11 @@ public class StatisticsScreen {
                 )
                 .count();
 
-        Label membershipCards = createLabelWithBoldDescriptor(
+        Label membershipCards = new BoldDescriptorLabel(
                 "All club members / No card / Active / Expired: ",
                 allClubMembers + " / " + clubMembersWithoutCard + " / " + clubMembersWithActiveCard + " / " + clubMembersWithExpiredCard
         );
 
         centerPane.getChildren().addAll(numberOfEventsCreated, participantsStatsToday, membershipCards);
-    }
-
-    private Label createLabelWithBoldDescriptor(String label, String value) {
-
-        Text boldText = new Text(label);
-        boldText.setStyle("-fx-font-weight: bold");
-
-        Text normalText = new Text(value);
-        TextFlow textFlow = new TextFlow(boldText, normalText);
-
-        return new Label("", textFlow);
     }
 }

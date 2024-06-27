@@ -7,6 +7,7 @@ import com.p4zd4n.globogym.entities.User;
 import com.p4zd4n.globogym.enums.ClassesType;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.utils.BoldDescriptorLabel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -72,13 +73,13 @@ public class UserAccountScreen {
         changeProfilePictureButton = new Button("Change picture");
         changeProfilePictureButton.setOnAction(e -> changeProfilePicture());
 
-        idLabel = createLabelWithBoldDescriptor("UID ", String.valueOf(user.getId()));
-        usernameLabel = createLabelWithBoldDescriptor("Username: ", user.getUsername());
-        emailLabel = createLabelWithBoldDescriptor("Email: ", user.getEmail());
-        firstNameLabel = createLabelWithBoldDescriptor("First name: ", user.getFirstName());
-        lastNameLabel = createLabelWithBoldDescriptor("Last name: ", user.getLastName());
+        idLabel = new BoldDescriptorLabel("UID ", String.valueOf(user.getId()));
+        usernameLabel = new BoldDescriptorLabel("Username: ", user.getUsername());
+        emailLabel = new BoldDescriptorLabel("Email: ", user.getEmail());
+        firstNameLabel = new BoldDescriptorLabel("First name: ", user.getFirstName());
+        lastNameLabel = new BoldDescriptorLabel("Last name: ", user.getLastName());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        birthDateLabel = createLabelWithBoldDescriptor("Birth date: ", user.getBirthDate().format(formatter));
+        birthDateLabel = new BoldDescriptorLabel("Birth date: ", user.getBirthDate().format(formatter));
 
         updateDataButton = new Button("Update data");
         updateDataButton.setOnAction(e -> updateData());
@@ -92,7 +93,7 @@ public class UserAccountScreen {
             centerRightPane.setSpacing(10);
             centerRightPane.setAlignment(Pos.CENTER);
 
-            Label specializesInLabel = createLabelWithBoldDescriptor("Specializes in: ", "");
+            Label specializesInLabel = new BoldDescriptorLabel("Specializes in: ", "");
             centerRightPane.getChildren().add(specializesInLabel);
 
             ClassesType.getAll()
@@ -118,7 +119,7 @@ public class UserAccountScreen {
             centerRightPane.setSpacing(10);
             centerRightPane.setAlignment(Pos.CENTER);
 
-            Label monthlySalaryLabel = createLabelWithBoldDescriptor("Monthly salary: ", employee.getSalary() + " zł");
+            Label monthlySalaryLabel = new BoldDescriptorLabel("Monthly salary: ", employee.getSalary() + " zł");
             centerRightPane.getChildren().add(monthlySalaryLabel);
         }
 
@@ -153,17 +154,6 @@ public class UserAccountScreen {
             user.setProfilePicturePath(path);
             User.serializeUsers();
         }
-    }
-
-    private Label createLabelWithBoldDescriptor(String label, String value) {
-
-        Text boldText = new Text(label);
-        boldText.setStyle("-fx-font-weight: bold");
-
-        Text normalText = new Text(value);
-        TextFlow textFlow = new TextFlow(boldText, normalText);
-
-        return new Label("", textFlow);
     }
 
     private void updateData() {
