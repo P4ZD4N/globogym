@@ -5,6 +5,7 @@ import com.p4zd4n.globogym.entities.*;
 import com.p4zd4n.globogym.enums.OpeningHours;
 import com.p4zd4n.globogym.panes.LeftPane;
 import com.p4zd4n.globogym.panes.TopPane;
+import com.p4zd4n.globogym.utils.BoldDescriptorLabel;
 import com.p4zd4n.globogym.utils.EmptySpace;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -54,7 +55,7 @@ public class HomeScreen {
         centerPane.setPadding(new Insets(10, 10, 10, 10));
         centerPane.setSpacing(20);
 
-        welcomeLabel = new Label("Welcome, " + user.getFirstName() + "!");
+        welcomeLabel = new BoldDescriptorLabel("Welcome, ", user.getFirstName() + "!");
 
         isOpenLabel = new Label(OpeningHours.isOpenNow(LocalDate.now().getDayOfWeek()) ? "Open now!" : "Closed now!");
         if (isOpenLabel.getText().equals("Open now!")) {
@@ -78,8 +79,8 @@ public class HomeScreen {
                 String classesType = closestClassesYouParticipateIn.get().getClassesType().getType();
                 String classesStartDateTime = closestClassesYouParticipateIn.get().getStartDateTime().format(
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                nextClassesYouParticipateIn = new Label(
-                        "Next classes you participate in: " + classesName + ", " + classesType + ", " + classesStartDateTime
+                nextClassesYouParticipateIn = new BoldDescriptorLabel(
+                        "Next classes you participate in: ", classesName + ", " + classesType + ", " + classesStartDateTime
                 );
                 nextClassesYouParticipateIn.setMaxWidth(500);
                 nextClassesYouParticipateIn.setWrapText(true);
@@ -103,8 +104,8 @@ public class HomeScreen {
                         classesType = closestClassesYouAreCoachIn.get().getClassesType().getType();
                         classesStartDateTime = closestClassesYouAreCoachIn.get().getStartDateTime().format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                        nextClassesYouAreCoachIn = new Label(
-                                "Next classes you are coach in: " + classesName + ", " + classesType + ", " + classesStartDateTime
+                        nextClassesYouAreCoachIn = new BoldDescriptorLabel(
+                                "Next classes you are coach in: ", classesName + ", " + classesType + ", " + classesStartDateTime
                         );
                         nextClassesYouAreCoachIn.setMaxWidth(500);
                         nextClassesYouAreCoachIn.setWrapText(true);
