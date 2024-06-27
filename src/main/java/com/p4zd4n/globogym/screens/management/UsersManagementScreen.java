@@ -22,14 +22,10 @@ import java.util.stream.Collectors;
 public class UsersManagementScreen {
 
     private Main main;
-
     private List<User> users;
-
     private Employee employee;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Button addMemberButton;
     private Button findMemberButton;
 

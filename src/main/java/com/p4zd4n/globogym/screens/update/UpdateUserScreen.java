@@ -20,20 +20,15 @@ import lombok.Getter;
 public class UpdateUserScreen implements Validatable {
 
     private Main main;
-
     private User updatingUser;
     private User updatedUser;
-
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private UpdateUserForm form;
     private HBox bottomContainer;
-
+    private UpdateUserForm form;
     private Label errorLabel;
-
     private Button updateButton;
-
     private Validation validation;
 
     public UpdateUserScreen(Main main, User updatingUser, User updatedUser) {
@@ -123,7 +118,6 @@ public class UpdateUserScreen implements Validatable {
     public void updateUsername() {
 
         if (!form.getUsernameField().getText().equals(updatedUser.getUsername())) {
-
             updatedUser.setUsername(form.getUsernameField().getText());
         }
     }
@@ -131,7 +125,6 @@ public class UpdateUserScreen implements Validatable {
     public void updateEmail() {
 
         if (!form.getEmailField().getText().equals(updatedUser.getEmail())) {
-
             updatedUser.setEmail(form.getEmailField().getText());
         }
     }
@@ -139,7 +132,6 @@ public class UpdateUserScreen implements Validatable {
     public void updatePassword() {
 
         if (!form.getPasswordField().getText().equals(updatedUser.getPassword())) {
-
             updatedUser.setPassword(form.getPasswordField().getText());
         }
     }
@@ -147,7 +139,6 @@ public class UpdateUserScreen implements Validatable {
     public void updateFirstName() {
 
         if (!form.getFirstNameField().getText().equals(updatedUser.getFirstName())) {
-
             updatedUser.setFirstName(form.getFirstNameField().getText());
         }
     }
@@ -155,7 +146,6 @@ public class UpdateUserScreen implements Validatable {
     public void updateLastName() {
 
         if (!form.getLastNameField().getText().equals(updatedUser.getLastName())) {
-
             updatedUser.setLastName(form.getLastNameField().getText());
         }
     }
@@ -163,7 +153,6 @@ public class UpdateUserScreen implements Validatable {
     public void updateBirthDate() {
 
         if (!form.getBirthDateField().getValue().equals(updatedUser.getBirthDate())) {
-
             updatedUser.setBirthDate(form.getBirthDateField().getValue());
         }
     }

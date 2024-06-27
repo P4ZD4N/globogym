@@ -7,6 +7,7 @@ public class EmptySpace extends Region {
     public EmptySpace(int space) {
 
         super();
+
         setMinHeight(space);
     }
 }

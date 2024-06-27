@@ -20,15 +20,11 @@ import java.util.List;
 public class FindUserScreen {
 
     private Main main;
-
     private Employee employee;
-
     private List<User> foundUsers;
-
     private BorderPane borderPane;
     private FindUserForm form;
     private HBox bottomContainer;
-
     private Button findButton;
 
     public FindUserScreen(Main main, Employee employee) {
@@ -202,7 +198,6 @@ public class FindUserScreen {
         List<User> usersFoundByBirthDate = new ArrayList<>();
 
         if (minDate != null) {
-
             User.getUsers()
                     .stream()
                     .filter(user -> user.getBirthDate().isAfter(minDate) || user.getBirthDate().isEqual(minDate))
@@ -210,7 +205,6 @@ public class FindUserScreen {
         }
 
         if (form.getMaxDateField().getValue() != null) {
-
             User.getUsers()
                     .stream()
                     .filter(user -> user.getBirthDate().isBefore(maxDate) || user.getBirthDate().isEqual(maxDate))
@@ -227,7 +221,6 @@ public class FindUserScreen {
         }
 
         if (form.getMembershipCardStatusComboBox().getValue().equals(MembershipCardStatus.NO_CARD)) {
-
             List<User> usersFoundByMembershipCardStatus = User.getUsers()
                     .stream()
                     .filter(user ->  user instanceof ClubMember)
@@ -239,7 +232,6 @@ public class FindUserScreen {
         }
 
         if (form.getMembershipCardStatusComboBox().getValue().equals(MembershipCardStatus.ACTIVE)) {
-
             List<User> usersFoundByMembershipCardStatus = User.getUsers()
                     .stream()
                     .filter(user ->  user instanceof ClubMember)
@@ -252,7 +244,6 @@ public class FindUserScreen {
         }
 
         if (form.getMembershipCardStatusComboBox().getValue().equals(MembershipCardStatus.EXPIRED)) {
-
             List<User> usersFoundByMembershipCardStatus = User.getUsers()
                     .stream()
                     .filter(user ->  user instanceof ClubMember)
@@ -266,16 +257,12 @@ public class FindUserScreen {
 
     private void findUsersByActiveStatus() {
 
-        if (
-                (form.getActiveCheckbox().isSelected() && form.getInactiveCheckbox().isSelected()) ||
-                (!form.getActiveCheckbox().isSelected() && !form.getInactiveCheckbox().isSelected())
-        ) {
-
+        if ((form.getActiveCheckbox().isSelected() && form.getInactiveCheckbox().isSelected()) ||
+            (!form.getActiveCheckbox().isSelected() && !form.getInactiveCheckbox().isSelected())) {
             return;
         }
 
         if (form.getActiveCheckbox().isSelected()) {
-
             List<User> usersFoundByActiveStatus = User.getUsers()
                     .stream()
                     .filter(user -> user instanceof Coach)

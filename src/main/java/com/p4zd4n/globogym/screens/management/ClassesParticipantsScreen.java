@@ -25,19 +25,13 @@ import java.util.stream.Collectors;
 public class ClassesParticipantsScreen {
 
     private Main main;
-
     private Classes classes;
-
     private Employee employee;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Label classesTitleLabel;
     private Label placesStatusLabel;
-
     private Button addParticipantButton;
-
     private TableView<ClubMember> tableView;
 
     public ClassesParticipantsScreen(Main main, Employee employee, Classes classes) {

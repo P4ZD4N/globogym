@@ -27,19 +27,14 @@ import java.time.ZoneId;
 public class AddOtherEventScreen implements Validatable {
 
     private Main main;
-
     private Employee employee;
-
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private AddOtherEventForm form;
     private HBox bottomContainer;
-
+    private AddOtherEventForm form;
     private Label errorLabel;
-
     private Button addButton;
-
     private Validation validation;
 
     public AddOtherEventScreen(Main main, Employee employee) {

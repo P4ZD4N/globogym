@@ -19,17 +19,13 @@ import lombok.Getter;
 public class RegistrationScreen implements Validatable {
 
     private Main main;
-
     private BorderPane borderPane;
     private HBox topContainer;
-    private RegistrationForm form;
     private HBox bottomContainer;
-
+    private RegistrationForm form;
     private Label errorLabel;
-
     private Button registerButton;
     private Button backButton;
-
     private Validation validation;
 
     public RegistrationScreen(Main main) {
@@ -115,6 +111,4 @@ public class RegistrationScreen implements Validatable {
 
         main.showMainScreen();
     }
-
-
 }

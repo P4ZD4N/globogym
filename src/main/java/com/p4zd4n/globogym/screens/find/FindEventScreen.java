@@ -20,15 +20,11 @@ import java.util.List;
 public class FindEventScreen {
 
     private Main main;
-
     private Employee employee;
-
     private List<Event> foundEvents;
-
     private BorderPane borderPane;
     private FindEventForm form;
     private HBox bottomContainer;
-
     private Button findButton;
 
     public FindEventScreen(Main main, Employee employee) {

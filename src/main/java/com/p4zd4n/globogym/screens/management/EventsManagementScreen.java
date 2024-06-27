@@ -23,18 +23,13 @@ import java.util.function.Consumer;
 public class EventsManagementScreen {
 
     private Main main;
-
     private List<Event> events;
-
     private Employee employee;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Button addClassesButton;
     private Button addOtherEventButton;
     private Button findEventButton;
-
     private TableView<Event> tableView;
 
     public EventsManagementScreen(Main main, Employee employee, List<Event> events) {

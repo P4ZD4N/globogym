@@ -28,22 +28,16 @@ import java.time.temporal.ChronoUnit;
 public class MembershipCardScreen {
 
     private Main main;
-
     private Double membershipCardPrice;
-
     private ClubMember clubMember;
-
     private MembershipCard membershipCard;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Label infoLabel;
     private Label errorLabel;
     private Label cardStatus;
     private Label purchaseDate;
     private Label expirationDate;
-
     private Button buyRenewCardButton;
 
     public MembershipCardScreen(Main main, ClubMember clubMember) {

@@ -17,19 +17,15 @@ import javafx.scene.layout.Pane;
 public class LoginScreen {
 
     private Main main;
-
     private BorderPane borderPane;
     private HBox topContainer;
-    private GridPane centerContainer;
     private HBox bottomContainer;
-
+    private GridPane centerContainer;
     private Label errorLabel;
     private Label usernameOrEmailLabel;
     private Label passwordLabel;
-
     private TextField usernameOrEmailField;
     private PasswordField passwordField;
-
     private Button loginButton;
     private Button backButton;
 
@@ -99,18 +95,15 @@ public class LoginScreen {
         User user = User.findByUsername(usernameOrEmailField.getText());
 
         if (user == null) {
-
             user = User.findByEmail(usernameOrEmailField.getText());
         }
 
         if (user == null) {
-
             errorLabel.setText("User not found");
             return;
         }
 
         if (!user.getPassword().equals(passwordField.getText())) {
-
             errorLabel.setText("Invalid password");
             return;
         }

@@ -18,15 +18,11 @@ import java.util.List;
 public class FindRoomScreen {
 
     private Main main;
-
     private Manager manager;
-
     private List<Room> foundRooms;
-
     private BorderPane borderPane;
     private FindRoomForm form;
     private HBox bottomContainer;
-
     private Button findButton;
 
     public FindRoomScreen(Main main, Manager manager) {

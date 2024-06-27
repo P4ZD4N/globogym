@@ -20,20 +20,15 @@ import lombok.Getter;
 public class UpdateRoomScreen implements Validatable {
 
     private Main main;
-
     private Manager manager;
     private Room room;
-
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private UpdateRoomForm form;
     private HBox bottomContainer;
-
+    private UpdateRoomForm form;
     private Label errorLabel;
-
     private Button updateButton;
-
     private Validation validation;
 
     public UpdateRoomScreen(Main main, Manager manager, Room room) {
@@ -107,7 +102,6 @@ public class UpdateRoomScreen implements Validatable {
     private void updateRoomNumber() {
 
         if (!form.getRoomNumberField().getText().equals(String.valueOf(room.getNumber()))) {
-
             room.setNumber(Integer.parseInt(form.getRoomNumberField().getText()));
         }
     }
@@ -115,7 +109,6 @@ public class UpdateRoomScreen implements Validatable {
     private void updateRoomCapacity() {
 
         if (!form.getRoomCapacityField().getText().equals(String.valueOf(room.getCapacity()))) {
-
             room.setCapacity(Integer.parseInt(form.getRoomCapacityField().getText()));
         }
     }

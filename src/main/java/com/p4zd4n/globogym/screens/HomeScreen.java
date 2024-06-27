@@ -32,17 +32,13 @@ import java.util.Optional;
 public class HomeScreen {
 
     private Main main;
-
     private User user;
-
     private BorderPane borderPane;
     private VBox centerPane;
-
     private Label welcomeLabel;
     private Label isOpenLabel;
     private Label nextClassesYouParticipateIn;
     private Label nextClassesYouAreCoachIn;
-
     private TableView<OpeningHours> tableView;
 
     public HomeScreen(Main main, User user) {

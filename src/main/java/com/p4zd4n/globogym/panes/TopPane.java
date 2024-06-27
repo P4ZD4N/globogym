@@ -12,10 +12,8 @@ import javafx.scene.layout.VBox;
 public class TopPane extends BorderPane {
 
     private VBox topRightContainer;
-
     private Image logo;
     private ImageView logoView;
-
     private Button usernameButton;
     private Button logoutButton;
 

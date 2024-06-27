@@ -20,19 +20,14 @@ import lombok.Getter;
 public class AddUserScreen implements Validatable {
 
     private Main main;
-
     private Employee employee;
-
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private AddUserForm form;
     private HBox bottomContainer;
-
+    private AddUserForm form;
     private Label errorLabel;
-
     private Button addButton;
-
     private Validation validation;
 
     public AddUserScreen(Main main, Employee employee) {

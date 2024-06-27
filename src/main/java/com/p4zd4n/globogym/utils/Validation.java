@@ -22,9 +22,7 @@ import java.util.regex.Pattern;
 public class Validation {
 
     private Form form;
-
     private Validatable validatable;
-
     private Pattern pattern;
     private Matcher matcher;
 

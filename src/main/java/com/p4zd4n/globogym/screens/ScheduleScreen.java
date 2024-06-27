@@ -30,29 +30,21 @@ import java.util.stream.IntStream;
 public class ScheduleScreen {
 
     private Main main;
-
     private User user;
-
     private BorderPane borderPane;
     private VBox centerPane;
     private HBox navigationBox;
-
     private Agenda agenda;
-
     private LocalDateTime currentDisplayedWeek;
     private LocalDateTime startOfWeek;
-
     private Button previousWeekButton;
     private Button buttonAdd;
     private Button nextWeekButton;
-
     private DatePicker eventDate;
-
     private ComboBox<Integer> startHourComboBox;
     private ComboBox<Integer> startMinuteComboBox;
     private ComboBox<Integer> endHourComboBox;
     private ComboBox<Integer> endMinuteComboBox;
-
     private Integer selectedRoomNumber;
     private LocalDateTime eventStartDateTime;
     private LocalDateTime eventEndDateTime;

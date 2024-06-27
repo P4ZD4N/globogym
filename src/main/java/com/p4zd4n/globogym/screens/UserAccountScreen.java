@@ -28,25 +28,20 @@ import java.time.format.DateTimeFormatter;
 public class UserAccountScreen {
 
     private Main main;
-
     private User user;
-
     private BorderPane borderPane;
     private GridPane centerPane;
     private VBox profilePicturePane;
     private VBox userDetailsPane;
     private VBox centerRightPane;
-
     private Image profilePicture;
     private ImageView profilePictureView;
-
     private Label idLabel;
     private Label usernameLabel;
     private Label emailLabel;
     private Label firstNameLabel;
     private Label lastNameLabel;
     private Label birthDateLabel;
-
     private Button changeProfilePictureButton;
     private Button updateDataButton;
 

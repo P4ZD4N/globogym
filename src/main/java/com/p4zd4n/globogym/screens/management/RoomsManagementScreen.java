@@ -20,17 +20,12 @@ import java.util.function.Consumer;
 public class RoomsManagementScreen {
 
     private Main main;
-
     private Manager manager;
-
     private List<Room> rooms;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Button addRoomButton;
     private Button findRoomButton;
-
     private TableView<Room> tableView;
 
     public RoomsManagementScreen(Main main, Manager manager, List<Room> rooms) {

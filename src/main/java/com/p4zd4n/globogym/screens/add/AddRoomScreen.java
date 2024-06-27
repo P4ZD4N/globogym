@@ -20,21 +20,15 @@ import lombok.Getter;
 public class AddRoomScreen implements Validatable {
 
     private Main main;
-
     private Manager manager;
-
     private BorderPane borderPane;
     private BorderPane centerContainer;
     private HBox centerTopContainer;
-    private AddRoomForm form;
     private HBox bottomContainer;
-
+    private AddRoomForm form;
     private Label errorLabel;
-
     private Button addButton;
-
     private Validation validation;
-
 
     public AddRoomScreen(Main main, Manager manager) {
 

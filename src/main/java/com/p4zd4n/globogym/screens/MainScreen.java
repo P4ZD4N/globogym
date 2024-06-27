@@ -15,18 +15,14 @@ import javafx.scene.layout.VBox;
 public class MainScreen {
 
     private Main main;
-
     private BorderPane borderPane;
     private VBox centerContainer;
     private HBox bottomContainer;
-
     private Image logo;
     private ImageView logoView;
-
     private Button loginButton;
     private Button registerButton;
     private Button exitButton;
-
     private Label authorLabel;
 
     public MainScreen(Main main) {

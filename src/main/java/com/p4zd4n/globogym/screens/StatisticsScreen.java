@@ -13,17 +13,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-
-
 public class StatisticsScreen {
 
     private Main main;
-
     private User user;
-
     private BorderPane borderPane;
     private VBox centerPane;
-
 
     public StatisticsScreen(Main main, User user) {
 

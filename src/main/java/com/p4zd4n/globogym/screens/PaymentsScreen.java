@@ -20,14 +20,10 @@ import javafx.stage.Stage;
 public class PaymentsScreen {
 
     private Main main;
-
     private ClubMember clubMember;
-
     private BorderPane borderPane;
     private CenterPane centerPane;
-
     private Label balanceLabel;
-
     private Button depositButton;
 
     public PaymentsScreen(Main main, ClubMember clubMember) {

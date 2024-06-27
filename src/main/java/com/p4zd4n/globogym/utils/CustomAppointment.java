@@ -13,6 +13,7 @@ public class CustomAppointment extends Agenda.AppointmentImplLocal {
     private Event event;
 
     public CustomAppointment(Event event) {
+
         super();
 
         setStartLocalDateTime(event.getStartDateTime());
@@ -24,6 +25,7 @@ public class CustomAppointment extends Agenda.AppointmentImplLocal {
     }
 
     public void setColor(Event event) {
+
         Agenda.AppointmentGroup group = new Agenda.AppointmentGroupImpl();
 
         group.setDescription(event.getDescription());
